@@ -575,6 +575,20 @@ function sndBell(times){if(save.settings&&save.settings.beep===false)return;for(
 function sndUI(){osc('square',1200,null,0.02,0.07);}
 function sndStamp(){osc('sine',300,150,0.06,0.3);noiseS('bandpass',2000,null,0.03,0.18);}
 function sndCrowd(kind){if(save.settings&&save.settings.crowd===false)return;if(kind==='ooh')noiseS('bandpass',600,1100,0.45,0.28);else if(kind==='cheer'){noiseS('bandpass',900,null,1.6,0.32);for(var i=0;i<6;i++)osc('sine',2200+Math.random()*400,null,0.15,0.04,0.2+i*0.15);}else noiseS('bandpass',900,500,0.5,0.18);}
+/* ===== FIGHTER VOICE LINES — har fighter ki apni recorded punchline (assets/voice/<id>.mp3).
+   SPECIAL aur STYLE (U) fire hone par synth SFX ke UPAR fighter khud bolta hai.
+   Playback sfxBus se jaata hai — Mute, SFX Volume aur Master Volume teeno laagu. */
+var VOICE_IDS=['adarsh','topper','backbencher','warden','canteen','labmadam','aidog','cr','vidya','eventwala','boss'];
+var voiceBuf={},voiceLoading={},voiceSrc={};
+function voiceId(fid){return fid==='adarsh3d'?'adarsh':fid;}
+function loadVoice(fid){fid=voiceId(fid);if(voiceBuf[fid]||voiceLoading[fid]||VOICE_IDS.indexOf(fid)<0)return;var c=ac();if(!c)return;voiceLoading[fid]=true;
+ fetch('assets/voice/'+fid+'.mp3').then(function(r){if(!r.ok)throw new Error('voice '+fid);return r.arrayBuffer();}).then(function(ab){return c.decodeAudioData(ab);}).then(function(buf){voiceBuf[fid]=buf;voiceLoading[fid]=false;}).catch(function(){voiceLoading[fid]=false;});}
+function preloadVoices(){for(var i=0;i<VOICE_IDS.length;i++)loadVoice(VOICE_IDS[i]);}
+function stopVoices(){for(var k in voiceSrc){if(voiceSrc[k]){try{voiceSrc[k].stop();}catch(e){}voiceSrc[k]=null;}}}
+function playVoice(fid){if(muted)return;fid=voiceId(fid);var c=ac();if(!c)return;
+ if(!voiceBuf[fid]){loadVoice(fid);return;}
+ try{if(voiceSrc[fid]){try{voiceSrc[fid].stop();}catch(e){}voiceSrc[fid]=null;}
+ var src=c.createBufferSource();src.buffer=voiceBuf[fid];src.connect(sfxBus||c.destination);voiceSrc[fid]=src;src.onended=function(){if(voiceSrc[fid]===src)voiceSrc[fid]=null;};src.start();}catch(e){}}
 /* ================= MUSIC ENGINE — SOUND_DESIGN §5, 100% procedural =================
    Menu: generative pentatonic ~72 BPM. Fight: layered dholak ~124 BPM, intensity
    stacks under 35% HP, ducks under supers, stops dead on KO. Per-arena flavour. */
@@ -652,7 +666,7 @@ function musicSetMode(mode,arena){
  else{MUS.step=0;MUS.nextTime=AC.currentTime+0.06;if(!MUS.timer)MUS.timer=setInterval(musicTick,25);musicTick();}
  musicDebugRender();
 }
-function musicUnlock(){MUS.unlocked=true;var c=ac();applyMusicGain();if(MUS.mode==='off')musicSetMode('menu');else musicDebugRender();}
+function musicUnlock(){MUS.unlocked=true;var c=ac();applyMusicGain();preloadVoices();if(MUS.mode==='off')musicSetMode('menu');else musicDebugRender();}
 function musicDuckSuper(){MUS.duckUntil=performance.now()+900;applyMusicGain();setTimeout(applyMusicGain,950);}
 function musicKO(){MUS.mode='off';if(MUS.timer){clearInterval(MUS.timer);MUS.timer=null;}musicDebugRender();}
 function musicDebugRender(){var el=document.getElementById('musicDebug');if(!el)return;var st=!AC?'no ctx':AC.state;el.textContent='♪ '+(MUS.mode==='off'?'MUSIC —':MUS.mode.toUpperCase()+' • '+(MUS.mode==='menu'?'72':'124')+' BPM • step '+MUS.step+(MUS.intensity?' • INTENSE':'')+' • '+MUS.arena)+' • ctx '+st+' • vol '+Math.round(((save.settings&&save.settings.musicVol!=null)?save.settings.musicVol:0.8)*100)+'%';el.style.opacity=MUS.mode==='off'?0.55:1;}
@@ -2287,8 +2301,8 @@ function handleEvents(evs){
   if(ev.t==='block'){sndBlock(ev.by.fd.id);var bv=ev.by;spawnSparks(bv.x,bv.y,false,0xBFD9FF);trauma=Math.min(1,trauma+0.05);}
   if(ev.t==='whoosh')noiseS('bandpass',700,1100,0.08,0.06);
   if(ev.t==='jump')osc('sine',300,500,0.08,0.05);
-  if(ev.t==='superGo'){musicDuckSuper();sndSuper(ev.by.fd.id);showPop('⚡ '+ev.by.fd.special.toUpperCase()+' ⚡\n"'+ev.txt+'"',1800);freezeT=6;cineT=58;cineX=ev.by.x;crowdExcited=170;crowdScatter=42;trauma=Math.min(1,trauma+0.3);reactiveTicker('BREAKING: '+ev.by.fd.name+' ne apna SPECIAL chala diya — campus me sannata (aur hasi)');}
-  if(ev.t==='styleGo'){sndStyle(ev.by.fd.id==='adarsh3d'?'adarsh':ev.by.fd.id);if(ev.txt)showPopAt(ev.by.x,'"'+ev.txt+'"',false,1050);}
+  if(ev.t==='superGo'){musicDuckSuper();sndSuper(ev.by.fd.id);playVoice(ev.by.fd.id);showPop('⚡ '+ev.by.fd.special.toUpperCase()+' ⚡\n"'+ev.txt+'"',1800);freezeT=6;cineT=58;cineX=ev.by.x;crowdExcited=170;crowdScatter=42;trauma=Math.min(1,trauma+0.3);reactiveTicker('BREAKING: '+ev.by.fd.name+' ne apna SPECIAL chala diya — campus me sannata (aur hasi)');}
+  if(ev.t==='styleGo'){sndStyle(ev.by.fd.id==='adarsh3d'?'adarsh':ev.by.fd.id);playVoice(ev.by.fd.id);if(ev.txt)showPopAt(ev.by.x,'"'+ev.txt+'"',false,1050);}
   if(ev.t==='ringHit'){sndHit('labmadam',false);spawnSparks(ev.vic.x,0.5,false,0xBFEFFF);showPopAt(ev.vic.x,ev.blocked?'🛡 CHUP! (blocked)':'CHUP! 🤫',false,700);trauma=Math.min(1,trauma+0.12);}
   if(ev.t==='ringEat'){spawnSparks(ev.x,0.6,false,0xffffff);showPopAt(ev.x,'💥 Kha gayi awaaz!',false,600);noiseS('bandpass',900,300,0.15,0.2);}
   if(ev.t==='ringPop'){noiseS('bandpass',1400,700,0.1,0.07);}
@@ -2471,7 +2485,7 @@ function renderGallery(){
  document.getElementById('galCard').innerHTML='<h2 style="margin:4px 0">'+fd.name+' — "'+fd.title+'"</h2>'+(ART[fd.id]?'<div class="galArt"><img src="'+ART[fd.id].idle+'" alt="'+fd.name+' — '+fd.title+', fighter in Campus Clash, the free online college fighting game"></div>':'')+(isLocked(fd)?'<p><b>🔒 Locked:</b> '+(fd.id==='aidog'?'VS CPU me 3-win streak banao, challenge khulega!':'Semester Mode clear karo — file Placement Cell me band hai.')+'</p>':'<p style="line-height:1.55">'+fd.story+'</p>'+(fd.model3d?'<p style="background:#13294d;color:#FFD94D;border-radius:8px;padding:10px 12px;font-weight:700;line-height:1.5">🧊 3D MODEL TRIAL — ye asal TripoSR 3D model hai (usi ki photo se bana). <b>Statue hai, pose nahi badalta</b> — poora mesh hi hilta hai: lunge, jhukav, spin, girna. Neeche 3D view me model khud ghumta rahega — <b>canvas ko drag karke khud bhi ghumao!</b>'+(M3D.state==='failed'?' ⚠️ Is device par 3D model load nahi hua — photo fighter dikh raha hai.':(M3D.state!=='ready'?' ⏳ 3D model load ho raha hai…':''))+'</p>':'')+row('SPEED',sp,'#2f6fd0')+row('TAQAT',Math.round((fd.pDmg+fd.kDmg)/98*100),'#e8493f')+row('RANGE',rg,'#2E7D32')+'<p><b>⚡ SPECIAL: '+fd.special+'</b> — Attendance Meter full → SPACE dabao. 30% damage, full comedy.</p>'+(fd.sty?'<p><b>🎭 STYLE MOVE (U key): '+fd.sty+'</b> — har fighter ka apna fighting style. <i>"'+fd.styCall+'"</i></p>':'')+'<p style="font-size:13px">'+fd.sig.join(' • ')+'<br>Strings: J·J·K · J·K · K·K · ↓J·J·K</p><p>🏆 <i>"'+fd.win+'"</i><br>💫 <i>"'+fd.lose+'"</i></p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="btnDemo">▶ DEMO DEKHO — Super Preview</button><button class="btn red" id="btnGalFight">⚔️ ISSE LADHO</button></div>');
  if(galMesh&&scene){scene.remove(galMesh);galMesh=null;}
  if(!isLocked(fd)&&glState==='ok'){galMesh=makeFighterVisual(fd);galMesh.position.set(0,0,1.8);scene.add(galMesh);
-  document.getElementById('btnDemo').addEventListener('click',function(){galDemoT=40;sndSuper(fd.id);showPop('⚡ '+fd.special+' ⚡\n"'+fd.dlg.go[0]+'"',1600);});
+  document.getElementById('btnDemo').addEventListener('click',function(){galDemoT=40;sndSuper(fd.id);playVoice(fd.id);showPop('⚡ '+fd.special+' ⚡\n"'+fd.dlg.go[0]+'"',1600);});
   document.getElementById('btnGalFight').addEventListener('click',function(){if(galMesh&&scene)scene.remove(galMesh);galMesh=null;beginSelect('cpu');previewId=fd.id;updatePreview();lockCurrentPick();showPop('✔ '+fd.name+' tumhara fighter LOCKED! Ab opponent chuno.',1800);});
  }
 }
@@ -2510,11 +2524,11 @@ document.getElementById('btnResultSelect').addEventListener('click',function(){i
 document.getElementById('btnResultHome').addEventListener('click',function(){if(mode==='online')netLeave(true);document.getElementById('resultModal').classList.remove('on');document.body.classList.remove('cine');sim=null;goMenu();});
 document.getElementById('btnShare').addEventListener('click',shareCard);
 function setMuteBtns(){var t=muted?'🔇 Sound OFF':'🔊 Sound ON';document.getElementById('btnMute2').textContent=t;document.getElementById('btnMuteTop').textContent=muted?'🔇 OFF':'🔊 ON';}
-document.getElementById('btnMute2').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted)stopAmbience();else if(screens.fight.classList.contains('on'))startAmbience(arenaId);});
-document.getElementById('btnMuteTop').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted)stopAmbience();});
+document.getElementById('btnMute2').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted){stopAmbience();stopVoices();}else if(screens.fight.classList.contains('on'))startAmbience(arenaId);});
+document.getElementById('btnMuteTop').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted){stopAmbience();stopVoices();}});
 document.getElementById('setMusicVol').addEventListener('input',function(){save.settings.musicVol=this.value/100;document.getElementById('musicVolLbl').textContent=this.value+'%';persist();applyMusicGain();musicDebugRender();});
 (function(){var sv=document.getElementById('setMusicVol');var v=Math.round(((save.settings.musicVol!=null)?save.settings.musicVol:0.8)*100);sv.value=v;document.getElementById('musicVolLbl').textContent=v+'%';})();
-document.getElementById('setSound').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;muted=b.dataset.v==='off';save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});});
+document.getElementById('setSound').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;muted=b.dataset.v==='off';save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted)stopVoices();this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});});
 document.getElementById('setQuality').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;save.settings.quality=b.dataset.v;persist();this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});showPop('Quality: '+b.dataset.v.toUpperCase()+' — agle match se apply hoga');});
 document.getElementById('setShake').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;save.settings.shake=b.dataset.v==='on';persist();this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});});
 function volSlider(id,lbl,key,after){var el=document.getElementById(id);if(!el)return;var cur=(save.settings&&save.settings[key]!=null)?save.settings[key]:1;el.value=Math.round(cur*100);document.getElementById(lbl).textContent=Math.round(cur*100)+'%';el.addEventListener('input',function(){save.settings[key]=this.value/100;document.getElementById(lbl).textContent=this.value+'%';persist();if(after)after();});}
