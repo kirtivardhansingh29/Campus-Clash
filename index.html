@@ -117,6 +117,10 @@ table{width:100%;border-collapse:collapse}td,th{border:1px solid #999;padding:6p
 .prevLocked{display:inline-block;background:var(--green);color:#fff;font-weight:900;font-size:13px;padding:3px 10px;border-radius:6px;margin-bottom:6px}
 #btnConfirmPick{background:var(--green);color:#fff;border:2px solid #14521a;width:100%;margin-top:12px;font-size:21px;min-height:60px;box-shadow:3px 3px 0 rgba(0,0,0,.5)}
 #btnConfirmPick:disabled{background:#8a8f94;border-color:#555;opacity:.75}
+/* ===== online screen contrast fix (room-fix pass): ONLINE DHAMAKA heading + intro safed-on-bright scene par gayab the ===== */
+#scr-online h2{color:var(--ink);background:rgba(255,246,227,.95);display:inline-block;padding:6px 14px;border-radius:8px;border:2px solid #d9c9a3;box-shadow:3px 3px 0 rgba(0,0,0,.35)}
+#scr-online .wrap>p{color:var(--ink);background:rgba(255,246,227,.94);padding:8px 12px;border-radius:8px;border:2px solid #d9c9a3}
+#scr-online .wrap>p#netStatusLine{color:#FFD94D;background:#13294d;border-color:#13294d}
 </style></head><body>
 <div id="gl"></div>
 <div id="rotatePrompt"><div><div style="font-size:54px">📱↔</div><h2>Phone ghumao, maza dugna hoga</h2><p>Campus Clash landscape me hi chalega — bilkul class ki aakhri bench ki tarah, side me jagah zyada hai.</p></div></div>
@@ -2199,7 +2203,10 @@ var loadIv=setInterval(function(){
 var NET={peer:null,conn:null,role:'',code:'',connected:false,joining:false,left:false,retried:false,
  inp2:emptyInp(),lastInpRx:0,lastInpTx:0,lastPacked:'',
  snap:null,snapPrev:null,snapRx:0,snapPrevRx:0,lastPhase:'',evQ:[],evAcc:[],tickSend:0,
- pingMs:null,lastPingTx:0,hostWant:false,guestWant:false,joinTimer:null};
+ pingMs:null,lastPingTx:0,hostWant:false,guestWant:false,joinTimer:null,hostTimer:null,openTimer:null,hostTries:0};
+/* Explicit PeerJS options — cloud broker default hi hai, par ICE servers (STUN + PeerJS ka apna TURN relay)
+   saaf taur par diye hain taaki college/mobile NAT ke peeche bhi data-channel ban jaye. */
+var NET_PEER_OPTS={debug:0,config:{iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'},{urls:'turn:0.peerjs.com:3478',username:'peerjs',credential:'peerjsp'}]}};
 var NET_ALPHABET='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 function netGenCode(){var s='';for(var i=0;i<5;i++)s+=NET_ALPHABET[Math.floor(Math.random()*NET_ALPHABET.length)];return s;}
 function r3(v){return Math.round(v*1000)/1000;}
@@ -2211,12 +2218,13 @@ function netResetUI(){
  document.getElementById('roomCodeBox').style.display='none';
  document.getElementById('btnNetSelect').style.display='none';
  document.getElementById('btnNetLeave').style.display='none';
- document.getElementById('btnHostRoom').textContent='🏠 ROOM BANAO';
+ var hb=document.getElementById('btnHostRoom');hb.disabled=false;hb.textContent='🏠 ROOM BANAO';
+ var jb=document.getElementById('btnJoinRoom');jb.disabled=false;jb.textContent='🚪 ROOM ME GHUSO';
  netSetStatus('host','Abhi room nahi bana — upar wala button dabao.');
  netSetStatus('guest','Code ka intezaar hai… dost se code maango!');
 }
 function netTeardown(){
- clearTimeout(NET.joinTimer);
+ clearTimeout(NET.joinTimer);clearTimeout(NET.hostTimer);clearTimeout(NET.openTimer);clearTimeout(NET.joinNoteTimer);
  try{if(NET.conn)NET.conn.close();}catch(e){}
  try{if(NET.peer)NET.peer.destroy();}catch(e){}
  NET.peer=null;NET.conn=null;NET.connected=false;NET.joining=false;NET.role='';NET.code='';
@@ -2254,15 +2262,18 @@ function netPeerError(err){
   if(NET.role==='guest'&&NET.joining){clearTimeout(NET.joinTimer);netLeave(false);show('online');netSetStatus('guest','❌ Aisa room nahi mila! Code dobara check karo — aur host ka page khula hona chahiye (tab band = room band).');netLine('❌ Room nahi mila — ya code galat hai, ya host ne page band kar diya hai.');}
   return;
  }
- if(t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'){netLine('🌐 Online server (PeerJS cloud) se jud nahi paya — apna net check karo, thodi der me phir try karo. Offline modes (VS CPU / 2P / Semester / Practice) full chalte hain!');return;}
+ if(t==='network'||t==='server-error'||t==='socket-error'||t==='socket-closed'){netLine('🌐 Online server (PeerJS cloud) se jud nahi paya — apna net check karo, thodi der me phir try karo. Offline modes (VS CPU / 2P / Semester / Practice) full chalte hain!');if(NET.role==='host'&&!NET.connected)netSetStatus('host','❌ Server se jud nahi paya — net/Wi-Fi check karo. College net kabhi-kabhi online-game servers rok deta hai; mobile data ya dusra Wi-Fi try karke PHIR TRY KARO dabao.');if(NET.role==='guest'&&NET.joining)netSetStatus('guest','❌ Server se jud nahi paya — net check karke code dobara daalo.');return;}
  if(t==='browser-incompatible'){netLine('🌐 Is browser me WebRTC nahi chalta — Chrome / Edge / Firefox try karo. Offline modes full chalte hain!');return;}
  if(t==='invalid-id'||t==='invalid-key')return;
  netLine('🌐 Connection me gadbad ('+t+') — phir try karo. Offline modes full chalte hain!');
 }
 function netBindConn(c){
  NET.conn=c;
+ var opened=false;
  c.on('open',function(){
-  NET.connected=true;NET.joining=false;clearTimeout(NET.joinTimer);
+  opened=true;
+  NET.connected=true;NET.joining=false;clearTimeout(NET.joinTimer);clearTimeout(NET.openTimer);clearTimeout(NET.joinNoteTimer);
+  var jb=document.getElementById('btnJoinRoom');jb.disabled=false;jb.textContent='🚪 ROOM ME GHUSO';
   if(NET.role==='host'){
    netSetStatus('host','🎉 DOST AA GAYA! Neeche wale button se fighter chuno — tum HOST ho, dono ke fighter + arena tum hi select karoge.');
    netLine('✅ Guest jud gaya! Fighter chuno — guest tumhare chune hue P2 fighter se ladega.');
@@ -2277,34 +2288,77 @@ function netBindConn(c){
   }
  });
  c.on('data',netOnData);
- c.on('close',function(){netPeerGone();});
- c.on('error',function(){netPeerGone();});
+ /* Guest ka connection khulne se PEHLE hi toot jaye (uska net kharab / ICE fail) to HOST ka room nahi marna chahiye —
+    sirf wo khaali slot saaf karo, code waisa ka waisa, dost dobara try kar sakta hai. Asli disconnect (khulne ke baad) par purana netPeerGone hi chalega. */
+ function deadGuestSlot(){
+  if(NET.role==='host'&&!opened&&NET.conn===c&&!NET.connected){
+   NET.conn=null;
+   netSetStatus('host','⚠️ Ek dost aaya tha, par uska connection ban nahi paya — ghabrao mat, room abhi bhi khula hai! Dost ko bolo code dobara daale, ya net badal kar try kare.');
+   netLine('⚠️ Guest aakar chala gaya (connection bana hi nahi) — room khula hai, CODE: '+NET.code+' • Dost phir try kar sakta hai.');
+   return true;
+  }
+  return false;
+ }
+ c.on('close',function(){if(!deadGuestSlot())netPeerGone();});
+ c.on('error',function(){if(!deadGuestSlot())netPeerGone();});
+}
+/* Room-fail ka saaf ant — peer band, button wapas, wajah status me. (Pehle: koi timeout hi nahi tha,
+   broker se haath na mile to "Room ban raha hai…" hamesha ke liye atka rehta tha aur code kabhi dikhta hi nahi tha.) */
+function netHostFail(){
+ clearTimeout(NET.hostTimer);
+ try{if(NET.peer)NET.peer.destroy();}catch(e){}
+ NET.peer=null;NET.conn=null;NET.connected=false;
+ var b=document.getElementById('btnHostRoom');b.disabled=false;b.textContent='🏠 ROOM BANAO — PHIR TRY KARO';
+ netSetStatus('host','❌ Room nahi bana — online server tak pahunch nahi hui. Net/Wi-Fi check karo (college net kabhi-kabhi game servers rok deta hai — mobile data ya dusra Wi-Fi try karo), phir PHIR TRY KARO dabao.');
+ netLine('❌ Room nahi bana: PeerJS server se connection nahi hua. Net badal kar ya thodi der baad phir try karo — offline modes (VS CPU / 2P / Semester / Practice) full chalte hain!');
+}
+function netHostAttemptFailed(){
+ clearTimeout(NET.hostTimer);
+ if(NET.hostTries<1){ /* ek automatic dusra try — aksar pehla handshake hi atakta hai */
+  NET.hostTries++;
+  netSetStatus('host','⚠️ Server se haath nahi mila — ek baar aur koshish ho rahi hai… (dusra try)');
+  try{if(NET.peer)NET.peer.destroy();}catch(e){}
+  NET.peer=null;
+  netWireHostPeer();
+  return;
+ }
+ netHostFail();
 }
 function netWireHostPeer(){
  netSetStatus('host','⏳ Room ban raha hai… server se haath mila rahe hain…');
- try{NET.peer=new Peer('campusclash-'+NET.code.toLowerCase(),{debug:0});}
- catch(e){netLine('❌ Room nahi bana — page reload karke phir try karo.');return;}
- NET.peer.on('open',function(){
+ var hb=document.getElementById('btnHostRoom');hb.disabled=true;hb.textContent='⏳ ROOM BAN RAHA HAI…';
+ var p=null,opened=false;
+ try{p=new Peer('campusclash-'+NET.code.toLowerCase(),NET_PEER_OPTS);}
+ catch(e){netHostFail();return;}
+ NET.peer=p;
+ clearTimeout(NET.hostTimer);
+ NET.hostTimer=setTimeout(function(){if(!opened&&NET.peer===p)netHostAttemptFailed();},12000);
+ p.on('open',function(){
+  if(NET.peer!==p)return;
+  opened=true;clearTimeout(NET.hostTimer);NET.hostTries=0;
   document.getElementById('roomCodeBox').style.display='block';
   document.getElementById('roomCodeTxt').textContent=NET.code;
-  document.getElementById('btnHostRoom').textContent='🔁 NAYA CODE BANAO';
+  hb.disabled=false;hb.textContent='🔁 NAYA CODE BANAO';
   netSetStatus('host','📣 Room taiyar! Upar wala CODE dost ko bhejo (WhatsApp par). Dost ka intezaar ho raha hai… chai piyo ☕');
   netLine('✅ Room khul gaya — CODE: '+NET.code+' • Dost is page par Online → Code Daalo me ye code daalega. Tumhara page khula rehna chahiye!');
  });
- NET.peer.on('connection',function(c){
+ p.on('connection',function(c){
+  if(NET.peer!==p)return;
   if(NET.conn&&NET.conn.open){try{c.close();}catch(e){}return;}
   netBindConn(c);
  });
- NET.peer.on('error',function(err){
-  if(err&&err.type==='unavailable-id'&&!NET.retried){NET.retried=true;try{NET.peer.destroy();}catch(e){}NET.code=netGenCode();netWireHostPeer();return;}
+ p.on('error',function(err){
+  if(NET.peer!==p)return;
+  if(err&&err.type==='unavailable-id'&&!NET.retried){NET.retried=true;clearTimeout(NET.hostTimer);try{p.destroy();}catch(e){}NET.code=netGenCode();netWireHostPeer();return;}
+  if(!opened&&err&&(err.type==='network'||err.type==='server-error'||err.type==='socket-error'||err.type==='socket-closed')){netHostAttemptFailed();return;}
   netPeerError(err);
  });
- NET.peer.on('disconnected',function(){try{NET.peer.reconnect();}catch(e){}});
+ p.on('disconnected',function(){if(NET.peer===p){try{p.reconnect();}catch(e){}}});
 }
 function netHost(){
  if(!window.Peer){netLine('❌ Online library (PeerJS) load nahi hui — net check karke page reload karo. Ghabrao mat: VS CPU, 2-Player, Semester aur Practice — sab offline modes full chalte hain!');return;}
  netLeave(false);
- NET.role='host';NET.left=false;NET.retried=false;NET.code=netGenCode();
+ NET.role='host';NET.left=false;NET.retried=false;NET.hostTries=0;NET.code=netGenCode();
  document.getElementById('btnNetLeave').style.display='inline-block';
  netWireHostPeer();
 }
@@ -2316,18 +2370,33 @@ function netJoin(){
  NET.role='guest';NET.left=false;NET.joining=true;NET.code=raw;
  document.getElementById('btnNetLeave').style.display='inline-block';
  netSetStatus('guest','⏳ Room '+raw+' dhoondh rahe hain… host ke darwaze par khat-khat ho rahi hai…');
- try{NET.peer=new Peer({debug:0});}
- catch(e){netLine('❌ Connection shuru nahi hua — page reload karke phir try karo.');return;}
- NET.peer.on('open',function(){
-  var c=NET.peer.connect('campusclash-'+raw.toLowerCase(),{reliable:true});
+ var jb=document.getElementById('btnJoinRoom');jb.disabled=true;jb.textContent='⏳ JUD RAHE HAIN…';
+ var p=null;
+ try{p=new Peer(NET_PEER_OPTS);}
+ catch(e){jb.disabled=false;jb.textContent='🚪 ROOM ME GHUSO';netLine('❌ Connection shuru nahi hua — page reload karke phir try karo.');return;}
+ NET.peer=p;
+ /* Broker tak pahunchne ka bhi timeout — pehle sirf host-join ka timer tha, apna peer hi na khule to guest bhi hamesha atka rehta tha */
+ clearTimeout(NET.openTimer);
+ NET.openTimer=setTimeout(function(){
+  if(NET.peer===p&&NET.joining&&!NET.connected){netLeave(false);show('online');netSetStatus('guest','❌ Online server se jud nahi paya — net/Wi-Fi check karke code dobara daalo. College net par aksar mobile data kaam kar jata hai!');netLine('❌ Online server tak pahunch nahi hui — net badal kar phir try karo. Offline modes full chalte hain!');}
+ },12000);
+ p.on('open',function(){
+  if(NET.peer!==p)return;
+  clearTimeout(NET.openTimer);
+  var c=p.connect('campusclash-'+raw.toLowerCase(),{reliable:true});
   netBindConn(c);
-  clearTimeout(NET.joinTimer);
+  clearTimeout(NET.joinTimer);clearTimeout(NET.joinNoteTimer);
+  /* 20 sec ka window: sakht NAT / sust net par asal connection (ICE) banne me 12 sec se zyada lag sakta hai —
+     beech me ek bharosa-note bhi, taaki lage ki khat-khat abhi chal rahi hai, atka nahi hai. */
+  NET.joinNoteTimer=setTimeout(function(){
+   if(NET.joining&&!NET.connected)netSetStatus('guest','⏳ Abhi bhi khat-khat ho rahi hai… sust net par seedha connection banne me thoda samay lag sakta hai — page khula rakho, bas ho gaya!');
+  },9000);
   NET.joinTimer=setTimeout(function(){
    if(!NET.connected){netLeave(false);show('online');netSetStatus('guest','❌ Host nahi mila! Code galat hai, ya host ka page band ho gaya hai. Code dobara check karo.');netLine('❌ Room '+raw+' se koi jawab nahi aaya — host ko bolo page khula rakhe aur code phir se bheje.');}
-  },12000);
+  },20000);
  });
- NET.peer.on('error',netPeerError);
- NET.peer.on('disconnected',function(){try{NET.peer.reconnect();}catch(e){}});
+ p.on('error',function(err){if(NET.peer===p)netPeerError(err);});
+ p.on('disconnected',function(){if(NET.peer===p){try{p.reconnect();}catch(e){}}});
 }
 function openOnline(){
  semesterActive=false;practiceActive=false;bossActive=false;
