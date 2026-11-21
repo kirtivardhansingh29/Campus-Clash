@@ -948,6 +948,15 @@ Sim.prototype.stepF=function(f,foe,inp){
    else if(pressed.style||f.buf.style>0){f.buf.style=0;this.tryStyle(f,foe);}
    else if(pressed.special||f.buf.special>0){f.buf.special=0;this.trySuper(f,foe);}
   }
+  else{
+   /* v26 FIX (player feedback: "A button se backward nahi ho raha"): hold-back pehle
+      fighter ko sirf block-pose me khada kar deta tha — peeche hatna impossible tha.
+      Classic fighting-game rule ab: away hold = peeche WALK, aur hit aaye to wahi
+      hold BLOCK bhi karta hai (f.block upar set hai; dmg() chip/block usi se decide
+      karta hai). Attack/jump block ke dauraan band hi rahte hain, jaise pehle the.
+      P1 ka A, P2 ka away-arrow, touch ◀ aur AI retreat — sab isi ek raaste se fix. */
+   f.x+=(foe.x>f.x?-1:1)*fd.speed/60;f.state='walk';acted=true;
+  }
  }
  if(acted)f.idleT=0;else f.idleT++;
  if(this.bossMode&&f.isP1&&f.idleT>0&&f.idleT%900===0)this.shortlist=Math.min(100,this.shortlist+6*this.slFactor());
