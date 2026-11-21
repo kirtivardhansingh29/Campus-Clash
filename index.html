@@ -87,7 +87,7 @@
       "name": "How do I play Campus Clash with a friend online?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Open the Online Dhamaka mode and create a room — you get a 5-letter room code. Share the code with your friend; they open the same page, enter the code, and join your room. The host picks the fighters and arena, and the match runs live between both browsers over WebRTC (PeerJS) while both players keep the page open."
+        "text": "Open the Online Dhamaka mode and create a room — you get a 5-letter room code. Share the code with your friend; they open the same page, enter the code, and join your room. Each player then picks their own fighter, the host picks the arena, and the match runs live between both browsers over WebRTC (PeerJS) while both players keep the page open."
       }
     },
     {
@@ -261,7 +261,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 <section class="screen" id="scr-notice"><div class="wrap"><div class="card" style="max-width:640px;margin:30px auto"><div class="stamp">SATIRE NOTICE — PEHLE PADH LO</div><h2>Samajh lo, phir ladho</h2><p>Saare characters fictional college archetypes hain. Koi asli teacher, student ya vyakti nahi hai.</p><p>Ye ek <b>fictional college</b> ki kahani hai — kisi asli college se inspired zaroor hai, par kisi ka official game nahi hai. Cartoon ladai hai — असली campus me try mat karna.</p><p>🐕 <b>AI Dog wala kissa dusri badi university ka tha. Hum apne college wale hain.</b> Dog apne college wala NAHI tha — dusri badi university wala tha!</p><p>Ladai sirf game me rakho — asal campus me shanti, canteen me Maggi.</p><label style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" id="noticeHide" style="width:22px;height:22px"> Dobara mat dikhana</label><br><button class="btn red" id="btnNoticeOk" style="width:100%">SAMAJH GAYA, AAGE BADHO →</button></div></div></section>
 
 <!-- TITLE -->
-<section class="screen" id="scr-title"><div class="wrap"><div style="padding-top:26px"><span style="background:#D92323;padding:6px 10px;font-weight:900">● LIVE &nbsp;CAMPUS LIVE</span><p style="color:#F2A81D;font-weight:800;letter-spacing:.15em">APNA CAMPUS · GREATER NOIDA SE LIVE</p><h1 class="logo">CAMPUS<br>CLASH</h1><span class="stamp" style="background:#FFF6E3">100% BAKWAAS, 0% PADHAI</span><p style="max-width:560px;font-size:17px;line-height:1.5">Fightkaro-style 2.5D ladai — 9 concept-photo fighters (bilkul photos jaise!) + 1 ASLI 3D MODEL TRIAL (Adarsh 3D 🧊 select screen me), 8 living 3D arenas, Attendance Meter supers. Attendance kiski zyada, ladai me kaun bhaari?</p><p id="streakLine" style="font-weight:800;color:#FFD94D"></p><button class="btn red" id="btnStart" style="font-size:20px" aria-label="Start Campus Clash — enter the free online college fighting game">▶ ENTER — DHAMAAKA SHURU KARO</button><p style="font-size:12px;opacity:.8">Satire hai, serious mat lo • <a href="#" id="linkNotice" style="color:#FFD94D">Disclaimer phir dekho</a> • Sound: <button class="btn ghost" id="btnMuteTop" style="min-height:36px;padding:4px 10px">🔊 ON</button></p></div></div></section>
+<section class="screen" id="scr-title"><div class="wrap"><div style="padding-top:26px"><span style="background:#D92323;padding:6px 10px;font-weight:900">● LIVE &nbsp;CAMPUS LIVE</span><p style="color:#F2A81D;font-weight:800;letter-spacing:.15em">APNA CAMPUS · GREATER NOIDA SE LIVE</p><h1 class="logo">CAMPUS<br>CLASH</h1><span class="stamp" style="background:#FFF6E3">100% BAKWAAS, 0% PADHAI</span><p style="max-width:560px;font-size:17px;line-height:1.5">Fightkaro-style 2.5D ladai — 9 concept-photo fighters (bilkul photos jaise!) + 1 ASLI 3D MODEL TRIAL (Adarsh 3D 🧊 select screen me), 8 living 3D arenas, Attendance Meter supers. Attendance kiski zyada, ladai me kaun bhaari?</p><p id="streakLine" style="font-weight:800;color:#FFD94D"></p><button class="btn red" id="btnStart" style="font-size:20px" aria-label="Start Campus Clash — enter the free online college fighting game">▶ ENTER — DHAMAAKA SHURU KARO</button><p style="font-size:12px;opacity:.8">Satire hai, serious mat lo • v22 • <a href="#" id="linkNotice" style="color:#FFD94D">Disclaimer phir dekho</a> • Sound: <button class="btn ghost" id="btnMuteTop" style="min-height:36px;padding:4px 10px">🔊 ON</button></p></div></div></section>
 
 <!-- MAIN MENU NOTICE BOARD -->
 <section class="screen" id="scr-menu"><div class="wrap"><div style="display:grid;grid-template-columns:1.2fr .8fr;gap:14px" id="menuGrid"><div class="card boardCard"><div class="stamp">NOTICE BOARD — AAJ KA PROGRAM</div>
@@ -288,7 +288,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 
 <!-- ONLINE -->
 <section class="screen" id="scr-online"><div class="wrap"><button class="btn ghost" id="btnOnlineBack">← NOTICE BOARD</button><h2 style="font-family:'Archivo Black'">🌐 ONLINE DHAMAKA</h2>
-<p style="font-weight:700;max-width:660px;line-height:1.5">Dost dusre sheher me hai? Room code banao, WhatsApp par bhejo — aur online ladai shuru! <b>HOST = P1</b> — fighter aur arena host hi chunta hai (dono ke liye). <b>GUEST = P2</b> — bas code daalo aur ladho. Dono ko ye page <b>khula rakhna</b> hai — tab band = match band.</p>
+<p style="font-weight:700;max-width:660px;line-height:1.5">Dost dusre sheher me hai? Room code banao, WhatsApp par bhejo — aur online ladai shuru! <b>HOST = P1</b> · <b>GUEST = P2</b> — dono apna-apna fighter <b>KHUD</b> chunte hain (ek hi fighter dono side bhi chalega!); arena sirf host chunta hai. Dono ko ye page <b>khula rakhna</b> hai — tab band = match band.</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px">
 <div class="card"><h3 style="margin-top:2px">🏠 ROOM BANAO — HOST (P1)</h3><p>Code banao, dost ko bhejo, phir intezaar karo.</p><button class="btn red" id="btnHostRoom" style="width:100%">🏠 ROOM BANAO</button>
 <div id="roomCodeBox" style="display:none;margin-top:10px;text-align:center"><div style="font-size:13px;font-weight:800">TUMHARA ROOM CODE — dost ko bhejo:</div><div id="roomCodeTxt" style="font-family:'Archivo Black';font-size:42px;letter-spacing:.16em;color:#B03030">·····</div><button class="btn" id="btnCopyCode" style="width:100%">📋 CODE COPY KARO</button></div>
@@ -394,7 +394,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 <li>The host opens <strong>Online Dhamaka</strong> and presses "Room Banao" (create room).</li>
 <li>The game shows a <strong>5-letter room code</strong>. The host shares this code with a friend, for example on WhatsApp.</li>
 <li>The friend opens the same Campus Clash page, goes to Online Dhamaka and enters the code to join the room as Player 2.</li>
-<li>The host (Player 1) picks the fighters and the arena for both players, and the match runs live between the two browsers over WebRTC (PeerJS). Both players must keep the page open during the match — closing the tab ends the match.</li>
+<li>The host (Player 1) and the guest (Player 2) each pick their own fighter on the character-select screen; the host picks the arena. The match then runs live between the two browsers over WebRTC (PeerJS). Both players must keep the page open during the match — closing the tab ends the match.</li>
 </ol>
 <p>Online play needs no account and no sign-up; the connection is made directly between the two browsers after a handshake through the free PeerJS server.</p>
 <h3>Controls</h3>
@@ -404,7 +404,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 <h3>Frequently asked questions</h3>
 <div class="faqItem"><h3>What is Campus Clash?</h3><p>Campus Clash is a free 2.5D comedy fighting game for the web browser, set in a fictional Indian college in Greater Noida. You fight as college archetypes — students, teachers and campus staff — across 8 arenas, filling an Attendance Meter to unleash a super move that deals 30% damage.</p></div>
 <div class="faqItem"><h3>Is Campus Clash free to play?</h3><p>Yes. Campus Clash is completely free to play in a web browser. There is no download, no installation and no sign-up or account required.</p></div>
-<div class="faqItem"><h3>How do I play Campus Clash with a friend online?</h3><p>Open the Online Dhamaka mode and create a room — you get a 5-letter room code. Share the code with your friend; they open the same page, enter the code, and join your room. The host picks the fighters and arena, and the match runs live between both browsers over WebRTC (PeerJS) while both players keep the page open.</p></div>
+<div class="faqItem"><h3>How do I play Campus Clash with a friend online?</h3><p>Open the Online Dhamaka mode and create a room — you get a 5-letter room code. Share the code with your friend; they open the same page, enter the code, and join your room. Each player then picks their own fighter, the host picks the arena, and the match runs live between both browsers over WebRTC (PeerJS) while both players keep the page open.</p></div>
 <div class="faqItem"><h3>Which fighters are in Campus Clash?</h3><p>Campus Clash has 11 fighters: Adarsh (super: Deploy Kar Diya!), Topper (Notes Tornado), Backbencher (Proxy Punch), Warden Sir (Gate Band 10 Baje!), Canteen Bhaiya (Maggi Missile), Lab Madam (6 Se 9!), AI Dog (Viral Bark Blast), CR (Notice Forward Blast), Vidya (Main Jaungi, Meri Marzi Hai!), Eventwala (Sab Event Mein Aao!) and the final boss Placement Cell Sir (CTC Mirage). Adarsh is also playable as Adarsh 3D, a 3D-model trial version. AI Dog unlocks with a 3-win streak against the CPU, and Placement Cell Sir unlocks by clearing Semester Mode.</p></div>
 <div class="faqItem"><h3>Do I need to download anything to play Campus Clash?</h3><p>No. Campus Clash runs entirely in the web browser using WebGL (Three.js) on desktop and mobile. Just open the page and press ENTER — DHAMAAKA SHURU KARO to play.</p></div>
 <div class="faqItem"><h3>Who made Campus Clash?</h3><p>Campus Clash was created by Kirti Vardhan Singh, a B.Tech Information Technology student (batch 2024–28) at Galgotias College of Engineering and Technology (GCET), Greater Noida, India. All characters are fictional college archetypes in a work of satire; Campus Clash is not an official game of any college.</p></div>
@@ -1810,7 +1810,7 @@ var keys={},touchState={};
 /* ENTER & SPACE = har menu me OK-key • SPACE = P1 SPECIAL, ENTER = PAUSE (fight me) */
 function confirmSelectKey(){
  /* Enter/Space = wahi ✔ YAHI CHUNO button — alag raasta nahi */
- if(selPhase==='ready'){if(pick1&&pick2)startMatch();return;}
+ if(selPhase==='ready'){if(mode==='online'&&typeof NET!=='undefined'&&NET.role==='guest')return; /* v22: guest match shuru NAHI kar sakta — host hi karega (netGuestStart seedha startMatch bulata hai, ye guard wahan NAHI hai) */ if(pick1&&pick2)startMatch();return;}
  var cb=document.getElementById('btnConfirmPick');if(cb&&!cb.disabled)cb.click();else lockCurrentPick();
 }
 function menuGo(){
@@ -1868,19 +1868,55 @@ function renderSelect(){
  var grid=document.getElementById('charGrid');grid.innerHTML='';
  FIGHTERS.forEach(function(fd){var b=document.createElement('button');b.dataset.fid=fd.id;b.className='fcard'+(isLocked(fd)?' locked':'')+((selPhase!=='ready'&&fd.id===previewId)?' hl':'')+((fd.id===pick1||fd.id===pick2)?' lk':'');b.innerHTML=(ART[fd.id]?'<span class="artWrap"><img src="'+ART[fd.id].idle+'" alt="'+fd.name+' — '+fd.title+', fighter in Campus Clash, the free online college fighting game"></span>':'')+'<h3>'+fd.name+(isLocked(fd)?' 🔒':'')+'<span class="lockBadge">LOCKED ✔</span></h3><p>'+(isLocked(fd)?(fd.id==='aidog'?'3-win streak se challenge khulega!':'Semester Mode clear karo!'):fd.title)+'</p><p style="font-weight:800;color:#B03030">⚡ '+fd.special+'</p>';b.addEventListener('mouseenter',function(){sndUI();});b.addEventListener('click',function(){ac();sndUI();previewOnly(fd);});grid.appendChild(b);});
  var rb=document.createElement('button');rb.className='fcard';rb.innerHTML='<span class="artWrap" style="font-size:64px;align-items:center">🎲</span><h3>RANDOM</h3><p>Kismat par chhod do — slot-machine ghumega!</p><p style="font-weight:800;color:#B03030">⚡ Surprise!</p>';rb.addEventListener('click',function(){ac();rollRandom();});grid.appendChild(rb);
- var ag=document.getElementById('arenaSeg');ag.innerHTML='';ARENAS.forEach(function(a){var b=document.createElement('button');b.className='acard'+(arenaId===a.id?' sel':'');b.innerHTML='<span class="athumb" style="background:linear-gradient(180deg,'+a.sky+' 62%,'+a.grd+' 62%);--ag:'+a.grd+'"><span>'+a.icon+'</span></span><h4>'+a.name+'</h4><p>'+a.desc+'</p>';b.setAttribute('aria-label','Arena: '+a.name);b.addEventListener('click',function(){arenaId=a.id;setArenaTicker(arenaId);if(glState==='ok')buildArena(arenaId);renderSelect();});ag.appendChild(b);});
- document.getElementById('questStrip').textContent=save.challengePending?'📺 AI Dog CHALLENGE khula hai — koi bhi fighter chuno, ladai Auditorium me AI Dog se hogi!':('🏆 Streak: '+save.streak+'/3 — 3 jeet = AI Dog challenge! • Semester: Stage '+(save.semesterStage+1)+'/8');
+ var ag=document.getElementById('arenaSeg');ag.innerHTML='';ARENAS.forEach(function(a){var b=document.createElement('button');b.className='acard'+(arenaId===a.id?' sel':'');b.innerHTML='<span class="athumb" style="background:linear-gradient(180deg,'+a.sky+' 62%,'+a.grd+' 62%);--ag:'+a.grd+'"><span>'+a.icon+'</span></span><h4>'+a.name+'</h4><p>'+a.desc+'</p>';b.setAttribute('aria-label','Arena: '+a.name);b.addEventListener('click',function(){if(mode==='online'&&typeof NET!=='undefined'&&NET.role==='guest'){showPop('📍 Arena host chunta hai!');return;} /* v22: online me arena sirf HOST chun sakta hai */ arenaId=a.id;setArenaTicker(arenaId);if(glState==='ok')buildArena(arenaId);renderSelect();});ag.appendChild(b);});
+ document.getElementById('questStrip').textContent=(mode==='online'&&typeof NET!=='undefined'&&NET.role)?(NET.role==='host'?'🌐 ONLINE — tum HOST (P1) ho. Dono apna-apna fighter chunege!':'🌐 ONLINE — tum GUEST (P2) ho. Apna fighter khud chuno!'):(save.challengePending?'📺 AI Dog CHALLENGE khula hai — koi bhi fighter chuno, ladai Auditorium me AI Dog se hogi!':('🏆 Streak: '+save.streak+'/3 — 3 jeet = AI Dog challenge! • Semester: Stage '+(save.semesterStage+1)+'/8'));
  updatePreview();
 }
 var rollTimer=null;
 function rollRandom(){ /* 🎲 slot-machine: ~600ms portraits ghumte hain, phir ek unlocked fighter par rukta hai */
+ if(mode==='online'&&typeof NET!=='undefined'&&NET.myPick)return; /* v22: online lock ke baad random bhi band */
  var pool=FIGHTERS.filter(function(c){return !isLocked(c);});if(!pool.length)return;var n=0;sndStamp();
  clearInterval(rollTimer);rollTimer=setInterval(function(){n++;previewId=pool[Math.floor(Math.random()*pool.length)].id;sndUI();updatePreview();refreshGridStates();
   if(n>=9){clearInterval(rollTimer);sndStamp();showPop('🎲 Kismat ne '+F(previewId).name+' chuna! Pasand hai to ✔ YAHI CHUNO dabao.',1800);}},70);
 }
 function previewHTML(fd,side,locked){if(!fd)return '<b>'+side+'</b><p>Chuno…</p>';var hp=Math.round(fd.hp/1080*100),sp=Math.round(fd.speed/3.4*100),rg=Math.round(fd.reach/1.35*100);function row(l,v,c){return '<div class="barRow"><span>'+l+'</span><span class="sbar"><i style="width:'+v+'%;background:'+c+'"></i></span><span>'+v+'</span></div>';}return (locked?'<span class="prevLocked">🔒 LOCKED ✔</span><br>':'')+(ART[fd.id]?'<div class="prevArt"><img src="'+ART[fd.id].idle+'" alt="'+fd.name+' — '+fd.title+', fighter in Campus Clash, the free online college fighting game"></div>':'')+'<h3 style="margin:2px 0">'+fd.name+'</h3><p style="margin:2px 0;font-size:13px">'+fd.title+'</p>'+row('SPEED',sp,'#2f6fd0')+row('TAQAT',Math.round((fd.pDmg+fd.kDmg)/98*100),'#e8493f')+row('RANGE',rg,'#2E7D32')+'<p style="font-weight:900;color:#B03030;margin:6px 0 2px">⚡ '+fd.special+'</p>'+(fd.sty?'<p style="font-weight:800;color:#2E7D32;margin:2px 0;font-size:12.5px">🎭 STYLE (U): '+fd.sty+'</p>':'')+'<p style="font-size:12px;margin:0">'+fd.sig.join(' • ')+'<br>String: J·J·K / J·K·K</p>';}
 function refreshGridStates(){var grid=document.getElementById('charGrid');if(!grid)return;for(var i=0;i<grid.children.length;i++){var b=grid.children[i],fid=b.dataset?b.dataset.fid:null;if(!fid)continue;b.classList.toggle('hl',selPhase!=='ready'&&fid===previewId);b.classList.toggle('lk',fid===pick1||fid===pick2);}}
+/* ===== v22: ONLINE select — dono apna-apna fighter KHUD lock karte hain.
+   Panels host-centric hain: prev1 = P1 (HOST), prev2 = P2 (GUEST); "mera" panel NET.role se banta hai.
+   pick1/pick2 globals netSyncPicks() se host-centric synced rehte hain. ===== */
+function updatePreviewOnline(){
+ var isHost=NET.role==='host';
+ var lbl1=isHost?'P1 · TUM (HOST)':'P1 · HOST (DOST)';
+ var lbl2=isHost?'P2 · GUEST (DOST)':'P2 · TUM (GUEST)';
+ function sideLbl(l){return '<div style="font-weight:900;margin-bottom:4px">'+l+'</div>';}
+ function waitNote(l){return sideLbl(l)+'<p style="font-size:13px;line-height:1.5">🎭 Dost abhi apna fighter chun raha hai… lock karte hi yahan dikhega!</p>';}
+ var p1h,p2h;
+ if(pick1)p1h=sideLbl(lbl1)+previewHTML(F(pick1),lbl1,true);
+ else if(isHost)p1h=sideLbl(lbl1)+previewHTML(F(previewId),lbl1,false);
+ else p1h=waitNote(lbl1);
+ if(pick2)p2h=sideLbl(lbl2)+previewHTML(F(pick2),lbl2,true);
+ else if(!isHost)p2h=sideLbl(lbl2)+previewHTML(F(previewId),lbl2,false);
+ else p2h=waitNote(lbl2);
+ document.getElementById('prev1').innerHTML=p1h;
+ document.getElementById('prev2').innerHTML=p2h;
+ var cb=document.getElementById('btnConfirmPick'),hint=document.getElementById('pickHint');
+ if(!NET.myPick){
+  var pfd=F(previewId),lkd=isLocked(pfd);
+  cb.disabled=lkd;cb.textContent=lkd?'🔒 YE FIGHTER LOCKED HAI':('✔ YAHI CHUNO — '+pfd.name);
+  hint.textContent=NET.foePick?'🎭 Dost ne apna fighter LOCK kar diya hai! Ab tum apna chuno — card = PREVIEW, ✔ YAHI CHUNO = LOCK.':'🌐 ONLINE — apna fighter chuno: card = sirf PREVIEW, ✔ YAHI CHUNO = LOCK. Dost bhi apna khud chun raha hai!';
+ }else if(!NET.foePick){
+  cb.disabled=true;cb.textContent='✔ LOCKED! Dost ka intezaar… ⏳';
+  hint.textContent='✔ Tumhara fighter LOCKED! Ab dost ke lock ka intezaar hai — wo lock kare to aage badhega.';
+ }else{
+  cb.disabled=true;
+  cb.textContent=isHost?'✔ DONO LOCKED! Arena chuno → LADHAI SHURU ⚔️':'✔ DONO LOCKED! Host ladai shuru karega… 🥊';
+  hint.textContent=isHost?'✔ Dono fighter LOCKED! Arena chun lo, phir neeche LADHAI SHURU ⚔️ dabao.':'✔ Dono fighter LOCKED! Host arena chun kar ladai shuru karega — controller pakdo, taiyaar raho!';
+ }
+ document.getElementById('btnFightStart').disabled=!(isHost&&pick1&&pick2); /* LADHAI SHURU sirf HOST, wo bhi dono lock ke baad */
+ refreshGridStates();
+}
 function updatePreview(){
+ if(mode==='online'&&typeof NET!=='undefined'&&NET.role){updatePreviewOnline();return;}
  var oppLbl=mode==='2p'?'P2':(mode==='online'?'P2 · DOST':'OPPONENT');
  document.getElementById('prev1').innerHTML=pick1?previewHTML(F(pick1),'P1',true):previewHTML(F(previewId),'P1',false);
  if(pick2)document.getElementById('prev2').innerHTML=previewHTML(F(pick2),oppLbl,true);
@@ -1894,9 +1930,20 @@ function updatePreview(){
  refreshGridStates();
 }
 /* Card click / keyboard highlight = SIRF preview. Lock sirf ✔ YAHI CHUNO (ya Enter/Space = wahi button) se hota hai. */
-function previewOnly(fd){if(selPhase==='ready')return;if(rollTimer){clearInterval(rollTimer);rollTimer=null;}previewId=fd.id;if(isLocked(fd))showPop(fd.id==='aidog'?'🔒 Ye fighter locked hai — 3-win streak se challenge khulega!':'🔒 Ye fighter locked hai — Semester Mode clear karo!');updatePreview();}
+function previewOnly(fd){if(selPhase==='ready')return;if(mode==='online'&&typeof NET!=='undefined'&&NET.myPick)return; /* v22: online me apna lock FINAL hai — preview badalna band */ if(rollTimer){clearInterval(rollTimer);rollTimer=null;}previewId=fd.id;if(isLocked(fd))showPop(fd.id==='aidog'?'🔒 Ye fighter locked hai — 3-win streak se challenge khulega!':'🔒 Ye fighter locked hai — Semester Mode clear karo!');updatePreview();}
 function firstUnlockedId(){for(var i=0;i<FIGHTERS.length;i++)if(!isLocked(FIGHTERS[i]))return FIGHTERS[i].id;return 'adarsh';}
 function lockCurrentPick(){
+ if(mode==='online'&&typeof NET!=='undefined'&&NET.role){ /* v22 ONLINE: sirf APNA fighter lock hota hai — semester mirror-swap yahan NAHI chalta, mirror match (dono ek hi fighter) bhi chalega */
+  if(NET.myPick)return;
+  var ofd=F(previewId);if(!ofd||isLocked(ofd)){showPop('🔒 Pehle koi unlocked fighter preview karo!');return;}
+  NET.myPick=ofd.id;
+  if(NET.role==='host')pick1=ofd.id;else pick2=ofd.id;
+  netSend({t:'pick',id:ofd.id});
+  selPhase=NET.foePick?'ready':'wait';
+  sndStamp();renderSelect();
+  showPop('✔ '+ofd.name+' LOCKED! '+(NET.foePick?'Dono taiyaar — ladai bas shuru hone wali hai!':'Dost ke lock ka intezaar…'),1800);
+  return;
+ }
  if(selPhase==='ready')return;
  var fd=F(previewId);if(!fd||isLocked(fd)){showPop('🔒 Pehle koi unlocked fighter preview karo!');return;}
  if(selPhase==='p1'){
@@ -1915,12 +1962,13 @@ function lockCurrentPick(){
  }
  sndStamp();renderSelect();
 }
-function moveHighlight(dx,dy){if(selPhase==='ready')return;var ids=FIGHTERS.map(function(c){return c.id;});var idx=ids.indexOf(previewId);if(idx<0)idx=0;var n=ids.length;idx=((idx+dx+dy*3)%n+n)%n;previewId=ids[idx];sndUI();updatePreview();}
+function moveHighlight(dx,dy){if(selPhase==='ready')return;if(mode==='online'&&typeof NET!=='undefined'&&NET.myPick)return; /* v22: online lock ke baad highlight bhi band */ var ids=FIGHTERS.map(function(c){return c.id;});var idx=ids.indexOf(previewId);if(idx<0)idx=0;var n=ids.length;idx=((idx+dx+dy*3)%n+n)%n;previewId=ids[idx];sndUI();updatePreview();}
 function beginSelect(m){mode=m;pick1=null;pick2=null;pickStage=1;selPhase='p1';previewId='adarsh';dogeshActive=false;challengeActive=false;renderSelect();show('select');}
 function startMatch(){
  loadModel3D();
  if(mode==='online'&&typeof NET!=='undefined'&&NET.role){ /* ONLINE: host guest ko match ki khabar bhejta hai; dono taraf net HUD + rematch state reset */
   if(NET.role==='host')netSend({t:'start',p1:pick1,p2:pick2,arena:arenaId});
+  NET.selActive=false; /* v22: select phase khatm — guest par bhi (netGuestStart yahin se aata hai) */
   NET.hostWant=false;NET.guestWant=false;
   var rb=document.getElementById('btnRematch');rb.disabled=false;rb.textContent='🔁 PHIR SE LADHO';
   document.getElementById('netHud').style.display='block';
@@ -2335,7 +2383,7 @@ document.getElementById('mode2p').addEventListener('click',function(){beginSelec
 document.getElementById('modeOnline').addEventListener('click',function(){openOnline();});
 document.getElementById('diffSeg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;difficulty=b.dataset.d;this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});});
 document.getElementById('btnConfirmPick').addEventListener('click',function(){ac();lockCurrentPick();});
-document.getElementById('btnFightStart').addEventListener('click',function(){if(pick2==='boss')bossActive=true;startMatch();});
+document.getElementById('btnFightStart').addEventListener('click',function(){if(mode==='online'&&typeof NET!=='undefined'&&NET.role==='guest')return; /* v22: online me LADHAI SHURU sirf HOST ka haq hai */ if(pick2==='boss')bossActive=true;startMatch();});
 document.getElementById('btnHowFight').addEventListener('click',function(){beginSelect('cpu');});
 function togglePause(){if(!screens.fight.classList.contains('on'))return;var m=document.getElementById('pauseModal');m.classList.toggle('on');if(m.classList.contains('on'))osc('sine',1800,null,0.05,0.08);}
 document.getElementById('btnPause').addEventListener('click',togglePause);
@@ -2397,10 +2445,23 @@ var loadIv=setInterval(function(){
 var NET={peer:null,conn:null,role:'',code:'',connected:false,joining:false,left:false,retried:false,
  inp2:emptyInp(),lastInpRx:0,lastInpTx:0,lastPacked:'',
  snap:null,snapPrev:null,snapRx:0,snapPrevRx:0,lastPhase:'',evQ:[],evAcc:[],tickSend:0,
- pingMs:null,lastPingTx:0,hostWant:false,guestWant:false,joinTimer:null,hostTimer:null,openTimer:null,hostTries:0};
-/* Explicit PeerJS options — cloud broker default hi hai, par ICE servers (STUN + PeerJS ka apna TURN relay)
-   saaf taur par diye hain taaki college/mobile NAT ke peeche bhi data-channel ban jaye. */
-var NET_PEER_OPTS={debug:0,config:{iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'},{urls:'turn:0.peerjs.com:3478',username:'peerjs',credential:'peerjsp'}]}};
+ pingMs:null,lastPingTx:0,hostWant:false,guestWant:false,joinTimer:null,hostTimer:null,openTimer:null,hostTries:0,
+ dead:false,wasConnected:false,lastRx:0,hbTimer:null,recovering:false,reTries:0,reTimer:null,graceTimer:null,
+ myPick:null,foePick:null,selActive:false}; /* v22: online select — mera locked fighter, dost ka locked fighter, select phase zinda hai ya nahi */
+/* Explicit PeerJS options — cloud broker default hi hai, par ICE servers saaf taur par diye hain.
+   v21 NETCODE HARDENING: Jio/Airtel jaise mobile networks CGNAT / symmetric NAT ke peeche hote hain —
+   wahan seedha phone-to-phone raasta (STUN) aksar banta hi nahi ya beech me mar jata hai, isliye
+   Metered OpenRelay ke FREE public TURN relay servers (documented public credentials) jode hain:
+   direct raasta fail ho to traffic relay se ghumkar aata hai, connection TUTTA nahi. */
+var NET_PEER_OPTS={debug:0,config:{iceServers:[
+ {urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'},
+ {urls:'turn:0.peerjs.com:3478',username:'peerjs',credential:'peerjsp'},
+ {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
+ {urls:'turn:openrelay.metered.ca:80?transport=tcp',username:'openrelayproject',credential:'openrelayproject'},
+ {urls:'turn:openrelay.metered.ca:443',username:'openrelayproject',credential:'openrelayproject'},
+ {urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'},
+ {urls:'turns:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'}
+]}};
 var NET_ALPHABET='ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 function netGenCode(){var s='';for(var i=0;i<5;i++)s+=NET_ALPHABET[Math.floor(Math.random()*NET_ALPHABET.length)];return s;}
 function r3(v){return Math.round(v*1000)/1000;}
@@ -2419,11 +2480,15 @@ function netResetUI(){
 }
 function netTeardown(){
  clearTimeout(NET.joinTimer);clearTimeout(NET.hostTimer);clearTimeout(NET.openTimer);clearTimeout(NET.joinNoteTimer);
+ clearTimeout(NET.reTimer);clearTimeout(NET.graceTimer);clearInterval(NET.hbTimer);
+ NET.dead=true; /* jaan-boojh kar band — 'disconnected' handler ab reconnect NA kare */
  try{if(NET.conn)NET.conn.close();}catch(e){}
  try{if(NET.peer)NET.peer.destroy();}catch(e){}
  NET.peer=null;NET.conn=null;NET.connected=false;NET.joining=false;NET.role='';NET.code='';
  NET.inp2=emptyInp();NET.snap=null;NET.snapPrev=null;NET.evQ.length=0;NET.evAcc.length=0;
  NET.hostWant=false;NET.guestWant=false;NET.pingMs=null;NET.lastPhase='';
+ NET.wasConnected=false;NET.lastRx=0;NET.recovering=false;NET.reTries=0;
+ NET.myPick=null;NET.foePick=null;NET.selActive=false; /* v22: select state bhi saaf (netPeerGone/netLeave yahin se aate hain) */
  netResetUI();
 }
 function netLeave(notify){
@@ -2461,29 +2526,147 @@ function netPeerError(err){
  if(t==='invalid-id'||t==='invalid-key')return;
  netLine('🌐 Connection me gadbad ('+t+') — phir try karo. Offline modes full chalte hain!');
 }
+/* ===== v21: ICE failure surfacing — underlying RTCPeerConnection 'failed' ho to silent hang nahi,
+   saaf Hinglish status + reconnect raasta (netChannelDead). PeerJS DataConnection.peerConnection se milta hai. ===== */
+function netHookIce(c){
+ try{
+  var pc=c.peerConnection;if(!pc||pc._ccHooked)return;pc._ccHooked=true;
+  pc.oniceconnectionstatechange=function(){
+   var st=pc.iceConnectionState;
+   if(st==='failed'){netLine('📶 Connection atak gaya — dobara judne ki koshish…');netChannelDead('ice');}
+   else if(st==='disconnected'){netLine('📶 Connection dheela pad gaya hai — khud sambhalne ki koshish ho rahi hai, page khula rakho…');}
+  };
+  pc.onconnectionstatechange=function(){if(pc.connectionState==='failed'){netLine('📶 Connection atak gaya — dobara judne ki koshish…');netChannelDead('ice');}};
+ }catch(e){}
+}
+/* ===== v21: HEARTBEAT — har 2 sec ping (dusri taraf pong deti hai, netOnData me pehle se hai);
+   ~3 missed beats (~6.5 sec) ki khamoshi = half-open connection. Freeze ki jagah ghoshna + reconnect. ===== */
+function netHbStart(){
+ clearInterval(NET.hbTimer);
+ NET.hbTimer=setInterval(function(){
+  if(NET.left||!NET.peer||NET.recovering)return;
+  var now=performance.now();
+  if(NET.conn&&NET.conn.open&&now-NET.lastPingTx>2000){NET.lastPingTx=now;netSend({t:'ping',ts:now});}
+  if(NET.connected&&NET.lastRx&&now-NET.lastRx>6500)netChannelDead('heartbeat');
+ },1000);
+}
+/* ===== v21: channel marne ka EK raasta — close/error/ICE-fail/heartbeat teeno yahin aate hain.
+   HOST: 20 sec GRACE — room + match state zinda, dost dobara jude to fresh snapshot se resync.
+   GUEST: usi room code par 3 bounded reconnect tries (~20 sec). Dono exhaust hon tabhi netPeerGone. ===== */
+function netChannelDead(why){
+ if(NET.left||NET.recovering)return;
+ if(!NET.connected&&!NET.wasConnected)return; /* kabhi juda hi nahi tha — join/host ke purane timeout raaste hi sahi hain */
+ NET.connected=false;NET.recovering=true;
+ try{if(NET.conn)NET.conn.close();}catch(e){}
+ NET.conn=null;
+ if(NET.role==='host'){
+  netSetStatus('host','📶 Dost ka connection atak gaya — 20 sec ka grace chal raha hai. Dost dobara jude to match wahin se aage badhega — page khula rakho!');
+  netLine('📶 Connection atak gaya — dost ke dobara judne ka intezaar (20 sec grace)… Room khula hai, CODE: '+NET.code);
+  showPop('📶 Dost ka net atak gaya — dobara judne ka intezaar…',2800);
+  clearTimeout(NET.graceTimer);
+  NET.graceTimer=setTimeout(function(){NET.recovering=false;netPeerGone();},20000);
+ }else if(NET.role==='guest'){
+  NET.reTries=0;
+  netSetStatus('guest','📶 Connection atak gaya — dobara judne ki koshish ho rahi hai… page khula rakho!');
+  netLine('📶 Connection atak gaya — dobara judne ki koshish…');
+  showPop('📶 Connection atak gaya — dobara judne ki koshish…',2800);
+  netGuestRetry();
+ }
+}
+function netGuestRetry(){
+ if(NET.left||NET.role!=='guest'||!NET.recovering)return;
+ NET.reTries++;
+ if(NET.reTries>3){NET.recovering=false;netPeerGone();return;}
+ netSetStatus('guest','📶 Dobara judne ki koshish '+NET.reTries+'/3 — room '+NET.code+' par phir khat-khat… page khula rakho!');
+ netLine('📶 Connection atak gaya — dobara judne ki koshish '+NET.reTries+'/3…');
+ clearTimeout(NET.reTimer);
+ NET.reTimer=setTimeout(function(){
+  if(NET.connected||NET.left)return; /* jud gaya — open handler ne sambhal liya */
+  try{if(NET.conn)NET.conn.close();}catch(e){}
+  NET.conn=null;
+  clearTimeout(NET.reTimer);NET.reTimer=setTimeout(netGuestRetry,2000);
+ },5000);
+ var dialed=false;
+ function dial(){
+  if(dialed||NET.left||!NET.recovering||NET.connected)return;dialed=true;
+  try{var c=NET.peer.connect('campusclash-'+NET.code.toLowerCase(),{reliable:true});if(c)netBindConn(c);}
+  catch(e){}
+ }
+ var p=NET.peer;
+ if(p&&!p.destroyed&&!p.disconnected){dial();return;}
+ if(p&&!p.destroyed){
+  /* broker se toota hua peer — reconnect karo, 'open' aate hi dial */
+  p.on('open',function(){dial();});
+  try{p.reconnect();}catch(e){dial();}
+  return;
+ }
+ /* peer hi mar gaya — naya peer banao, open par dial */
+ try{p=new Peer(NET_PEER_OPTS);}catch(e){return;}
+ NET.peer=p;NET.dead=false;
+ p.on('open',function(){if(NET.peer===p)dial();});
+ p.on('error',function(err){if(NET.peer===p)netPeerError(err);});
+ p.on('disconnected',function(){if(NET.peer===p&&!NET.dead){try{p.reconnect();}catch(e){}}});
+}
 function netBindConn(c){
  NET.conn=c;
  var opened=false;
+ netHookIce(c);
  c.on('open',function(){
   opened=true;
-  NET.connected=true;NET.joining=false;clearTimeout(NET.joinTimer);clearTimeout(NET.openTimer);clearTimeout(NET.joinNoteTimer);
+  var wasRecovering=NET.recovering;
+  NET.connected=true;NET.wasConnected=true;NET.joining=false;NET.recovering=false;NET.reTries=0;
+  NET.lastRx=performance.now();
+  clearTimeout(NET.joinTimer);clearTimeout(NET.openTimer);clearTimeout(NET.joinNoteTimer);clearTimeout(NET.reTimer);clearTimeout(NET.graceTimer);
+  netHookIce(c);netHbStart();
   var jb=document.getElementById('btnJoinRoom');jb.disabled=false;jb.textContent='🚪 ROOM ME GHUSO';
   if(NET.role==='host'){
-   netSetStatus('host','🎉 DOST AA GAYA! Neeche wale button se fighter chuno — tum HOST ho, dono ke fighter + arena tum hi select karoge.');
-   netLine('✅ Guest jud gaya! Fighter chuno — guest tumhare chune hue P2 fighter se ladega.');
-   document.getElementById('btnNetSelect').style.display='block';
-   netSend({t:'welcome'});
-   showPop('🎉 Dost jud gaya! Ab fighter chuno!',2200);
+   if(wasRecovering&&NET.selActive){
+    /* v22 RESYNC (select phase beech me tha): 'selecting' dobara + apna lock bhi, taaki guest wahin se aage badhe */
+    netSetStatus('host','🎉 Dost dobara jud gaya — select wahin se aage!');
+    netLine('✅ Dost dobara jud gaya — select wahin se aage badhega!');
+    netSend({t:'welcome'});
+    netSend({t:'selecting'});
+    if(NET.myPick)netSend({t:'pick',id:NET.myPick});
+    showPop('🎉 Dost dobara jud gaya — select wahin se aage!',2400);
+   }else if(wasRecovering&&sim&&!sim.isView&&(screens.fight.classList.contains('on')||document.getElementById('vsModal').classList.contains('on'))){
+    /* RESYNC: match beech me tha — 'start' dobara + full fresh snapshot, ladai wahin se aage */
+    netSetStatus('host','🎉 Dost dobara jud gaya! Match wahin se aage — fresh snapshot bhej diya hai.');
+    netLine('✅ Dost dobara jud gaya — match resync ho gaya, ladai wahin se aage!');
+    netSend({t:'welcome'});
+    netSend({t:'start',p1:pick1,p2:pick2,arena:arenaId});
+    netSend({t:'snap',s:netSnap(),evs:[]});
+    showPop('🎉 Dost dobara jud gaya — match wahin se aage!',2400);
+   }else{
+    netSetStatus('host','🎉 DOST AA GAYA! Neeche wale button se select kholo — dono apna-apna fighter KHUD chunege; arena tum (HOST) chunoge.');
+    netLine('✅ Guest jud gaya! Select kholo — dono apna-apna fighter khud chunege.');
+    document.getElementById('btnNetSelect').style.display='block';
+    netSend({t:'welcome'});
+    showPop('🎉 Dost jud gaya! Ab select kholo — dono apna fighter chunege!',2200);
+   }
   }else{
-   netSetStatus('guest','🎉 HOST SE JUD GAYE! Host ab dono ke fighter chun raha hai… tum P2 ho. Chai piyo ☕');
-   netLine('✅ Connection ban gaya! Host ke LADHAI SHURU karte hi match yahan apne aap khul jayega — page khula rakho.');
+   if(wasRecovering&&NET.selActive){
+    /* v22: select phase beech me tha — picks mehfooz rakh kar select me wapas, apna lock host ko dobara bhejo taaki wo resync ho jaye */
+    netEnterSelect();
+    if(NET.myPick)netSend({t:'pick',id:NET.myPick});
+    netSetStatus('guest','🎉 DOBARA JUD GAYE! Select wahin se aage — tumhara lock mehfooz hai!');
+    netLine('✅ Dobara jud gaye! Select wahin se aage badhega — page khula rakho.');
+    showPop('🎉 Dobara jud gaye — select wahin se aage!',2200);
+   }else if(wasRecovering){
+    netSetStatus('guest','🎉 DOBARA JUD GAYE! Host se fresh snapshot aa raha hai — match wahin se aage badhega!');
+    netLine('✅ Dobara jud gaye! Match resync ho raha hai — page khula rakho.');
+    showPop('🎉 Dobara jud gaye — match wahin se aage!',2200);
+   }else{
+    netSetStatus('guest','🎉 HOST SE JUD GAYE! Host select kholega — phir tum BHI apna fighter chunoge! Tum P2 (GUEST) ho.');
+    netLine('✅ Connection ban gaya! Host select khole to tum bhi apna fighter chunoge — dono ke lock ke baad ladai yahan apne aap khul jayegi. Page khula rakho.');
+    showPop('🎉 Host se jud gaye!',2000);
+   }
    netSend({t:'hello'});
-   showPop('🎉 Host se jud gaye!',2000);
   }
  });
  c.on('data',netOnData);
  /* Guest ka connection khulne se PEHLE hi toot jaye (uska net kharab / ICE fail) to HOST ka room nahi marna chahiye —
-    sirf wo khaali slot saaf karo, code waisa ka waisa, dost dobara try kar sakta hai. Asli disconnect (khulne ke baad) par purana netPeerGone hi chalega. */
+    sirf wo khaali slot saaf karo, code waisa ka waisa, dost dobara try kar sakta hai. Asli disconnect (khulne ke baad)
+    par ab seedha ant nahi — pehle grace/reconnect raasta (netChannelDead), exhaust ho tab netPeerGone. */
  function deadGuestSlot(){
   if(NET.role==='host'&&!opened&&NET.conn===c&&!NET.connected){
    NET.conn=null;
@@ -2493,8 +2676,8 @@ function netBindConn(c){
   }
   return false;
  }
- c.on('close',function(){if(!deadGuestSlot())netPeerGone();});
- c.on('error',function(){if(!deadGuestSlot())netPeerGone();});
+ c.on('close',function(){if(!deadGuestSlot())netChannelDead('close');});
+ c.on('error',function(){if(!deadGuestSlot())netChannelDead('error');});
 }
 /* Room-fail ka saaf ant — peer band, button wapas, wajah status me. (Pehle: koi timeout hi nahi tha,
    broker se haath na mile to "Room ban raha hai…" hamesha ke liye atka rehta tha aur code kabhi dikhta hi nahi tha.) */
@@ -2524,7 +2707,7 @@ function netWireHostPeer(){
  var p=null,opened=false;
  try{p=new Peer('campusclash-'+NET.code.toLowerCase(),NET_PEER_OPTS);}
  catch(e){netHostFail();return;}
- NET.peer=p;
+ NET.peer=p;NET.dead=false;
  clearTimeout(NET.hostTimer);
  NET.hostTimer=setTimeout(function(){if(!opened&&NET.peer===p)netHostAttemptFailed();},12000);
  p.on('open',function(){
@@ -2547,7 +2730,9 @@ function netWireHostPeer(){
   if(!opened&&err&&(err.type==='network'||err.type==='server-error'||err.type==='socket-error'||err.type==='socket-closed')){netHostAttemptFailed();return;}
   netPeerError(err);
  });
- p.on('disconnected',function(){if(NET.peer===p){try{p.reconnect();}catch(e){}}});
+ /* Broker socket idle me girta hai (free PeerJS cloud) — 'disconnected' par reconnect, par jaan-boojh kar
+    destroy kiye hue peer par NAHI (NET.dead / NET.peer badal chuka ho to purana handler chup rahe). */
+ p.on('disconnected',function(){if(NET.peer===p&&!NET.dead){try{p.reconnect();}catch(e){}}});
 }
 function netHost(){
  if(!window.Peer){netLine('❌ Online library (PeerJS) load nahi hui — net check karke page reload karo. Ghabrao mat: VS CPU, 2-Player, Semester aur Practice — sab offline modes full chalte hain!');return;}
@@ -2568,7 +2753,7 @@ function netJoin(){
  var p=null;
  try{p=new Peer(NET_PEER_OPTS);}
  catch(e){jb.disabled=false;jb.textContent='🚪 ROOM ME GHUSO';netLine('❌ Connection shuru nahi hua — page reload karke phir try karo.');return;}
- NET.peer=p;
+ NET.peer=p;NET.dead=false;
  /* Broker tak pahunchne ka bhi timeout — pehle sirf host-join ka timer tha, apna peer hi na khule to guest bhi hamesha atka rehta tha */
  clearTimeout(NET.openTimer);
  NET.openTimer=setTimeout(function(){
@@ -2590,7 +2775,8 @@ function netJoin(){
   },20000);
  });
  p.on('error',function(err){if(NET.peer===p)netPeerError(err);});
- p.on('disconnected',function(){if(NET.peer===p){try{p.reconnect();}catch(e){}}});
+ /* Broker 'disconnected' → reconnect (host wala hi guard: jaan-boojh kar destroy hue peer par loop nahi) */
+ p.on('disconnected',function(){if(NET.peer===p&&!NET.dead){try{p.reconnect();}catch(e){}}});
 }
 function openOnline(){
  semesterActive=false;practiceActive=false;bossActive=false;
@@ -2666,6 +2852,47 @@ function netGuestFrame(){
  netGuestApplySnap(now);
  if(NET.evQ.length&&sim&&sim.isView){var evs=[];while(NET.evQ.length){var re=netRehEv(NET.evQ.shift());if(re)evs.push(re);}if(evs.length)handleEvents(evs);}
 }
+/* ===== v22: ONLINE SELECT — dono apna-apna fighter KHUD chunte hain =====
+   NET.myPick = mera locked fighter, NET.foePick = dost ka locked fighter, NET.selActive = select phase chal raha hai.
+   pick1/pick2 globals hamesha HOST-CENTRIC rehte hain (P1 = host, P2 = guest) taaki grid lock-badges,
+   VS splash aur startMatch ka {t:'start'} payload bilkul purane jaise chalein. Mirror match (dono ek hi
+   fighter) par koi rok NAHI hai — Sim identical P1/P2 ids pehle se sambhalta hai (local 2P). */
+function netSyncPicks(){
+ if(NET.role==='host'){pick1=NET.myPick;pick2=NET.foePick;}
+ else{pick1=NET.foePick;pick2=NET.myPick;}
+}
+function netEnterSelect(){
+ var keep=NET.selActive&&(NET.myPick||NET.foePick); /* reconnect-resync: purane locks mehfooz rahein */
+ if(!keep){NET.myPick=null;NET.foePick=null;}
+ NET.selActive=true;
+ document.getElementById('resultModal').classList.remove('on');
+ semesterActive=false;practiceActive=false;bossActive=false;
+ beginSelect('online');
+ if(keep){
+  netSyncPicks();
+  if(NET.myPick)previewId=NET.myPick;
+  selPhase=NET.myPick?(NET.foePick?'ready':'wait'):'p1';
+  renderSelect();
+ }
+}
+function netOnPick(id){
+ if(!id||!F(id))return;
+ NET.foePick=id;
+ netSyncPicks();
+ if(NET.myPick)selPhase='ready';
+ if(NET.selActive&&screens.select.classList.contains('on')){
+  renderSelect();
+  showPop('🎭 Dost ne '+F(id).name+' lock kiya!',1800);
+ }
+}
+function netRematchToSelect(){ /* v22: rematch = purane fighters par NAHI — dono PHIR SE apna-apna fighter chunege */
+ NET.hostWant=false;NET.guestWant=false;
+ document.getElementById('resultModal').classList.remove('on');
+ var rb=document.getElementById('btnRematch');rb.disabled=false;rb.textContent='🔁 PHIR SE LADHO';
+ netEnterSelect();
+ netSend({t:'selecting'});
+ showPop('🎭 Rematch pakka! Dono phir se apna-apna fighter chuno!',2000);
+}
 function netGuestStart(d){
  mode='online';semesterActive=false;practiceActive=false;bossActive=d.p2==='boss';
  pick1=d.p1;pick2=d.p2;arenaId=d.arena;
@@ -2686,47 +2913,48 @@ function netGuestToLobby(){
 }
 function netHostToSelect(){
  document.getElementById('resultModal').classList.remove('on');
- netSend({t:'lobby'});
- semesterActive=false;practiceActive=false;bossActive=false;
- beginSelect('online');
- showPop('🎭 Dost ne naye fighter maange — chuno!',1800);
+ netEnterSelect();
+ netSend({t:'selecting'});
+ showPop('🎭 Dost ne naye fighter maange — dono phir se apna-apna chuno!',1800);
 }
 function netResultSelect(){
  document.getElementById('resultModal').classList.remove('on');
- if(NET.role==='host'){netSend({t:'lobby'});semesterActive=false;practiceActive=false;bossActive=false;beginSelect('online');}
- else{netSend({t:'reqSelect'});document.body.classList.remove('cine');sim=null;document.getElementById('netHud').style.display='none';netSetStatus('guest','🎭 Host ko bol diya hai — wo naye fighter chun raha hai… ☕');show('online');}
+ if(NET.role==='host'){netEnterSelect();netSend({t:'selecting'});showPop('🎭 Naye fighter chuno — dost bhi apna khud chunega!',1800);}
+ else{netSend({t:'reqSelect'});document.body.classList.remove('cine');sim=null;document.getElementById('netHud').style.display='none';netSetStatus('guest','🎭 Host ko bol diya hai — select khulte hi tum BHI apna naya fighter chunoge… ☕');show('online');}
 }
 function netAskRematch(){
  var rb=document.getElementById('btnRematch');
  if(NET.role==='host'){
   NET.hostWant=true;netSend({t:'rematchAsk'});
-  if(NET.guestWant){document.getElementById('resultModal').classList.remove('on');startMatch();}
+  if(NET.guestWant){netRematchToSelect();} /* v22: dono taiyaar — purane fighters par rematch NAHI, phir se select */
   else{rb.disabled=true;rb.textContent='⏳ DOST KA JAWAAB AANE DO…';showPop('🔁 Rematch ki arzi bhej di — dost ke HAA ka intezaar hai!',1800);}
  }else{
   NET.guestWant=true;netSend({t:'rematchAsk'});
-  rb.disabled=true;rb.textContent=NET.hostWant?'⏳ HOST MATCH SHURU KAR RAHA HAI…':'⏳ HOST KE JAWAAB KA INTEZAAR…';
+  rb.disabled=true;rb.textContent=NET.hostWant?'⏳ HOST SELECT KHOL RAHA HAI…':'⏳ HOST KE JAWAAB KA INTEZAAR…';
   showPop('🔁 Rematch ki arzi host ko bhej di!',1800);
  }
 }
 function netOnRematchAsk(){
  if(NET.role==='host'){
   NET.guestWant=true;
-  if(NET.hostWant){document.getElementById('resultModal').classList.remove('on');startMatch();}
+  if(NET.hostWant){netRematchToSelect();} /* v22: guest pehle taiyaar tha, host ab — dono phir se select par */
   else if(document.getElementById('resultModal').classList.contains('on')){var rb=document.getElementById('btnRematch');rb.disabled=false;rb.textContent='🔁 DOST TAIYAR HAI — LADHO!';showPop('🔁 Dost rematch chahta hai! PHIR SE LADHO dabao!',2200);}
  }else{
   NET.hostWant=true;
-  if(NET.guestWant){var rb2=document.getElementById('btnRematch');rb2.disabled=true;rb2.textContent='⏳ HOST MATCH SHURU KAR RAHA HAI…';}
+  if(NET.guestWant){var rb2=document.getElementById('btnRematch');rb2.disabled=true;rb2.textContent='⏳ HOST SELECT KHOL RAHA HAI…';}
   else if(document.getElementById('resultModal').classList.contains('on'))showPop('🔁 Host rematch chahta hai! PHIR SE LADHO dabao!',2200);
  }
 }
 function netOnData(d){
  if(!d||!d.t)return;
+ NET.lastRx=performance.now(); /* koi bhi message = connection zinda hai (heartbeat ka saboot) */
  switch(d.t){
   case 'inp': if(NET.role==='host'){NET.inp2=netUnpackInp(d);NET.lastInpRx=performance.now();} break;
   case 'ping': netSend({t:'pong',ts:d.ts}); break;
   case 'pong': NET.pingMs=Math.max(1,Math.round(performance.now()-d.ts));netPingRender(); break;
-  case 'welcome': if(NET.role==='guest')netSetStatus('guest','🎉 HOST SE JUD GAYE! Host ab dono ke fighter chun raha hai… tum P2 ho. Chai piyo ☕'); break;
-  case 'selecting': if(NET.role==='guest'){netSetStatus('guest','🎭 Host fighter chun raha hai… controller pakdo, ladai bas aane wali hai!');netLine('🎭 Host select screen par hai — match jald shuru hoga.');} break;
+  case 'welcome': if(NET.role==='guest')netSetStatus('guest','🎉 HOST SE JUD GAYE! Host select kholega — phir tum BHI apna fighter chunoge! Tum P2 (GUEST) ho.'); break;
+  case 'selecting': if(NET.role==='guest'){netEnterSelect();netSetStatus('guest','🎭 SELECT KHUL GAYA! Apna fighter chuno aur ✔ YAHI CHUNO se lock karo!');netLine('🎭 Select khul gaya — dono apna-apna fighter chun rahe hain. Dono ke lock hote hi host ladai shuru karega!');} break;
+  case 'pick': netOnPick(d.id); break;
   case 'start': if(NET.role==='guest')netGuestStart(d); break;
   case 'snap': if(NET.role==='guest'){NET.snapPrev=NET.snap;NET.snapPrevRx=NET.snapRx;NET.snap=d.s;NET.snapRx=performance.now();if(d.evs&&d.evs.length)for(var i=0;i<d.evs.length;i++)NET.evQ.push(d.evs[i]);} break;
   case 'rematchAsk': netOnRematchAsk(); break;
@@ -2735,6 +2963,17 @@ function netOnData(d){
   case 'bye': netPeerGone(); break;
  }
 }
+/* ===== v21: MOBILE TAB-SWITCH — phone par tab/app badal kar wapas aao to channel ki haalat phir jaancho;
+   match beech me tha aur channel mar chuka hai to wahi reconnect/resync raasta, frozen screen nahi.
+   (Background me timers throttle hote hain — khamoshi ka hisaab wapas aane par heartbeat bhi pakad lega.) ===== */
+document.addEventListener('visibilitychange',function(){
+ if(document.hidden||NET.left||!NET.peer)return;
+ var p=NET.peer;
+ if(p.disconnected&&!p.destroyed&&!NET.dead){try{p.reconnect();}catch(e){}}
+ if(NET.recovering||!NET.wasConnected)return;
+ var inMatch=screens.fight.classList.contains('on')||document.getElementById('vsModal').classList.contains('on');
+ if(inMatch&&(!NET.conn||!NET.conn.open))netChannelDead('visible');
+});
 /* ===== online screen wiring ===== */
 document.getElementById('btnHostRoom').addEventListener('click',function(){ac();netHost();});
 document.getElementById('btnJoinRoom').addEventListener('click',function(){ac();netJoin();});
@@ -2747,9 +2986,9 @@ document.getElementById('btnCopyCode').addEventListener('click',function(){
 });
 document.getElementById('btnNetSelect').addEventListener('click',function(){
  if(!NET.connected){showPop('⏳ Pehle dost ko judne do — code bheja?',1600);return;}
+ netEnterSelect();
  netSend({t:'selecting'});
- semesterActive=false;practiceActive=false;bossActive=false;
- beginSelect('online');
+ if(NET.myPick)netSend({t:'pick',id:NET.myPick}); /* select beech me chhod kar wapas aaye hon to mehfooz lock dost ko bhi dobara bata do */
 });
 document.getElementById('btnOnlineBack').addEventListener('click',function(){netLeave(false);goMenu();});
 document.getElementById('btnNetLeave').addEventListener('click',function(){netLeave(false);netLine('🚪 Connection band kar diya. Phir khelna ho to naya room banao ya code dobara daalo.');showPop('🚪 Online band — connection saaf!',1600);});
