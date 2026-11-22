@@ -152,8 +152,8 @@ h1.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw,78px);li
 .mbar.full{outline:2px solid var(--gold)}
 .timer{font-family:'Archivo Black';font-size:30px;background:#fff;color:#111;border-radius:10px;padding:4px 14px;text-align:center}
 /* ===== v23: TOUCH CONTROLS — fixed overlay, sirf touch devices par, sirf live fight me (JS .fightlive + modal check se display milta hai) ===== */
-.touch{position:fixed;left:0;right:0;bottom:44px;z-index:45;display:none;justify-content:space-between;align-items:flex-end;gap:10px;padding:0 10px;pointer-events:none;touch-action:none}
-.tcl{display:flex;flex-direction:column;gap:8px}
+.touch{position:fixed;left:0;right:0;bottom:44px;z-index:45;display:none;justify-content:space-between;align-items:flex-end;gap:10px;padding:0 max(10px,env(safe-area-inset-right)) 0 max(10px,env(safe-area-inset-left));pointer-events:none;touch-action:none}
+.tcl{display:flex;flex-direction:column;gap:8px;max-width:47vw;min-width:0}
 .tcrow{display:flex;gap:8px;justify-content:center}
 .tbtn{pointer-events:auto;min-width:58px;min-height:58px;padding:6px 10px;background:rgba(11,42,91,.68);color:#FFF6E3;border:2.5px solid #111;border-radius:14px;font-size:15px;font-weight:900;letter-spacing:.02em;box-shadow:3px 3px 0 rgba(0,0,0,.45);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
 .tbtn[data-k="left"],.tbtn[data-k="right"],.tbtn[data-k="down"],.tbtn[data-k="jump"]{font-size:23px;color:#FFD94D;min-width:62px}
@@ -164,10 +164,45 @@ h1.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw,78px);li
 #gl canvas{touch-action:none}
 body.fightlive{overscroll-behavior:none}
 body.touchdev #scr-fight .wrap{padding-bottom:210px}
-@media(max-height:430px) and (pointer:coarse){.tbtn{min-width:52px;min-height:52px}.tbtn-special{min-width:74px;min-height:62px}.touch{bottom:40px}}
+@media(max-height:430px) and (pointer:coarse){.tbtn{min-width:56px;min-height:56px}.tbtn-special{min-width:76px;min-height:64px}.touch{bottom:42px}}
+/* ===== v36: MOBILE FIGHT LAYOUT FIX (user ke real-phone screenshot, 22 Nov) — sirf touch/mobile; desktop bilkul same =====
+   1) Fight ke dauraan touch par keyboard help-strip gayab (pause modal me full controls pehle se hain, tutorial touch steps sikhaata hai)
+   2) HUD naam/attendance kabhi kata nahi — grid children min-width:0 + naam ellipsis
+   3) Chhoti landscape screen par HUD compact/patla — arena ko zyada height
+   4) Pause row compact — fighters ke upar bade safed dabbe nahi */
+body.touchdev #scr-fight .fightHelp{display:none}
+.hud>div{min-width:0}
+#fname1,#fname2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrap{padding-left:max(10px,env(safe-area-inset-left));padding-right:max(10px,env(safe-area-inset-right))}
+@media(pointer:coarse) and (max-width:680px){.tbtn{font-size:13px;padding:6px 7px}.tbtn-special{font-size:15px}}
+@media(pointer:coarse) and (max-height:500px){
+ .hud{padding:5px 7px;gap:6px;border-radius:10px}
+ .hbar{height:12px}
+ .mbar{height:8px;margin-top:3px}
+ .timer{font-size:20px;padding:2px 10px;border-radius:8px}
+ #roundLbl{font-size:10px!important;margin-top:2px!important}
+ #fightMsg{font-size:16px!important;min-height:22px!important}
+ .hudName{font-size:13px}
+ .attLbl{font-size:10px!important}
+ .fightBtns{margin-top:5px!important;gap:6px!important}
+ .fightBtns .btn{min-height:40px;min-width:46px;font-size:16px;padding:5px 9px;border-radius:9px;box-shadow:2px 2px 0 rgba(0,0,0,.5)}
+ .fightBtns .btnLbl,.kbdHint{display:none}
+}
 .dmgNum{position:fixed;z-index:60;font-family:'Archivo Black',sans-serif;font-size:clamp(20px,3.4vw,34px);color:#FFD94D;text-shadow:2px 2px 0 #000,-1px -1px 0 #000;pointer-events:none;transform:translate(-50%,-50%)}
 .dmgNum.grey{color:#C9D2D9;font-size:clamp(15px,2.4vw,24px)}
 .pop{position:fixed;left:50%;top:32%;transform:translate(-50%,-50%);z-index:60;font-family:'Archivo Black';font-size:clamp(22px,5vw,44px);color:#FFD94D;text-shadow:3px 3px 0 #000;text-align:center;pointer-events:none;max-width:90vw}
+/* ===== v28: HIDDEN TUTORIAL — pehle VS CPU match ke andar bade pops (koi alag screen/mode nahi) ===== */
+.tutPop{position:fixed;left:50%;top:15%;transform:translateX(-50%);z-index:58;width:min(620px,92vw);background:var(--cream);color:var(--ink);border:3px solid #111;border-radius:12px;box-shadow:6px 6px 0 rgba(0,0,0,.5);padding:14px 18px 12px;text-align:center;pointer-events:none;opacity:1;transition:opacity .45s ease,transform .45s ease}
+.tutPop.fade{opacity:0;transform:translateX(-50%) translateY(8px)}
+.tutPop .tutStepLbl{font-size:12px;font-weight:900;letter-spacing:.14em;color:#B03030}
+.tutPop .tutHead{font-family:'Archivo Black',sans-serif;font-size:clamp(21px,4.6vw,30px);line-height:1.15;margin:4px 0 6px;color:#0B2A5B}
+.tutPop .tutBody{font-size:clamp(15px,3.4vw,18px);font-weight:700;line-height:1.5}
+.tutPop .tutBody b{background:#0B2A5B;color:#FFD94D;border-radius:5px;padding:1px 8px;white-space:nowrap}
+.tutPop .tutDots{margin-top:8px;font-size:13px;letter-spacing:.35em;color:#B03030}
+.tutPop .tutSkip{font-size:12px;font-weight:700;color:#666;margin-top:4px}
+.tutPop.done{border-color:var(--green);box-shadow:6px 6px 0 rgba(46,125,50,.45)}
+@media(max-height:500px){.tutPop{top:8%}}
+@media (prefers-reduced-motion: reduce){.tutPop{transition:opacity .45s ease}.tutPop.fade{transform:translateX(-50%)}}
 .noticeSlip{background:#fff;color:#111;border:1px solid #ddd;padding:14px;margin:8px 0;border-radius:4px;text-align:left;width:100%;font-size:17px;font-weight:800;box-shadow:2px 2px 0 rgba(0,0,0,.2)}
 .hand{font-family:Caveat,cursive;color:#1D4E9E;font-size:20px}
 input[type=text]{min-height:48px;font-size:16px;padding:8px;width:100%}
@@ -264,6 +299,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 <div id="gl" role="img" aria-label="Campus Clash live 3D fighting arena — the 3D stage where all matches take place"></div>
 <div id="rotatePrompt"><div><div style="font-size:54px">📱↔</div><h2>📱 Phone ghuma kar khelo — landscape me mazaa aayega!</h2><p>Side me jagah zyada hai — bilkul class ki aakhri bench ki tarah. Fighters poore dikhenge, buttons bhi bade lagenge.</p><button class="btn ghost" id="btnRotDismiss" style="margin-top:10px">✖ Rehne do — aise hi khelenge</button></div></div>
 <div class="pop" id="popText" style="display:none"></div>
+<div class="tutPop" id="tutPop" style="display:none" role="status" aria-live="polite"><div class="tutStepLbl" id="tutStepLbl"></div><div class="tutHead" id="tutHead"></div><div class="tutBody" id="tutBody"></div><div class="tutDots" id="tutDots"></div><div class="tutSkip">Khelte raho — step miss ho jaye to ye khud aage badh jayega, match kabhi nahi rukega!</div></div>
 <div id="lbTop"></div><div id="lbBot"></div>
 
 <!-- LOADING -->
@@ -274,7 +310,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 <section class="screen" id="scr-notice"><div class="wrap"><div class="card" style="max-width:640px;margin:30px auto"><div class="stamp">SATIRE NOTICE — PEHLE PADH LO</div><h2>Samajh lo, phir ladho</h2><p>Saare characters fictional college archetypes hain. Koi asli teacher, student ya vyakti nahi hai.</p><p>Ye ek <b>fictional college</b> ki kahani hai — kisi asli college se inspired zaroor hai, par kisi ka official game nahi hai. Cartoon ladai hai — असली campus me try mat karna.</p><p>🐕 <b>AI Dog wala kissa dusri badi university ka tha. Hum apne college wale hain.</b> Dog apne college wala NAHI tha — dusri badi university wala tha!</p><p>Ladai sirf game me rakho — asal campus me shanti, canteen me Maggi.</p><label style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" id="noticeHide" style="width:22px;height:22px"> Dobara mat dikhana</label><br><button class="btn red" id="btnNoticeOk" style="width:100%">SAMAJH GAYA, AAGE BADHO →</button></div></div></section>
 
 <!-- TITLE -->
-<section class="screen" id="scr-title"><div class="wrap"><div style="padding-top:26px"><span style="background:#D92323;padding:6px 10px;font-weight:900">● LIVE &nbsp;CAMPUS LIVE</span><p style="color:#F2A81D;font-weight:800;letter-spacing:.15em">APNA CAMPUS · GREATER NOIDA SE LIVE</p><h1 class="logo">CAMPUS<br>CLASH</h1><span class="stamp" style="background:#FFF6E3">100% BAKWAAS, 0% PADHAI</span><p style="max-width:560px;font-size:17px;line-height:1.5">Fightkaro-style 2.5D ladai — 9 concept-photo fighters (bilkul photos jaise!) + 1 ASLI 3D MODEL TRIAL (Adarsh 3D 🧊 select screen me), 8 living 3D arenas, Attendance Meter supers. Attendance kiski zyada, ladai me kaun bhaari?</p><p id="streakLine" style="font-weight:800;color:#FFD94D"></p><button class="btn red" id="btnStart" style="font-size:20px" aria-label="Start Campus Clash — enter the free online college fighting game">▶ ENTER — DHAMAAKA SHURU KARO</button><p style="font-size:12px;opacity:.8">Satire hai, serious mat lo • v25 • <a href="#" id="linkNotice" style="color:#FFD94D">Disclaimer phir dekho</a> • Sound: <button class="btn ghost" id="btnMuteTop" style="min-height:44px;padding:4px 12px">🔊 ON</button></p></div></div></section>
+<section class="screen" id="scr-title"><div class="wrap"><div style="padding-top:26px"><span style="background:#D92323;padding:6px 10px;font-weight:900">● LIVE &nbsp;CAMPUS LIVE</span><p style="color:#F2A81D;font-weight:800;letter-spacing:.15em">APNA CAMPUS · GREATER NOIDA SE LIVE</p><h1 class="logo">CAMPUS<br>CLASH</h1><span class="stamp" style="background:#FFF6E3">100% BAKWAAS, 0% PADHAI</span><p style="max-width:560px;font-size:17px;line-height:1.5">Fightkaro-style 2.5D ladai — 9 concept-photo fighters (bilkul photos jaise!) + 1 ASLI 3D MODEL TRIAL (Adarsh 3D 🧊 select screen me), 8 living 3D arenas, Attendance Meter supers. Attendance kiski zyada, ladai me kaun bhaari?</p><p id="streakLine" style="font-weight:800;color:#FFD94D"></p><button class="btn red" id="btnStart" style="font-size:20px" aria-label="Start Campus Clash — enter the free online college fighting game">▶ ENTER — DHAMAAKA SHURU KARO</button><p style="font-size:12px;opacity:.8">Satire hai, serious mat lo • v32 • <a href="#" id="linkNotice" style="color:#FFD94D">Disclaimer phir dekho</a> • Sound: <button class="btn ghost" id="btnMuteTop" style="min-height:44px;padding:4px 12px">🔊 ON</button></p></div></div></section>
 
 <!-- MAIN MENU NOTICE BOARD -->
 <section class="screen" id="scr-menu"><div class="wrap"><div style="display:grid;grid-template-columns:1.2fr .8fr;gap:14px" id="menuGrid"><div class="card boardCard"><div class="stamp">NOTICE BOARD — AAJ KA PROGRAM</div>
@@ -302,6 +338,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 <!-- ONLINE -->
 <section class="screen" id="scr-online"><div class="wrap"><button class="btn ghost" id="btnOnlineBack">← NOTICE BOARD</button><h2 style="font-family:'Archivo Black'">🌐 ONLINE DHAMAKA</h2>
 <p style="font-weight:700;max-width:660px;line-height:1.5">Dost dusre sheher me hai? Room code banao, WhatsApp par bhejo — aur online ladai shuru! <b>HOST = P1</b> · <b>GUEST = P2</b> — dono apna-apna fighter <b>KHUD</b> chunte hain (ek hi fighter dono side bhi chalega!); arena sirf host chunta hai. Dono ko ye page <b>khula rakhna</b> hai — tab band = match band.</p>
+<p class="pinNote" style="max-width:660px" role="note">📱 <b>Chhota sa tip:</b> Online match <b>mobile data par best chalega</b> — campus Wi-Fi kabhi-kabhi WebRTC ko block kar deta hai, isliye wahan room judne me atakta hai. Dono dost mobile data par ho to connection seedha, smooth aur turant banta hai. Ladai shuru karne se pehle bas Wi-Fi se mobile data par aa jao!</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px">
 <div class="card"><h3 style="margin-top:2px">🏠 ROOM BANAO — HOST (P1)</h3><p>Code banao, dost ko bhejo, phir intezaar karo.</p><button class="btn red" id="btnHostRoom" style="width:100%">🏠 ROOM BANAO</button>
 <div id="roomCodeBox" style="display:none;margin-top:10px;text-align:center"><div style="font-size:13px;font-weight:800">TUMHARA ROOM CODE — dost ko bhejo:</div><div id="roomCodeTxt" style="font-family:'Archivo Black';font-size:42px;letter-spacing:.16em;color:#B03030">·····</div><button class="btn" id="btnCopyCode" style="width:100%">📋 CODE COPY KARO</button></div>
@@ -330,9 +367,11 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 
 <!-- HOWTO -->
 <section class="screen" id="scr-howto"><div class="wrap"><button class="btn ghost" data-back="menu">← NOTICE BOARD</button><div class="card"><h2>KAISE KHELEIN? — Ek Raat Pehle Wala Chapter</h2>
-<div style="background:#13294d;color:#fff;border-radius:10px;padding:14px 16px;margin-bottom:12px"><div style="font-family:'Archivo Black';font-size:19px;color:#FFD94D">SIMPLE WALA TAREEKA — bas 6 keys!</div><div style="font-size:16.5px;line-height:1.65;margin-top:6px">🚶 <b>Chalo:</b> A / D &nbsp;•&nbsp; 👊 <b>Punch:</b> J &nbsp;•&nbsp; 🦵 <b>Kick:</b> K &nbsp;•&nbsp; ✋ <b>Grab:</b> L &nbsp;•&nbsp; 🎭 <b>Style:</b> U &nbsp;•&nbsp; ⚡ <b>Special:</b> SPACE</div><div style="font-size:13px;opacity:.85">Jump: W • Crouch: S • Peeche hold = Block • 1-player me Arrow keys se bhi chal sakte ho</div><div style="font-size:13px;opacity:.85">🎭 <b>STYLE MOVE (U)</b> — har fighter ka APNA fighting style: Topper kitab phenkta hai, Lab Madam "CHUP!" chillati hai (awaaz ki lehar projectiles ko kha jati hai!), AI Dog dash karke kaat-ta hai, Warden ka danda sabse lamba hai. Kuch style moves par Attendance Meter se tax bhi lagta hai — character select par har fighter ka style likha hai.</div><div style="font-size:13px;opacity:.85">🥊 Har move ki APNI pose hai — Punch, Kick aur Special teeno ka movement alag dikhega. Button thoda pehle dab bhi jaye to move chalega (input buffer), aur move ke beech me agla button dabane se string combo khud chal padta hai!</div><div style="font-size:13px;opacity:.85">🎬 <b>Special lagne par</b> saamne wale par pura comedy scene hota hai — damage 3-4 tukdo me dikhta hai, aur jeet ka nishan (chipke notes, Maggi-wig, REJECTED ki mohar…) ladai dobara shuru hone ke baad bhi 2 second tak dikhta hai!</div></div>
+<div style="background:#13294d;color:#fff;border-radius:10px;padding:14px 16px;margin-bottom:12px"><div style="font-family:'Archivo Black';font-size:19px;color:#FFD94D">SIMPLE WALA TAREEKA — bas 6 keys!</div><div style="font-size:16.5px;line-height:1.65;margin-top:6px">🚶 <b>Chalo:</b> A / D &nbsp;•&nbsp; 👊 <b>Punch:</b> J &nbsp;•&nbsp; 🦵 <b>Kick:</b> K &nbsp;•&nbsp; ✋ <b>Grab:</b> L &nbsp;•&nbsp; 🎭 <b>Style:</b> U &nbsp;•&nbsp; ⚡ <b>Special:</b> SPACE</div><div style="font-size:13px;opacity:.85">Jump: W • Crouch: S • Peeche hold = Block • 1-player me Arrow keys se bhi chal sakte ho</div><div style="font-size:13px;opacity:.85">💨 <b>DASH:</b> A / D ko <b>DOUBLE-TAP</b> karo — aage ki taraf double-tap = forward dash, peeche double-tap = back dash! Touch par 💨 DASH button bhi hai (aur ◀ ▶ double-tap bhi chalta hai). Dash ke dauraan block nahi hota — sahi time par hi ghusna!</div><div style="font-size:13px;opacity:.85">🚀 <b>ANTI-AIR:</b> dushman baar-baar kood raha hai? Khade hokar <b>K (Kick)</b> maro — khadi laat hawa me utarte hue dushman ko pakad leti hai. Jump-spam ki yahi dawa hai!</div><div style="font-size:13px;opacity:.85">😱 <b>CAUGHT!:</b> Signature (→+P / →+K / ↓+K) ya Style move chalane ke baad fighter kuch der <b>RECOVERY</b> me phansa rehta hai — move khatam, par haath bandhe hue! Usi ghadi saaf hit pada to <b>CAUGHT!</b> — us hit par <b>+20% extra damage</b> aur lamba freeze. Bade moves andhe hokar spam karna mehenga padega — aur jo recovery padh le, usi ko punish milega!</div><div style="font-size:13px;opacity:.85">🎭 <b>STYLE MOVE (U)</b> — har fighter ka APNA fighting style: Topper kitab phenkta hai, Lab Madam "CHUP!" chillati hai (awaaz ki lehar projectiles ko kha jati hai!), AI Dog dash karke kaat-ta hai, Warden ka danda sabse lamba hai. Kuch style moves par Attendance Meter se tax bhi lagta hai — character select par har fighter ka style likha hai.</div><div style="font-size:13px;opacity:.85">🥊 Har move ki APNI pose hai — Punch, Kick aur Special teeno ka movement alag dikhega. Button thoda pehle dab bhi jaye to move chalega (input buffer), aur move ke beech me agla button dabane se string combo khud chal padta hai!</div><div style="font-size:13px;opacity:.85">🎬 <b>Special lagne par</b> saamne wale par pura comedy scene hota hai — damage 3-4 tukdo me dikhta hai, aur jeet ka nishan (chipke notes, Maggi-wig, REJECTED ki mohar…) ladai dobara shuru hone ke baad bhi 2 second tak dikhta hai!</div></div>
 <table><tr><th>Action</th><th>P1</th><th>P2</th><th>Touch</th></tr>
 <tr><td>Move</td><td>A / D <span style="color:#777">(1P me ← → bhi)</span></td><td>← / →</td><td>◀ ▶</td></tr>
+<tr><td>Dash (aage / peeche)</td><td><b>A / D double-tap</b></td><td><b>← / → double-tap</b></td><td>💨 DASH button / ◀ ▶ double-tap</td></tr>
+<tr><td>Anti-Air (koodne wale ke liye)</td><td colspan="2"><b>Khade hokar Kick</b> — laat hawa me pakadti hai</td><td>KICK</td></tr>
 <tr><td>Jump / Crouch</td><td>W / S <span style="color:#777">(1P me ↑ ↓ bhi)</span></td><td>↑ / ↓</td><td>▲ ▼</td></tr>
 <tr><td>Punch</td><td><b>J</b></td><td><b>,</b> <span style="color:#777">(Numpad 1)</span></td><td>PUNCH</td></tr>
 <tr><td>Kick</td><td><b>K</b></td><td><b>.</b> <span style="color:#777">(Numpad 2)</span></td><td>KICK</td></tr>
@@ -341,7 +380,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 <tr><td>Special (meter 100%)</td><td><b>SPACE</b></td><td><b>Right Shift</b> <span style="color:#777">(Numpad 0 • ' bhi)</span></td><td>SPECIAL</td></tr>
 <tr><td>Pause — CHAI BREAK</td><td colspan="2"><b>ENTER</b> / Esc / P</td><td>⏸ button</td></tr>
 <tr><td>Menu me Confirm / Back</td><td colspan="2"><b>ENTER ya SPACE</b> = confirm • <b>Esc</b> = back</td><td>tap</td></tr></table>
-<p style="font-size:12.5px;color:#666">Pro / purane keys bhi chalte hain (sab ek saath active hain): P1 — F = Punch, G = Kick, R = Grab, H / T = Special.</p>
+<p style="font-size:12.5px;color:#666">Bas yahi ek controls mapping hai — har screen par yahi dikhega: P1 — J = Punch • K = Kick • L = Grab • U = Style • SPACE = Special.</p>
 <p class="hand">Pro tip: Super bachake rakho — 30% health ek saath jata hai!</p>
 <button class="btn red" id="btnHowFight">SAMAJH GAYA — LADHAI PAR CHALO ⚔️</button></div></div></section>
 
@@ -411,7 +450,7 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 </ol>
 <p>Online play needs no account and no sign-up; the connection is made directly between the two browsers after a handshake through the free PeerJS server.</p>
 <h3>Controls</h3>
-<p>Player 1 uses a simple 6-key layout: <strong>A / D</strong> to move, <strong>W</strong> to jump, <strong>S</strong> to crouch, <strong>J</strong> to punch, <strong>K</strong> to kick, <strong>L</strong> to grab, <strong>U</strong> for the fighter's style move, and <strong>SPACE</strong> for the super move when the Attendance Meter is full. Holding away from the opponent blocks. In single-player, the arrow keys also work. Player 2 uses the arrow keys to move, comma (,) to punch, full stop (.) to kick, slash (/) to grab, M for style move and Right Shift for the super move. On touch screens, on-screen buttons for movement, punch, kick, grab, style and special appear automatically. Signature moves are done with forward + punch, forward + kick, or down + kick.</p>
+<p>Player 1 uses a simple 6-key layout: <strong>A / D</strong> to move, <strong>W</strong> to jump, <strong>S</strong> to crouch, <strong>J</strong> to punch, <strong>K</strong> to kick, <strong>L</strong> to grab, <strong>U</strong> for the fighter's style move, and <strong>SPACE</strong> for the super move when the Attendance Meter is full. Holding away from the opponent blocks. In single-player, the arrow keys also work. Player 2 uses the arrow keys to move, comma (,) to punch, full stop (.) to kick, slash (/) to grab, M for style move and Right Shift for the super move. On touch screens, on-screen buttons for movement, punch, kick, grab, style and special appear automatically. Signature moves are done with forward + punch, forward + kick, or down + kick. Both players can also <strong>dash</strong> by double-tapping a direction (forward double-tap dashes in, backward double-tap dashes away; touch players get a dedicated DASH button as well), and a <strong>standing kick is an anti-air</strong>: it catches an opponent out of the air on their way down, which makes repeated jump-ins punishable. Landing a clean hit on an opponent who is still in the recovery of a signature or style move triggers <strong>CAUGHT!</strong> — that one hit deals 20% extra damage with a longer freeze, which makes spamming big moves punishable.</p>
 <h3>Price, platform and requirements</h3>
 <p>Campus Clash is <strong>completely free</strong>. It is a browser game built with HTML, CSS, JavaScript, Three.js (WebGL) for the 3D arenas and PeerJS (WebRTC) for online play. It needs <strong>no download, no installation and no sign-up</strong>, and it runs on desktop and mobile browsers; landscape orientation is recommended on phones.</p>
 <h3>Frequently asked questions</h3>
@@ -426,21 +465,21 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 
 <!-- FIGHT -->
 <section class="screen" id="scr-fight"><div class="wrap" style="max-width:1000px">
-<div class="hud"><div><div style="display:flex;justify-content:space-between;font-weight:900"><span id="fname1">P1</span><span id="wins1" style="color:#F2A81D"></span></div><div class="hbar" id="hbar1"><i style="width:100%"></i></div><div class="mbar" id="mbar1"><i style="width:0%"></i></div><div style="font-size:11px;font-weight:800">📋 ATTENDANCE — <span id="mpct1">0%</span></div><div id="shortlistWrap" style="display:none"><div style="font-size:11px;font-weight:900;color:#ff9d9d">SHORTLIST METER</div><div class="mbar"><i id="shortlistBar" style="width:0%;background:#D92323"></i></div></div></div>
+<div class="hud"><div><div class="hudName" style="display:flex;justify-content:space-between;font-weight:900"><span id="fname1">P1</span><span id="wins1" style="color:#F2A81D"></span></div><div class="hbar" id="hbar1"><i style="width:100%"></i></div><div class="mbar" id="mbar1"><i style="width:0%"></i></div><div class="attLbl" style="font-size:11px;font-weight:800">📋 ATTENDANCE — <span id="mpct1">0%</span></div><div id="shortlistWrap" style="display:none"><div style="font-size:11px;font-weight:900;color:#ff9d9d">SHORTLIST METER</div><div class="mbar"><i id="shortlistBar" style="width:0%;background:#D92323"></i></div></div></div>
 <div><div class="timer" id="timer">60</div><div id="roundLbl" style="text-align:center;font-size:11px;font-weight:900;margin-top:4px">ROUND 1</div></div>
-<div><div style="display:flex;justify-content:space-between;font-weight:900"><span id="wins2" style="color:#F2A81D"></span><span id="fname2">P2</span></div><div class="hbar" id="hbar2"><i style="width:100%"></i></div><div class="mbar" id="mbar2"><i style="width:0%"></i></div><div style="font-size:11px;font-weight:800;text-align:right"><span id="mpct2">0%</span> — ATTENDANCE 📋</div></div></div>
+<div><div class="hudName" style="display:flex;justify-content:space-between;font-weight:900"><span id="wins2" style="color:#F2A81D"></span><span id="fname2">P2</span></div><div class="hbar" id="hbar2"><i style="width:100%"></i></div><div class="mbar" id="mbar2"><i style="width:0%"></i></div><div class="attLbl" style="font-size:11px;font-weight:800;text-align:right"><span id="mpct2">0%</span> — ATTENDANCE 📋</div></div></div>
 <div id="fightMsg" style="text-align:center;font-weight:900;font-size:20px;min-height:28px;color:#FFD94D;text-shadow:2px 2px 0 #000"></div>
 <div id="tutBox" style="display:none;background:#FFF6E3;color:#111;padding:10px;border-radius:8px;font-weight:700;margin:6px 0"></div>
-<div class="touch" id="touch" role="group" aria-label="Touch controls — Player 1"><div class="tcl"><div class="tcrow"><button class="tbtn tbtn-jump" data-k="jump" aria-label="Jump">▲</button></div><div class="tcrow"><button class="tbtn" data-k="left" aria-label="Left chalo">◀</button><button class="tbtn" data-k="down" aria-label="Crouch / neeche">▼</button><button class="tbtn" data-k="right" aria-label="Right chalo">▶</button></div></div><div class="tcl"><div class="tcrow"><button class="tbtn" data-k="punch">PUNCH</button><button class="tbtn" data-k="kick">KICK</button><button class="tbtn" data-k="grab">GRAB</button></div><div class="tcrow"><button class="tbtn" data-k="style">🎭 STYLE</button><button class="tbtn tbtn-special" data-k="special">⚡ SPECIAL</button></div></div></div>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn ghost" id="btnPause">⏸ CHAI BREAK (ENTER)</button><button class="btn ghost" id="btnMute2">🔊 Sound ON</button><button class="btn ghost" id="btnQuitFight">🚪 Quit</button></div>
+<div class="touch" id="touch" role="group" aria-label="Touch controls — Player 1"><div class="tcl"><div class="tcrow"><button class="tbtn tbtn-jump" data-k="jump" aria-label="Jump">▲</button><button class="tbtn" data-k="dash" aria-label="Dash — dushman ki taraf dash">💨 DASH</button></div><div class="tcrow"><button class="tbtn" data-k="left" aria-label="Left chalo">◀</button><button class="tbtn" data-k="down" aria-label="Crouch / neeche">▼</button><button class="tbtn" data-k="right" aria-label="Right chalo">▶</button></div></div><div class="tcl"><div class="tcrow"><button class="tbtn" data-k="punch">PUNCH</button><button class="tbtn" data-k="kick">KICK</button><button class="tbtn" data-k="grab">GRAB</button></div><div class="tcrow"><button class="tbtn" data-k="style">🎭 STYLE</button><button class="tbtn tbtn-special" data-k="special">⚡ SPECIAL</button></div></div></div>
+<div class="fightBtns" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn ghost" id="btnPause" aria-label="Pause — Chai Break">⏸<span class="btnLbl"> CHAI BREAK</span><span class="kbdHint"> (ENTER)</span></button><button class="btn ghost" id="btnMute2" aria-label="Sound on/off">🔊<span class="btnLbl"> Sound ON</span></button><button class="btn ghost" id="btnQuitFight" aria-label="Quit fight">🚪<span class="btnLbl"> Quit</span></button></div>
 <div id="netHud" style="display:none;margin-top:8px;font-weight:800;font-size:13px;background:rgba(6,12,28,.85);color:#7CFC9A;border-radius:6px;padding:6px 10px">📶 ONLINE — <span id="netPingTxt">ping: …</span> • <span id="netRoleTxt"></span></div>
-<p style="font-size:12px;opacity:.85">P1: A/D chalo · <b>J punch · K kick · L grab · U style · SPACE special</b> · <b>ENTER pause</b> (hold-back = block) • P2: Arrows · <b>, punch · . kick · / grab · M style · R-SHIFT special</b> • Signatures: →+P / →+K / ↓+K • 🎭 Style = har fighter ka apna signature move!</p>
+<p class="fightHelp" style="font-size:12px;opacity:.85">P1: A/D chalo · <b>J punch · K kick · L grab · U style · SPACE special</b> · <b>ENTER pause</b> (hold-back = block) • P2: Arrows · <b>, punch · . kick · / grab · M style · R-SHIFT special</b> • Signatures: →+P / →+K / ↓+K • 🎭 Style = har fighter ka apna signature move!</p>
 </div></section>
 </div>
 
 <!-- PAUSE -->
 <div class="modal" id="pauseModal"><div class="card" style="max-width:440px;width:100%"><div class="stamp">CHAI BREAK ☕</div><h2>Match sthagit hai</h2><p>Class adjourned till further notice.</p><button class="btn red" id="btnResume" style="width:100%;margin:4px 0">▶ WAPAS LADHO</button><button class="btn" id="btnRestart" style="width:100%;margin:4px 0">🔁 ROUND RESTART</button><button class="btn ghost" id="btnPauseQuit" style="width:100%;margin:4px 0">📌 NOTICE BOARD</button>
-<div class="ctrlKeys">⌨️ <b>ENTER / SPACE</b> Resume &nbsp;•&nbsp; <b>ENTER / Esc / P</b> Pause<br>P1: A/D chalo · W jump · S crouch · <b>J</b> punch · <b>K</b> kick · <b>L</b> grab · <b>U</b> style · <b>SPACE</b> SPECIAL <span style="opacity:.75">(purane: F/G/R/H)</span><br>P2: Arrows · <b>,</b> punch · <b>.</b> kick · <b>/</b> grab · <b>M</b> style · <b>R-SHIFT</b> special</div></div></div>
+<div class="ctrlKeys">⌨️ <b>ENTER / SPACE</b> Resume &nbsp;•&nbsp; <b>ENTER / Esc / P</b> Pause<br>P1: A/D chalo · W jump · S crouch · <b>J</b> punch · <b>K</b> kick · <b>L</b> grab · <b>U</b> style · <b>SPACE</b> SPECIAL<br>P2: Arrows · <b>,</b> punch · <b>.</b> kick · <b>/</b> grab · <b>M</b> style · <b>R-SHIFT</b> special<br>💨 DASH: direction <b>double-tap</b> (dono players) · 🚀 ANTI-AIR: khade hokar <b>Kick</b></div></div></div>
 
 <!-- VS SPLASH -->
 <div class="modal" id="vsModal"><div style="text-align:center;color:#fff"><div style="display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap"><div class="card" style="min-width:180px"><div class="vsArt" id="vsArt1"></div><h2 id="vsName1" style="margin:4px"></h2><p id="vsSub1"></p></div><div style="font-family:'Archivo Black';font-size:52px;color:#F2A81D;text-shadow:3px 3px 0 #D92323">VS</div><div class="card" style="min-width:180px"><div class="vsArt" id="vsArt2"></div><h2 id="vsName2" style="margin:4px"></h2><p id="vsSub2"></p></div></div><p id="vsArena" style="font-weight:900;font-size:18px"></p><button class="btn red" id="btnVsGo">SHURU KARO →</button></div></div>
@@ -456,7 +495,6 @@ h1.logo,div.logo{font-family:'Archivo Black',sans-serif;font-size:clamp(42px,8vw
 
 <div id="dmgNums"></div>
 <div id="flashFx" style="position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:55;transition:opacity .13s"></div>
-<div id="musicDebug" style="position:fixed;left:8px;bottom:44px;z-index:49;background:rgba(6,12,28,.85);color:#FFD94D;font:700 11px ui-monospace,monospace;padding:5px 9px;border-radius:6px;border:1px solid rgba(255,217,77,.4)">♪ MUSIC — • ctx —</div>
 <div class="ticker"><div class="bug">● CAMPUS LIVE</div><div class="track"><span class="move" id="tickerText"></span></div><div class="clk" id="tickerClock">⏱ CANTEEN: BHEED</div></div>
 
 <noscript><div style="max-width:720px;margin:20px auto;background:#FFF6E3;color:#1C1A17;border:2px solid #d9c9a3;border-radius:6px;padding:18px;font-family:system-ui,sans-serif"><h2>Campus Clash — Free Online College Fighting Game</h2><p>Campus Clash is a free 2.5D comedy fighting game for the web browser, set in a fictional Indian college in Greater Noida. Play as 11 fighters — Adarsh, Topper, Backbencher, Warden Sir, Canteen Bhaiya, Lab Madam, AI Dog, CR, Vidya, Eventwala and the final boss Placement Cell Sir — across 8 arenas (Canteen, Library, Lab, Classroom, Auditorium, Main Gate, Hostel Corridor and Placement Cell Office).</p><p>Modes: VS CPU, 2-player on one keyboard, Online Dhamaka multiplayer with a 5-letter room code, Semester Mode (8 fights) and Practice. Campus Clash is completely free, with no download, no installation and no sign-up. It is made by Kirti Vardhan Singh, a B.Tech IT student at GCET, Greater Noida. Official site: https://campusclash-lime.vercel.app/</p><p><strong>JavaScript is disabled in your browser, so the game itself cannot start.</strong> Please enable JavaScript and reload this page to play Campus Clash.</p></div></noscript>
@@ -475,23 +513,24 @@ if(!window.Peer){document.write('<script src="https:\/\/cdnjs.cloudflare.com\/aj
 "use strict";
 /* ================= DATA ================= */
 var FIGHTERS=[
-{id:'adarsh',name:'ADARSH',title:'The Ideal Loser ⭐ Hero',hp:1000,speed:2.8,reach:1.0,weight:1,pDmg:30,pFrames:19,kDmg:46,kFrames:29,color:0x2B3245,accent:0xE8B33C,skin:0x8d5524,special:'Deploy Kar Diya!',story:'Chhote sheher se aaya, papa ne loan lekar admission karaya. 2 back lagi, par give up nahi kiya. Class ka sabse bada coder nahi — par jab project rukta hai, sab kehte hain: Adarsh ko bula.',win:'Average bolte the... average hi sabse zyada der tak tikta hai.',lose:'Koi nahi... re-attempt bhi ek attempt hota hai.',sig:['Last-Night Revision →+P','Chappal Slide →+K','Bag Rakh Diya ↓+K'],dlg:{go:['Ek minute… bas deploy ho raha hai!','Local pe toh chal raha tha!'],hit:['DEPLOY KAR DIYA! Production me bhi chal gaya!','Dekha? Bola tha chalega!'],miss:['Arre… server down ho gaya.','Local pe sach me chal raha tha yaar.']}},
-{id:'adarsh3d',name:'ADARSH 3D',title:'The Ideal Loser — 3D MODEL TRIAL 🧊',hp:1000,speed:2.8,reach:1.0,weight:1,pDmg:30,pFrames:19,kDmg:46,kFrames:29,color:0x2B3245,accent:0xE8B33C,skin:0x8d5524,special:'Deploy Kar Diya!',model3d:true,story:'Wahi Adarsh — par is baar photo nahi, ASLI 3D MODEL (TripoSR se usi ki concept photo se bana hua). Statue hai — haddiyan (rig) nahi hain, isliye pose nahi badalta; poora model hi lunge, jhukav aur spin se ladta hai. Ek trial hai — kaisa laga, wahi asli review hoga.',win:'Average bolte the... average hi sabse zyada der tak tikta hai.',lose:'Koi nahi... re-attempt bhi ek attempt hota hai.',sig:['Last-Night Revision →+P','Chappal Slide →+K','Bag Rakh Diya ↓+K'],dlg:{go:['Ek minute… bas deploy ho raha hai!','Local pe toh chal raha tha!'],hit:['DEPLOY KAR DIYA! Production me bhi chal gaya!','Dekha? Bola tha chalega!'],miss:['Arre… server down ho gaya.','Local pe sach me chal raha tha yaar.']}},
-{id:'topper',name:'TOPPER',title:'The Rank Machine',hp:950,speed:3.2,reach:1.05,weight:.92,pDmg:26,pFrames:17,kDmg:40,kFrames:26,color:0x7A2E35,accent:0xffffff,skin:0xa0662f,special:'Notes Tornado',story:'Subah 5 baje uthne wala. Dusra number uske liye darr hai. Exam se ek raat pehle apne notes poori class ko khud forward karta hai — bina mange.',win:'Revision teen baar kiya tha. Result expected tha.',lose:'Ek haar... syllabus me ye chapter tha hi nahi.',sig:['Formula Jab →+P','Calculator Kick →+K','Notes Bicha Diye ↓+K'],dlg:{go:['Ye chapter syllabus me hai — pakka aayega!','Maine raat bhar padha hai iske liye!'],hit:['Notes chahiye the na? LO, SAARE LE LO!','Important marked tha!'],miss:['Impossible… ye to maine cover kiya tha!','Out of syllabus tha ye move!']}},
-{id:'backbencher',name:'BACKBENCHER',title:'The Last Bench Legend',hp:1020,speed:2.4,reach:1.1,weight:1,pDmg:34,pFrames:24,kDmg:55,kFrames:34,color:0x232323,accent:0x7a2e2e,skin:0x7a4a21,special:'Proxy Punch',story:'Attendance 61%, doston ke dil me presence 100%. Exam ki raat wahi 20 questions padhata hai jo hamesha aate hain. Degree se pehle yaari.',win:'Last bench se sab dikhta hai, bhai.',lose:'Haar gaya to kya... attendance to waise bhi kam thi.',sig:['Pen-Drive Throw →+P','Kursi Kheench →+K','Suna Sab Tha (Counter) ↓+K'],dlg:{go:['Main nahi aa raha… mera proxy aayega.','Bhai, ek help kar de bas.'],hit:['Dekha? Attendance bhi lagi, maar bhi!','Proxy successful, sir!'],miss:['Proxy ne dhokha de diya…','Bhai ne bola tha aayega…']}},
-{id:'warden',name:'WARDEN SIR',title:'The 10 Baje Wala',hp:1080,speed:2.1,reach:1.35,weight:1.18,pDmg:38,pFrames:26,kDmg:60,kFrames:36,color:0x8A7B4F,accent:0x5a4632,skin:0x96683a,special:'Gate Band 10 Baje!',story:'30 saal se hostel gate par. Ek ladka raat ko bina bataye gaya tha — us din se gate ka time rule nahi, kasam hai. Gate band hota hai, dil nahi.',win:'Time se aana seekho, zindagi khud time se milegi.',lose:'Aaj gate khula reh gaya... umar ho gayi hai shayad.',sig:['Register Thappad →+P','Chaabi Ghuma →+K','Seeti Bandh ↓+K'],dlg:{go:['GATE BAND HOGA — DUS BAJE!','Time dekha hai? TIME?'],hit:['Ab entry BAND. Parents ko phone karun?','Register me naam likh diya hai tumhara!'],miss:['Ruko! …Bhag gaya saala.','Kal subah baat hogi tumse!']}},
-{id:'canteen',name:'CANTEEN BHAIYA',title:'The Maggi Master',hp:1040,speed:2.9,reach:.85,weight:1.08,pDmg:27,pFrames:16,kDmg:42,kFrames:25,color:0x2E5FA3,accent:0xE8DCC8,skin:0x8d5524,special:'Maggi Missile',story:'18 saal ki umar me bartan dhota tha, aaj canteen uski hai. Udhaar register wasooli ke liye kabhi nahi khulta. Uske liye har baccha apna hai.',win:'Jeet gaye? Chalo, aaj chai meri taraf se.',lose:'Haar gaya to kya hua... kal phir khilayenge.',sig:['Kalchhul Combo →+P','Kettle Ubaal →+K','Floor Pochha ↓+K'],dlg:{go:['Ek Maggi — zyada masala!','Do minute ruk, bana ke deta hun!'],hit:['Garam hai, sambhal ke! Bola tha!','Udhaar me ye free — maar nahi!'],miss:['Maggi gir gayi… ₹40 ka nuksaan!','Koi baat nahi, dusri banata hun.']}},
-{id:'labmadam',name:'LAB MADAM',title:'The Internal Marks Empress',hp:980,speed:2.6,reach:1.15,weight:1,pDmg:30,pFrames:21,kDmg:48,kFrames:30,color:0xa4133c,accent:0xF2A81D,skin:0x96683a,special:'6 Se 9!',story:'Lab me unka raaj. Student thi tab viva me wahi hua jo aaj wo sabke saath karti hain. Par final day, phasaa student — chupke se file sign ho jati hai.',win:'File sign ho gayi samjho... jeet bhi meri marzi se mili hai.',lose:'Ye haar record me nahi jayegi. Register mera hai.',sig:['Red Pen Slash →+P','Register Phenk →+K','FILE SIGN Stamp ↓+K'],dlg:{go:['Ye marks main dungi — MERI marzi se!','File kholo… pen kahan hai mera?'],hit:['6 SE 9 KAR DIYA! Khush?','Ab bolo, internal marks kiske haath me hain?'],miss:['Hmm. File pending rahegi tumhari.','Viva me milna mujhse.']}},
-{id:'aidog',name:'AI DOG',title:'Made in Greater Noida 🐕',hp:920,speed:3.4,reach:.9,weight:.85,pDmg:24,pFrames:15,kDmg:38,kFrames:24,color:0xC9CCCE,accent:0x37e0ff,skin:0xC9CCCE,special:'Viral Bark Blast',dog:true,locked:true,story:'Summit me use invention kaha gaya, internet ne sach nikal liya — import tha. Usne sharm ki jagah swag chuna. Import ho ya invention — apna hai. Note: Dog apne college wala NAHI tha — dusri badi university wala tha!',win:'Import hoon ya invention — jeet to pakki hai!',lose:'Battery 1%... recharge karke wapas aaunga.',sig:['Zoomies Dash →+P','Backflip Kick →+K','Quantum Bark ↓+K'],dlg:{go:['BARK.EXE chal gaya!','Camera on hai — viral hone wala hai ye!'],hit:['ORION ne kar dikhaya! (Import tha, par kar dikhaya!)','10 million views pakke!'],miss:['Battery low… charge karna bhool gaya.','Ye wala clip delete kar dena.']}},
-{id:'cr',name:'CR',title:'The Notice Machine',hp:960,speed:2.7,reach:1.2,weight:.94,pDmg:27,pFrames:20,kDmg:44,kFrames:29,color:0x87b5d6,accent:0xffffff,skin:0x96683a,special:'Notice Forward Blast',story:'Pehle din sabse pehle baith gaya, teacher ne CR bana diya. 3 saal se har notice ka bojh usi par. Bina uske class ek din na chale.',win:'Jeet ki notice group me daal di hai. Pin bhi kar di.',lose:'Haar ki notice... ye wali group me nahi dalunga.',sig:['Notice Throw →+P','Circular Barrage →+K','Urgent Ping ↓+K'],dlg:{go:['URGENT NOTICE — sab dhyaan do!','Sir ne bola hai, forward kar raha hun!'],hit:['Notice mila? Blue tick bhi aa gaya!','47 groups me gaya hai ye — bachoge kahan?'],miss:['Sabne mute kar diya group ko…','Sir, kisi ne padha hi nahi.']}},
-{id:'vidya',name:'VIDYA',title:'The Front Bench Storm',hp:940,speed:3.1,reach:1.0,weight:.9,pDmg:25,pFrames:16,kDmg:42,kFrames:25,color:0x5A7247,accent:0xF2A81D,skin:0xa0662f,special:'Main Jaungi, Meri Marzi Hai!',story:'Poori class mass bunk ki planning karti hai — Vidya akeli front bench par baithti hai. Notes uske haath ke likhe, attendance 100%, aur marzi sirf uski apni. Bunk uske liye gunaah nahi hai — bas use class jaana hai. Bas. Uski marzi.',win:'Kaha tha na — main jaungi. Gayi bhi, jeeti bhi.',lose:'Haar gayi… par class to main kal bhi jaungi.',sig:['Guide-Book Jab →+P','Front-Bench Kick →+K','Attendance Full ↓+K'],dlg:{go:['Mass bunk? MAIN JAUNGI — meri marzi hai!','Front bench khaali hai? Main baithungi!'],hit:['Notes ka toofaan dekha? Ye to trailer tha!','Padhai bhi ek superpower hoti hai!'],miss:['Arre… galat page palat gaya!','Ek minute — index me dhundhti hun…']}},
-{id:'eventwala',name:'EVENTWALA',title:'The Goodies Announcer',hp:990,speed:3.0,reach:1.05,weight:.97,pDmg:28,pFrames:18,kDmg:44,kFrames:27,color:0x1D3A6E,accent:0xF2A81D,skin:0x8d5524,special:'Sab Event Mein Aao!',story:'Har club ka poster usi ke haath se chipka hai. Mic uski talwaar, lanyard uska kavach. "Event mein aao, goodies milenge!" — ye line usne sapne me bhi boli hai. Ladai bhi uske liye ek event hai — bas isme registration desk par hi maar padti hai.',win:'Jeet ki photo group me daal di — sabko tag karke!',lose:'Haar gaya… par event to phir bhi hoga. Tum aa rahe ho na?',sig:['Mic Swing →+P','Poster Roll Kick →+K','Registration Stamp ↓+K'],dlg:{go:['HELLO HELLO, TESTING! Event shuru ho raha hai!','Goodies ready hain — pehle ladai, phir goodies!'],hit:['Dekha? Bola tha event hit hoga!','Ye hit bhi register ho gaya — attendance ke saath!'],miss:['Mic me feedback aa gaya… sorry sorry!','Poster gir gaya — koi baat nahi, aur hain!']}},
-{id:'boss',name:'PLACEMENT CELL SIR',title:'The Final Boss',hp:1050,speed:2.3,reach:1.3,weight:1.12,pDmg:34,pFrames:23,kDmg:52,kFrames:32,color:0x1D2A4A,accent:0xF2A81D,skin:0x8d5524,special:'CTC Mirage',boss:true,locked:true,story:'Criteria clear hai? Toh andar aao. Gale me 5 companies ke ID cards, haath me dual-side stamp — ek taraf SHORTLISTED, dusri taraf REJECTED.',win:'Criteria clear nahi hua. Next company ke liye try karo.',lose:'Shortlisted! …Galti se ho gaya lagta hai. Congratulations.',sig:['Criteria Check →+P','GD Elbow (Grab)','CTC Mirage — Super'],dlg:{go:['Package suno pehle — BARAH LPA!','Shortlist me naam hai tumhara… shayad.'],hit:['In-hand alag hota hai, beta. Seekh lo.','REJECTED — agla candidate!'],miss:['Tum… resume dobara bhejna.','HR will get back to you. (Kabhi nahi.)']}}
+{id:'adarsh',name:'ADARSH',title:'The Ideal Loser ⭐ Hero',hp:1000,speed:2.8,reach:1.0,weight:1,pDmg:30,pFrames:19,kDmg:46,kFrames:29,color:0x2B3245,accent:0xE8B33C,skin:0x8d5524,special:'Deploy Kar Diya!',story:'Chhote sheher se aaya, papa ne loan lekar admission karaya. 2 back lagi, par give up nahi kiya. Class ka sabse bada coder nahi — par jab project rukta hai, sab kehte hain: Adarsh ko bula.',win:'Average bolte the... average hi sabse zyada der tak tikta hai.',lose:'Koi nahi... re-attempt bhi ek attempt hota hai.',sig:['Last-Night Revision →+P','Chappal Slide →+K','Bag Rakh Diya ↓+K'],dlg:{go:['Ek minute… bas deploy ho raha hai!','Local pe toh chal raha tha!','Bas ek commit aur… phir pakka chalega!','Wi-Fi slow hai, himmat full hai — deploy!'],hit:['DEPLOY KAR DIYA! Production me bhi chal gaya!','Dekha? Bola tha chalega!','Chal gaya! Screenshot le lo, viva me kaam aayega!','Production me pehli baar bina error ke!'],miss:['Arre… server down ho gaya.','Local pe sach me chal raha tha yaar.','Phir se try karta hun… ek minute bas.','Error 404: jeet not found… abhi ke liye.']}},
+{id:'adarsh3d',name:'ADARSH 3D',title:'The Ideal Loser — 3D MODEL TRIAL 🧊',hp:1000,speed:2.8,reach:1.0,weight:1,pDmg:30,pFrames:19,kDmg:46,kFrames:29,color:0x2B3245,accent:0xE8B33C,skin:0x8d5524,special:'Deploy Kar Diya!',model3d:true,story:'Wahi Adarsh — par is baar photo nahi, ASLI 3D MODEL (TripoSR se usi ki concept photo se bana hua). Statue hai — haddiyan (rig) nahi hain, isliye pose nahi badalta; poora model hi lunge, jhukav aur spin se ladta hai. Ek trial hai — kaisa laga, wahi asli review hoga.',win:'Average bolte the... average hi sabse zyada der tak tikta hai.',lose:'Koi nahi... re-attempt bhi ek attempt hota hai.',sig:['Last-Night Revision →+P','Chappal Slide →+K','Bag Rakh Diya ↓+K'],dlg:{go:['Ek minute… bas deploy ho raha hai!','Local pe toh chal raha tha!','Bas ek commit aur… phir pakka chalega!','Wi-Fi slow hai, himmat full hai — deploy!'],hit:['DEPLOY KAR DIYA! Production me bhi chal gaya!','Dekha? Bola tha chalega!','Chal gaya! Screenshot le lo, viva me kaam aayega!','Production me pehli baar bina error ke!'],miss:['Arre… server down ho gaya.','Local pe sach me chal raha tha yaar.','Phir se try karta hun… ek minute bas.','Error 404: jeet not found… abhi ke liye.']}},
+{id:'topper',name:'TOPPER',title:'The Rank Machine',hp:950,speed:3.2,reach:1.05,weight:.92,pDmg:26,pFrames:17,kDmg:40,kFrames:26,color:0x7A2E35,accent:0xffffff,skin:0xa0662f,special:'Notes Tornado',story:'Subah 5 baje uthne wala. Dusra number uske liye darr hai. Exam se ek raat pehle apne notes poori class ko khud forward karta hai — bina mange.',win:'Revision teen baar kiya tha. Result expected tha.',lose:'Ek haar... syllabus me ye chapter tha hi nahi.',sig:['Formula Jab →+P','Calculator Kick →+K','Notes Bicha Diye ↓+K'],dlg:{go:['Ye chapter syllabus me hai — pakka aayega!','Maine raat bhar padha hai iske liye!','Full syllabus revision — teesri baar!','Ye wala question har saal aata hai!'],hit:['Notes chahiye the na? LO, SAARE LE LO!','Important marked tha!','Full marks wala jawab tha ye!','Topper ka notes-tornado — sab udd gaya!'],miss:['Impossible… ye to maine cover kiya tha!','Out of syllabus tha ye move!','Ek mark yahi kat gaya lagta hai…','Rechecking ke liye daal dunga!']}},
+{id:'backbencher',name:'BACKBENCHER',title:'The Last Bench Legend',hp:1020,speed:2.4,reach:1.1,weight:1,pDmg:34,pFrames:24,kDmg:55,kFrames:34,color:0x232323,accent:0x7a2e2e,skin:0x7a4a21,special:'Proxy Punch',story:'Attendance 61%, doston ke dil me presence 100%. Exam ki raat wahi 20 questions padhata hai jo hamesha aate hain. Degree se pehle yaari.',win:'Last bench se sab dikhta hai, bhai.',lose:'Haar gaya to kya... attendance to waise bhi kam thi.',sig:['Pen-Drive Throw →+P','Kursi Kheench →+K','Suna Sab Tha (Counter) ↓+K'],dlg:{go:['Main nahi aa raha… mera proxy aayega.','Bhai, ek help kar de bas.','Proxy bhai, aaj tum hi hero ho!','Main last bench se hi lad lunga!'],hit:['Dekha? Attendance bhi lagi, maar bhi!','Proxy successful, sir!','Bina padhe pass — matlab, jeet!','Suna sab tha — ye wala bhi!'],miss:['Proxy ne dhokha de diya…','Bhai ne bola tha aayega…','Proxy bhi bunk maar gaya aaj…','Bhai kal pakka aayega… bola tha usne.']}},
+{id:'warden',name:'WARDEN SIR',title:'The 10 Baje Wala',hp:1080,speed:2.1,reach:1.35,weight:1.18,pDmg:38,pFrames:26,kDmg:60,kFrames:36,color:0x8A7B4F,accent:0x5a4632,skin:0x96683a,special:'Gate Band 10 Baje!',story:'30 saal se hostel gate par. Ek ladka raat ko bina bataye gaya tha — us din se gate ka time rule nahi, kasam hai. Gate band hota hai, dil nahi.',win:'Time se aana seekho, zindagi khud time se milegi.',lose:'Aaj gate khula reh gaya... umar ho gayi hai shayad.',sig:['Register Thappad →+P','Chaabi Ghuma →+K','Seeti Bandh ↓+K'],dlg:{go:['GATE BAND HOGA — DUS BAJE!','Time dekha hai? TIME?','Register khul gaya hai — naam bolo!','Gate ka time kisi ke liye nahi badalta!'],hit:['Ab entry BAND. Parents ko phone karun?','Register me naam likh diya hai tumhara!','Entry register me ye vaar bhi likh diya!','10 baje wala rule — ab samajh aaya?'],miss:['Ruko! …Bhag gaya saala.','Kal subah baat hogi tumse!','Torch ki battery bhi dhokha de gayi…','Hmm… aaj chhod diya, kal pakka pakdunga.']}},
+{id:'canteen',name:'CANTEEN BHAIYA',title:'The Maggi Master',hp:1040,speed:2.9,reach:.85,weight:1.08,pDmg:27,pFrames:16,kDmg:42,kFrames:25,color:0x2E5FA3,accent:0xE8DCC8,skin:0x8d5524,special:'Maggi Missile',story:'18 saal ki umar me bartan dhota tha, aaj canteen uski hai. Udhaar register wasooli ke liye kabhi nahi khulta. Uske liye har baccha apna hai.',win:'Jeet gaye? Chalo, aaj chai meri taraf se.',lose:'Haar gaya to kya hua... kal phir khilayenge.',sig:['Kalchhul Combo →+P','Kettle Ubaal →+K','Floor Pochha ↓+K'],dlg:{go:['Ek Maggi — zyada masala!','Do minute ruk, bana ke deta hun!','Kadhai garam hai — special ban raha hai!','Do minute wala vaada — is baar sach me!'],hit:['Garam hai, sambhal ke! Bola tha!','Udhaar me ye free — maar nahi!','Extra masala wala vaar tha ye!','Chai ke saath ye bilkul free!'],miss:['Maggi gir gayi… ₹40 ka nuksaan!','Koi baat nahi, dusri banata hun.','Arre, masala kam pad gaya shayad…','Koi nahi — kal wali Maggi aur tez hogi.']}},
+{id:'labmadam',name:'LAB MADAM',title:'The Internal Marks Empress',hp:980,speed:2.6,reach:1.15,weight:1,pDmg:30,pFrames:21,kDmg:48,kFrames:30,color:0xa4133c,accent:0xF2A81D,skin:0x96683a,special:'6 Se 9!',story:'Lab me unka raaj. Student thi tab viva me wahi hua jo aaj wo sabke saath karti hain. Par final day, phasaa student — chupke se file sign ho jati hai.',win:'File sign ho gayi samjho... jeet bhi meri marzi se mili hai.',lose:'Ye haar record me nahi jayegi. Register mera hai.',sig:['Red Pen Slash →+P','Register Phenk →+K','FILE SIGN Stamp ↓+K'],dlg:{go:['Ye marks main dungi — MERI marzi se!','File kholo… pen kahan hai mera?','Pen laal hai — aaj faisla hoga!','Attendance sheet bhi meri, marks bhi mere!'],hit:['6 SE 9 KAR DIYA! Khush?','Ab bolo, internal marks kiske haath me hain?','File SIGN ho gayi — isi khushi me!','Ye vaar record me likha jayega!'],miss:['Hmm. File pending rahegi tumhari.','Viva me milna mujhse.','System No. 7 ki tarah ye bhi atak gaya…','Chalo, viva me hisaab barabar karenge.']}},
+{id:'aidog',name:'AI DOG',title:'Made in Greater Noida 🐕',hp:920,speed:3.4,reach:.9,weight:.85,pDmg:24,pFrames:15,kDmg:38,kFrames:24,color:0xC9CCCE,accent:0x37e0ff,skin:0xC9CCCE,special:'Viral Bark Blast',dog:true,locked:true,story:'Summit me use invention kaha gaya, internet ne sach nikal liya — import tha. Usne sharm ki jagah swag chuna. Import ho ya invention — apna hai. Note: Dog apne college wala NAHI tha — dusri badi university wala tha!',win:'Import hoon ya invention — jeet to pakki hai!',lose:'Battery 1%... recharge karke wapas aaunga.',sig:['Zoomies Dash →+P','Backflip Kick →+K','Quantum Bark ↓+K'],dlg:{go:['BARK.EXE chal gaya!','Camera on hai — viral hone wala hai ye!','Sensors ON — shikaar mode chalu!','Zoomies level: MAXIMUM!'],hit:['ORION ne kar dikhaya! (Import tha, par kar dikhaya!)','10 million views pakke!','Viral hona tay hai — clip ban gaya!','Made in… jahan se bhi — vaar toh laga!'],miss:['Battery low… charge karna bhool gaya.','Ye wala clip delete kar dena.','Signal lost… reconnect ho raha hun.','Ye miss bhi odd-day wala tha shayad.']}},
+{id:'cr',name:'CR',title:'The Notice Machine',hp:960,speed:2.7,reach:1.2,weight:.94,pDmg:27,pFrames:20,kDmg:44,kFrames:29,color:0x87b5d6,accent:0xffffff,skin:0x96683a,special:'Notice Forward Blast',story:'Pehle din sabse pehle baith gaya, teacher ne CR bana diya. 3 saal se har notice ka bojh usi par. Bina uske class ek din na chale.',win:'Jeet ki notice group me daal di hai. Pin bhi kar di.',lose:'Haar ki notice... ye wali group me nahi dalunga.',sig:['Notice Throw →+P','Circular Barrage →+K','Urgent Ping ↓+K'],dlg:{go:['URGENT NOTICE — sab dhyaan do!','Sir ne bola hai, forward kar raha hun!','Sab groups me forward — ladai bhi!','Pin kiya hua vaar hai ye — upar hi rahega!'],hit:['Notice mila? Blue tick bhi aa gaya!','47 groups me gaya hai ye — bachoge kahan?','Sabne padha bhi, laga bhi — double tick!','Notice ka asar — seedha dil par!'],miss:['Sabne mute kar diya group ko…','Sir, kisi ne padha hi nahi.','Message gaya… par sab offline hain.','Ye wala notice bhi seen-zone me gaya.']}},
+{id:'vidya',name:'VIDYA',title:'The Front Bench Storm',hp:940,speed:3.1,reach:1.0,weight:.9,pDmg:25,pFrames:16,kDmg:42,kFrames:25,color:0x5A7247,accent:0xF2A81D,skin:0xa0662f,special:'Main Jaungi, Meri Marzi Hai!',story:'Poori class mass bunk ki planning karti hai — Vidya akeli front bench par baithti hai. Notes uske haath ke likhe, attendance 100%, aur marzi sirf uski apni. Bunk uske liye gunaah nahi hai — bas use class jaana hai. Bas. Uski marzi.',win:'Kaha tha na — main jaungi. Gayi bhi, jeeti bhi.',lose:'Haar gayi… par class to main kal bhi jaungi.',sig:['Guide-Book Jab →+P','Front-Bench Kick →+K','Attendance Full ↓+K'],dlg:{go:['Mass bunk? MAIN JAUNGI — meri marzi hai!','Front bench khaali hai? Main baithungi!','Attendance full hai — vaar bhi full hoga!','Front bench se seedha final jawab!'],hit:['Notes ka toofaan dekha? Ye to trailer tha!','Padhai bhi ek superpower hoti hai!','Bilkul sahi jawab — full marks!','Marzi bhi meri, jeet bhi meri!'],miss:['Arre… galat page palat gaya!','Ek minute — index me dhundhti hun…','Page palat gaya… ek second bas.','Koi nahi — kal ki class me cover kar lungi.']}},
+{id:'eventwala',name:'EVENTWALA',title:'The Goodies Announcer',hp:990,speed:3.0,reach:1.05,weight:.97,pDmg:28,pFrames:18,kDmg:44,kFrames:27,color:0x1D3A6E,accent:0xF2A81D,skin:0x8d5524,special:'Sab Event Mein Aao!',story:'Har club ka poster usi ke haath se chipka hai. Mic uski talwaar, lanyard uska kavach. "Event mein aao, goodies milenge!" — ye line usne sapne me bhi boli hai. Ladai bhi uske liye ek event hai — bas isme registration desk par hi maar padti hai.',win:'Jeet ki photo group me daal di — sabko tag karke!',lose:'Haar gaya… par event to phir bhi hoga. Tum aa rahe ho na?',sig:['Mic Swing →+P','Poster Roll Kick →+K','Registration Stamp ↓+K'],dlg:{go:['HELLO HELLO, TESTING! Event shuru ho raha hai!','Goodies ready hain — pehle ladai, phir goodies!','Mic check, mic check — dhamaka shuru!','Chief guest aa gaye — ab ladai hogi!'],hit:['Dekha? Bola tha event hit hoga!','Ye hit bhi register ho gaya — attendance ke saath!','Housefull! Ye vaar bhi housefull gaya!','Photo lo is pal ki — frame karenge!'],miss:['Mic me feedback aa gaya… sorry sorry!','Poster gir gaya — koi baat nahi, aur hain!','Crowd kam aaya is vaar par…','Koi nahi — agla event aur bada hoga!']}},
+{id:'boss',name:'PLACEMENT CELL SIR',title:'The Final Boss',hp:1050,speed:2.3,reach:1.3,weight:1.12,pDmg:34,pFrames:23,kDmg:52,kFrames:32,color:0x1D2A4A,accent:0xF2A81D,skin:0x8d5524,special:'CTC Mirage',boss:true,locked:true,story:'Criteria clear hai? Toh andar aao. Gale me 5 companies ke ID cards, haath me dual-side stamp — ek taraf SHORTLISTED, dusri taraf REJECTED.',win:'Criteria clear nahi hua. Next company ke liye try karo.',lose:'Shortlisted! …Galti se ho gaya lagta hai. Congratulations.',sig:['Criteria Check →+P','GD Elbow (Grab)','CTC Mirage — Super'],dlg:{go:['Package suno pehle — BARAH LPA!','Shortlist me naam hai tumhara… shayad.','Criteria sun lo — phir rote mat phirna!','Interview shuru — seedha final round!'],hit:['In-hand alag hota hai, beta. Seekh lo.','REJECTED — agla candidate!','Offer letter me ye vaar print hoga!','CTC ka matlab ab samajh aaya hoga!'],miss:['Tum… resume dobara bhejna.','HR will get back to you. (Kabhi nahi.)','Application pending rahegi tumhari.','Agli company try karo — all the best.']}}
 ];
 function F(id){for(var i=0;i<FIGHTERS.length;i++)if(FIGHTERS[i].id===id)return FIGHTERS[i];return FIGHTERS[0];}
 /* STYLE MOVES (STYLE_DESIGN.md) — name + activation callout per fighter */
-var STY_NAMES={adarsh:['Seedha Punch (No Jugaad)','Isme koi jugaad nahi hai — bas punch hai!'],topper:['Kitab Phenk 📚','Ye chapter pakka aayega — CATCH KARO!'],backbencher:['So Nahi Raha Tha… 😴','So nahi raha tha. SUN raha tha. Sab.'],warden:['Danda Poke 🔑','DOORI rakho! Danda lamba hai mera!'],canteen:['Thali Frisbee 🍽️','Order ready hai — THALI aa rahi hai, side hato!'],labmadam:['CHUP! 🔊','CHUP! Ye lab hai, MANDI nahi!'],aidog:['Zoomies Bite 🐕','Zoomies ON hai — rukna mana hai!'],cr:['Paper Plane Notice ✈️','Ye notice plane se aaya hai — ab toh padh lo!'],vidya:['Quantum Phenk 📖','Ye lo — puri guide! Wazan bhi hai, gyaan bhi!'],eventwala:['Poster Phenk 🎤','Poster le jao — event me aana pakka!'],boss:['Rejection Letter 💼','Regret ke saath soochit kiya jata hai… CATCH!']};
-FIGHTERS.forEach(function(fd){var s=STY_NAMES[fd.id==='adarsh3d'?'adarsh':fd.id];if(s){fd.sty=s[0];fd.styCall=s[1];}});
+/* v32 PHASE G: style-move (U) callouts ab 4 variants per fighter — pehla variant asli wala hi hai; tryStyle har baar pool se random chunta hai (Sim rng), isliye online me host ka chuna hua variant netSerEv ke txt se guest tak bhi waisa hi pahunchta hai. Moves/damage/timing bilkul same. */
+var STY_NAMES={adarsh:['Seedha Punch (No Jugaad)',['Isme koi jugaad nahi hai — bas punch hai!','Seedha punch, seedhi baat — koi jugaad nahi, promise!','Ye wala bina copy-paste ke hai — khud likha hai!','No jugaad mode ON — bas ek saaf punch!']],topper:['Kitab Phenk 📚',['Ye chapter pakka aayega — CATCH KARO!','Highlighted hai ye — important wala page khula hai!','Notes sabke kaam aate hain — aaj maar ke roop me!','Ek aur chapter! Revision pura karke aaya hun!']],backbencher:['So Nahi Raha Tha… 😴',['So nahi raha tha. SUN raha tha. Sab.','Aankhein band thi, kaan khule the — sab suna maine!','Last bench se sab dikhta hai — ye vaar bhi wahi se aaya!','Neend? Kaisi neend? Main toh bas… dhyaan de raha tha!']],warden:['Danda Poke 🔑',['DOORI rakho! Danda lamba hai mera!','Register se lamba mera danda hai — peeche hato!','10 baje se pehle ye seekh lo — doori hi suraksha hai!','Ek kadam aur… aur danda khud baat karega!']],canteen:['Thali Frisbee 🍽️',['Order ready hai — THALI aa rahi hai, side hato!','Garam thali, garam vaar — side hato, bheed hai!','Ye wala order bina number ke — seedha tumhare liye!','Thali ghoomti hai, khaana bhi — sambhal ke pakdo!']],labmadam:['CHUP! 🔊',['CHUP! Ye lab hai, MANDI nahi!','Ek shabd aur — file wahin ruk jayegi!','Lab me awaaz sirf meri chalegi — CHUP!','Viva me bologe tab bolna — abhi sirf suno!']],aidog:['Zoomies Bite 🐕',['Zoomies ON hai — rukna mana hai!','Battery full, zoomies full — kaatne ka time!','Camera on hai — ye wala bite pakka viral!','Rukna mere software me hai hi nahi — ZOOMIES!']],cr:['Paper Plane Notice ✈️',['Ye notice plane se aaya hai — ab toh padh lo!','URGENT hai ye plane — neeche sign bhi hai, padh lo!','Group me 3 baar bheja tha — ab plane se bhej raha hun!','Notice udd ke aaya hai — kal pakka nahi chalega!']],vidya:['Quantum Phenk 📖',['Ye lo — puri guide! Wazan bhi hai, gyaan bhi!','Front bench se seedha — puri guide, ek hi vaar me!','Index tak marked hai — pakdo, kaam aayegi!','Main jaungi bhi, aur ye guide bhi jayegi — pakdo!']],eventwala:['Poster Phenk 🎤',['Poster le jao — event me aana pakka!','Ek poster tumhare liye — goodies ladai ke baad!','Registration khula hai — poster pakdo, line me lago!','Ye poster har deewaar par lagega — tumse shuru!']],boss:['Rejection Letter 💼',['Regret ke saath soochit kiya jata hai… CATCH!','Letter padh lena — we regret wali line khaas tumhare liye!','Shortlist nahi hui — par letter toh mil hi gaya, pakdo!','HR ki taraf se ek aur chitthi — is baar hawa me!']]};
+FIGHTERS.forEach(function(fd){var s=STY_NAMES[fd.id==='adarsh3d'?'adarsh':fd.id];if(s){fd.sty=s[0];fd.styCalls=s[1];fd.styCall=s[1][0];}}); /* v32: styCall = pehla variant (gallery preview ke liye), styCalls = poora 4-variant pool */
 /* WIN/LOSE QUOTE POOLS — CHARACTER_STORIES.md verbatim (3 jeet + 2 haar per fighter);
    result screen inhe rotate karke dikhata hai taaki repeat matches me nayi line aaye */
 var QUOTES={
@@ -525,7 +564,7 @@ var LOAD_JOKES=['Notes photocopy ho rahe hain…','CR sabko notice forward kar r
 var SEMESTER=[{opp:'backbencher',arena:'classroom',note:'Orientation Week — Welcome to campus. Lift nahi hai, aadat daal lo.'},{opp:'cr',arena:'maingate',note:'Attendance Warning — subah 8:55, gate par ID check! CR notices tez aayenge.'},{opp:'canteen',arena:'canteen',note:'Udhaar Ka Takaza — canteen credit due hai.'},{opp:'labmadam',arena:'lab',note:'Lab Viva Day — file sign hai? System No. 7 aaj bhi band hai. Monitor par: Your 6 can be my 9.'},{opp:'topper',arena:'library',note:'Notes Emergency — kal exam hai. SILENCE PLEASE.'},{opp:'warden',arena:'hostel',note:'Hostel Raid Night — 10 baje ke baad, torch ghoom rahi hai.'},{opp:'aidog',arena:'auditorium',note:'Viral Week — placards: ORION (apna wala) · Dog apne college wala NAHI tha'},{opp:'boss',arena:'placement',note:'PLACEMENT SEASON — FINAL BOSS. Placement Cell Office me Shortlist Meter se bachke!'}];
 /* ================= STORAGE ================= */
 var SAVE_KEY='campusClash.v2';
-var save={streak:0,bestStreak:0,winsTotal:0,lossesTotal:0,winsByFighter:{},winsByArena:{},comebacks:0,dailyFighters:{date:'',ids:[]},challengePending:false,unlocked:{aidog:false,boss:false},badges:[],semesterStage:0,semesterClears:0,noticeSeen:false,settings:{sound:true,quality:'auto',shake:true,musicVol:0.8,masterVol:1,sfxVol:1,ambVol:1,crowd:true,beep:true,vibration:true,ticker:'normal'},lastDate:'',dailyDone:false,attendanceStreak:0};
+var save={streak:0,bestStreak:0,winsTotal:0,lossesTotal:0,winsByFighter:{},winsByArena:{},comebacks:0,dailyFighters:{date:'',ids:[]},challengePending:false,unlocked:{aidog:false,boss:false},badges:[],semesterStage:0,semesterClears:0,noticeSeen:false,tutCpuDone:false,settings:{sound:true,quality:'auto',shake:true,musicVol:0.8,masterVol:1,sfxVol:1,ambVol:1,crowd:true,beep:true,vibration:true,ticker:'normal'},lastDate:'',dailyDone:false,attendanceStreak:0};
 try{var raw=localStorage.getItem(SAVE_KEY);if(raw){var p=JSON.parse(raw);for(var k in p)save[k]=p[k];}}catch(e){}
 function persist(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(save));}catch(e){}}
 function addBadge(id,label){if(save.badges.indexOf(id)<0){save.badges.push(id);showPop('🏅 BADGE: '+label);sndBell(1);[523,659,784,1046].forEach(function(fr,i){osc('triangle',fr,null,0.12,0.12,0.1+i*0.09);});persist();}}
@@ -589,6 +628,20 @@ function playVoice(fid){if(muted)return;fid=voiceId(fid);var c=ac();if(!c)return
  if(!voiceBuf[fid]){loadVoice(fid);return;}
  try{if(voiceSrc[fid]){try{voiceSrc[fid].stop();}catch(e){}voiceSrc[fid]=null;}
  var src=c.createBufferSource();src.buffer=voiceBuf[fid];src.connect(sfxBus||c.destination);voiceSrc[fid]=src;src.onended=function(){if(voiceSrc[fid]===src)voiceSrc[fid]=null;};src.start();}catch(e){}}
+/* ===== ANNOUNCER — recorded calls (assets/voice/announcer/<name>.mp3): round intro par
+   Round 1 "Attendance Lagao!" / Round 2 "Proxy Nahi Chalegi!" / final round "Last Lecture!",
+   uske baad fightStart ka maujooda bell-sting "SHURU!" deta hai; round end par KO / time-up call.
+   Playback sfxBus se jaata hai — Mute, SFX Volume aur Master Volume teeno laagu. */
+var ANN_IDS=['round1','round2','round3','ko','timeup'];
+var annBuf={},annLoading={},annSrc=null;
+function loadAnnouncer(name){if(annBuf[name]||annLoading[name]||ANN_IDS.indexOf(name)<0)return;var c=ac();if(!c)return;annLoading[name]=true;
+ fetch('assets/voice/announcer/'+name+'.mp3').then(function(r){if(!r.ok)throw new Error('announcer '+name);return r.arrayBuffer();}).then(function(ab){return c.decodeAudioData(ab);}).then(function(buf){annBuf[name]=buf;annLoading[name]=false;}).catch(function(){annLoading[name]=false;});}
+function preloadAnnouncer(){for(var i=0;i<ANN_IDS.length;i++)loadAnnouncer(ANN_IDS[i]);}
+function stopAnnouncer(){if(annSrc){try{annSrc.stop();}catch(e){}annSrc=null;}}
+function playAnnouncer(name){if(muted)return;var c=ac();if(!c)return;
+ if(!annBuf[name]){loadAnnouncer(name);return;}
+ try{stopAnnouncer();
+ var src=c.createBufferSource();src.buffer=annBuf[name];src.connect(sfxBus||c.destination);annSrc=src;src.onended=function(){if(annSrc===src)annSrc=null;};src.start();}catch(e){}}
 /* ================= MUSIC ENGINE — SOUND_DESIGN §5, 100% procedural =================
    Menu: generative pentatonic ~72 BPM. Fight: layered dholak ~124 BPM, intensity
    stacks under 35% HP, ducks under supers, stops dead on KO. Per-arena flavour. */
@@ -666,7 +719,7 @@ function musicSetMode(mode,arena){
  else{MUS.step=0;MUS.nextTime=AC.currentTime+0.06;if(!MUS.timer)MUS.timer=setInterval(musicTick,25);musicTick();}
  musicDebugRender();
 }
-function musicUnlock(){MUS.unlocked=true;var c=ac();applyMusicGain();preloadVoices();if(MUS.mode==='off')musicSetMode('menu');else musicDebugRender();}
+function musicUnlock(){MUS.unlocked=true;var c=ac();applyMusicGain();preloadVoices();preloadAnnouncer();if(MUS.mode==='off')musicSetMode('menu');else musicDebugRender();}
 function musicDuckSuper(){MUS.duckUntil=performance.now()+900;applyMusicGain();setTimeout(applyMusicGain,950);}
 function musicKO(){MUS.mode='off';if(MUS.timer){clearInterval(MUS.timer);MUS.timer=null;}musicDebugRender();}
 function musicDebugRender(){var el=document.getElementById('musicDebug');if(!el)return;var st=!AC?'no ctx':AC.state;el.textContent='♪ '+(MUS.mode==='off'?'MUSIC —':MUS.mode.toUpperCase()+' • '+(MUS.mode==='menu'?'72':'124')+' BPM • step '+MUS.step+(MUS.intensity?' • INTENSE':'')+' • '+MUS.arena)+' • ctx '+st+' • vol '+Math.round(((save.settings&&save.settings.musicVol!=null)?save.settings.musicVol:0.8)*100)+'%';el.style.opacity=MUS.mode==='off'?0.55:1;}
@@ -677,8 +730,8 @@ function musicDebugRender(){var el=document.getElementById('musicDebug');if(!el)
 /* ============ PURE SIM — no THREE, no DOM (WebRTC seam) ============ */
 function RNG(seed){var s=seed>>>0||12345;return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296;};}
 function Sim(seed){
- this.rng=RNG(seed);this.tick=0;this.timeLeft=60*60;this.grace=0;this.round=1;this.phase='intro';this.phaseT=0;this.events=[];this.hitstop=0;this.slowmo=1;this.shortlist=0;this.bossMode=false;this.practice=false;
- this.mk=function(fd,x,dir,isP1){return {fd:fd,x:x,y:0,vy:0,dir:dir,isP1:isP1,hp:fd.hp,maxhp:fd.hp,meter:0,state:'idle',t:0,atkT:0,atkKind:'',didHit:false,hitT:0,block:false,crouch:false,onGround:true,prev:{},stats:{punch:0,kick:0,superTry:0,superHit:0,blocked:0},idleT:0,blockT:0,counterT:0,buf:{punch:0,kick:0,grab:0,special:0,style:0},queue:null,move:null,moveIdx:0,moveT:0,hitReg:{},pose:'idle',styleCD:0,dashLow:false,spawnDone:false,aftermath:null,aftermathT:0};};
+ this.rng=RNG(seed);this.tick=0;this.timeLeft=60*60;this.grace=0;this.round=1;this.phase='intro';this.phaseT=0;this.events=[];this.hitstop=0;this.slowmo=1;this.shortlist=0;this.bossMode=false;this.practice=false;this.meterBoost=1; /* v28: pehle VS CPU match me P1 ka Attendance Meter 1.5x — launchFight set karta hai, baaki har match me 1 */
+ this.mk=function(fd,x,dir,isP1){return {fd:fd,x:x,y:0,vy:0,pushV:0,dir:dir,isP1:isP1,hp:fd.hp,maxhp:fd.hp,meter:0,state:'idle',t:0,atkT:0,atkKind:'',didHit:false,hitT:0,block:false,crouch:false,onGround:true,prev:{},stats:{punch:0,kick:0,superTry:0,superHit:0,blocked:0},idleT:0,blockT:0,counterT:0,buf:{punch:0,kick:0,grab:0,special:0,style:0},queue:null,move:null,moveIdx:0,moveT:0,hitReg:{},pose:'idle',styleCD:0,dashLow:false,spawnDone:false,aftermath:null,aftermathT:0,dashT:0,dashDir:0,dashCD:0,tapL:-999,tapR:-999};}; /* v30: dashT/dashDir/dashCD + double-tap yaad (tapL/tapR = aakhri tap ka fighter-frame) */
  this.p1=null;this.p2=null;this.projectiles=[];this.rings=[];this.cine=null;this.wins={p1:0,p2:0};this.winner=null;
 }
 Sim.prototype.startRound=function(a,b){this.p1=this.mk(a,-1.6,1,true);this.p2=this.mk(b,1.6,-1,false);this.projectiles=[];this.rings=[];this.cine=null;this.grace=0;this.timeLeft=60*60;this.phase='intro';this.phaseT=0;this.shortlist=0;};
@@ -766,22 +819,47 @@ Sim.prototype.tryStyle=function(f,foe){
  if(def.cd)f.styleCD=def.cd;
  var mv=buildStyleSteps(f.fd,def);
  f.state='style';f.atkKind='style';f.move=mv;f.moveIdx=0;f.moveT=0;f.hitReg={};f.spawnDone=false;f.atkT=mv.total;f.atkDur=mv.total;
- this.events.push({t:'styleGo',by:f,txt:f.fd.styCall||''});
+ this.events.push({t:'styleGo',by:f,txt:(f.fd.styCalls&&f.fd.styCalls.length)?f.fd.styCalls[Math.floor(this.rng()*f.fd.styCalls.length)]:(f.fd.styCall||'')}); /* v32: 4-variant pool se random callout */
  return true;
 };
 Sim.prototype.slFactor=function(){return this.bossMode?(1+0.15*Math.max(0,this.round-1)):1;}; /* E10: Shortlist Meter escalates per round */
+/* ===== v31 PHASE F — "CAUGHT!" PUNISH COUNTER =====
+   Signature (sigP / sigK / sigD) aur Style (U) moves ki RECOVERY = move ke saare
+   active steps (hit / spawn / spawnRing / dashStep wale) nikal jaane ke baad ke
+   bache hue frames — fighter atkT>0 ke saath abhi bhi bandha hai, par ab vaar
+   nahi kar sakta. Us window me SAAF hit pade to CAUGHT!: sirf usi hit par +20%
+   damage, +6f extra hitstop aur bada pop (view layer 'caught' event se dikhata
+   hai). Blocked hit (chip), super (cine ka fixed-30% raasta) aur Backbencher ka
+   counter-thappad isse bahar hain; normal punch/kick/grab, block aur neutral par
+   kabhi trigger nahi hota. Ye check Sim ke andar hai, isliye VS CPU, 2P aur
+   online (host ka Sim) — teeno me ek jaisa result; 'caught' event netSerEv ke
+   generic by/vic/x/amt fields se guest tak khud pahunch jata hai. */
+var CAUGHT_HS_BONUS=6;
+function isSigRecovery(f){
+ if(!f||!f.move||f.atkT<=0)return false;
+ if(f.state==='hit'||f.state==='ko'||f.state==='counter')return false;
+ var isSig=f.atkKind&&f.atkKind.indexOf('sig')===0;
+ if(!isSig&&f.atkKind!=='style')return false;
+ var steps=f.move.steps,lastAct=-1;
+ for(var i=0;i<steps.length;i++){if(steps[i].hit||steps[i].spawn||steps[i].spawnRing||steps[i].dashStep)lastAct=i;}
+ if(lastAct<0)lastAct=0; /* projectile signature: hit steps delete ho jate hain, projectile turant banta hai — startup ke baad ka saara move hi uski recovery hai */
+ return f.moveIdx>lastAct;
+}
 Sim.prototype.dmg=function(atk,vic,amount,isSuper,kind,fx){
  if(vic.state==='ko')return;
  fx=fx||{};
+ vic.caughtHS=0;
  var blocked=vic.block&&vic.onGround&&(!fx.low||vic.crouch); /* lows beat a standing block — crouch-block stops them (COMBAT §2) */
  if(vic.counterT>0&&!isSuper){vic.counterT=0;this.dmg(vic,atk,80,false,'counter');this.events.push({t:'pop',x:vic.x,txt:'SUNAA SAB THA! THAPPAD!'});return;}
- if(blocked){var chip=Math.round(amount*0.1);if(vic.hp-chip<1)chip=Math.max(0,vic.hp-1);vic.hp-=chip;vic.stats.blocked++;vic.meter=Math.min(100,vic.meter+2);this.events.push({t:'block',by:vic});this.hitstop=3;}
- else{vic.hp=Math.max(0,vic.hp-amount);vic.state='hit';vic.hitT=isSuper?22:12;vic.move=null;vic.queue=null;vic.dashLow=false;
-   if(!fx.noPush){var pb=kind==='punch'?0.15:kind==='kick'?0.30:kind==='sig'?0.40:(isSuper?0.5:0.22);vic.x+=atk.dir*pb/vic.fd.weight;}
+ var caught=false;
+ if(!blocked&&!isSuper&&kind!=='counter'&&atk!==vic&&isSigRecovery(vic)){caught=true;amount=Math.round(amount*1.2);vic.caughtHS=CAUGHT_HS_BONUS;} /* v31: CAUGHT! — recovery me saaf hit = +20% damage, isi hit par */
+ if(blocked){var chip=Math.round(amount*0.1);if(vic.hp-chip<1)chip=Math.max(0,vic.hp-1);vic.hp-=chip;vic.stats.blocked++;vic.meter=Math.min(100,vic.meter+2*(vic.isP1?(this.meterBoost||1):1));this.events.push({t:'block',by:vic});this.hitstop=3;}
+ else{vic.hp=Math.max(0,vic.hp-amount);vic.state='hit';vic.hitT=isSuper?22:12;vic.move=null;vic.queue=null;vic.dashLow=false;vic.dashT=0; /* v30: saaf hit dash ko wahi rok deta hai — dash me i-frames NAHI hain */
+   if(!fx.noPush){var pb=kind==='punch'?0.15:kind==='kick'?0.30:kind==='sig'?0.40:(isSuper?0.5:0.22);vic.pushV=(vic.pushV||0)+atk.dir*(pb/vic.fd.weight)*0.22;} /* v29 FEEL AUDIT: ease-out pushback (COMBAT §2 — "ease-out, never linear"). Pehle victim EK frame me poora pb teleport ho jata tha; ab velocity milti hai jo stepF me 0.78x/frame decay hoti hai — kul displacement wahi pb/weight (0.22/(1-0.78) = 1.0), bhaari fighter kam, halka zyada */
    atk.stats[(kind==='kick'||atk.atkKind==='sigK'||atk.atkKind==='sigD')?'kick':'punch']++;
    var gain=kind==='punch'?4:kind==='kick'?6:(kind==='sig'||kind==='style'||kind==='grab'||kind==='counter')?8:0;
-   if(gain)atk.meter=Math.min(100,atk.meter+gain);
-   vic.meter=Math.min(100,vic.meter+3);this.events.push({t:'hit',by:atk,vic:vic,heavy:kind!=='punch',x:vic.x});this.hitstop=(kind==='punch')?5:9;}
+   if(gain)atk.meter=Math.min(100,atk.meter+gain*(atk.isP1?(this.meterBoost||1):1));
+   vic.meter=Math.min(100,vic.meter+3*(vic.isP1?(this.meterBoost||1):1));this.events.push({t:'hit',by:atk,vic:vic,heavy:kind!=='punch',x:vic.x});this.hitstop=((kind==='punch')?5:9)+(caught?CAUGHT_HS_BONUS:0);if(caught)this.events.push({t:'caught',by:atk,vic:vic,x:vic.x,amt:amount});} /* v31: CAUGHT! par extra hitstop; 'caught' event 'hit' ke BAAD push hota hai taaki bada pop onomatopoeia ko overwrite kare */
  if(this.bossMode&&vic.isP1){this.shortlist=Math.min(100,this.shortlist+1.2*this.slFactor());}
  /* GRACE MARKS (COMBAT §8 step 3): sudden death — first CLEAN hit of ≥20 wins the round */
  if(this.grace>0&&!blocked&&amount>=20&&this.phase==='fight'){this.grace=0;this.phase='roundEnd';this.phaseT=0;this.winner=atk.isP1?'p1':'p2';if(atk.isP1)this.wins.p1++;else this.wins.p2++;this.events.push({t:'graceWin',winner:this.winner});return;}
@@ -814,6 +892,21 @@ Sim.prototype.tryAttack=function(f,foe,kind,dirHeld){
  f.state=kind;f.atkKind=sig||kind;f.move=mv;f.moveIdx=0;f.moveT=0;f.hitReg={};f.atkT=mv.total;f.atkDur=mv.total;
 };
 Sim.prototype.tryGrab=function(f,foe){if(f.atkT>0||f.state==='hit'||f.state==='ko')return;var mv=buildSteps(f.fd,'grab',null,false);f.state='grab';f.atkKind='grab';f.move=mv;f.moveIdx=0;f.moveT=0;f.hitReg={};f.atkT=mv.total;f.atkDur=mv.total;};
+/* ===== v30 PHASE E — UNIVERSAL DOUBLE-TAP DASH (har fighter, dono direction, EK hi timing/speed) =====
+   Window 16f (~267ms): usi direction ka dusra tap = dash. Dash 12f chalta hai, 0.13u/f
+   (≈1.5u kul) — walk (~0.047u/f) se ~2.8x tez, har fighter par bilkul same (fd.speed
+   yahan istemal NAHI hota — consistency hi rule hai). Dash ke dauraan na block, na
+   attack, na jump — ek saaf commitment: aage dash = andar ghusna, peeche dash = jaan
+   bachana, aur dono hi galat time par punishable. Cooldown 21f (dash ke baad 9f saans)
+   taaki dash-spam se match bhaag-daud na ban jaye. Touch par 💨 DASH button inp.dashF
+   se seedha yahi tryDash bulata hai; double-tap ◀ ▶ bhi wahi raasta hai (pressed edges). */
+var DASH_WIN=16,DASH_FRAMES=12,DASH_SPD=0.13,DASH_CD=21;
+Sim.prototype.tryDash=function(f,dir){
+ if(!f.onGround||f.atkT>0||f.state==='hit'||f.state==='ko'||f.dashT>0||f.dashCD>0||this.phase!=='fight')return false;
+ f.dashT=DASH_FRAMES;f.dashDir=dir;f.dashCD=DASH_CD;f.state='dash';f.block=false;
+ this.events.push({t:'dash',by:f,fwd:dir===f.dir});
+ return true;
+};
 Sim.prototype.fireBuffered=function(f,foe,kind,dirH){
  if(kind==='grab')this.tryGrab(f,foe);
  else if(kind==='special')this.trySuper(f,foe);
@@ -874,7 +967,7 @@ Sim.prototype.endCine=function(){
  cn.atk.state='idle';cn.atk.atkT=0;
  cn.atk.x=cn.x1;cn.vic.x=cn.x2; /* gag visual offsets never grant positional advantage */
  if(cn.outcome==='hit'){
-   cn.vic.state='hit';cn.vic.hitT=22;cn.vic.x+=cn.atk.dir*0.5/cn.vic.fd.weight;
+   cn.vic.state='hit';cn.vic.hitT=22;cn.vic.pushV=(cn.vic.pushV||0)+cn.atk.dir*(0.5/cn.vic.fd.weight)*0.22; /* v29: super ke baad ka dhakka bhi ease-out velocity se */
    cn.vic.aftermath=cn.gag;cn.vic.aftermathT=120;
    this.events.push({t:'superHit',by:cn.atk,txt:cn.atk.fd.dlg.hit[Math.floor(this.rng()*cn.atk.fd.dlg.hit.length)]});
  } else if(cn.outcome==='blocked'){
@@ -888,20 +981,40 @@ Sim.prototype.skipCine=function(){
  while(cn.ti<cn.ticks.length){if(this.cineTick(cn))return;}
  cn.t=cn.dur;this.endCine();
 };
-Sim.prototype.stepF=function(f,foe,inp){
- f.t++;var fd=f.fd;
+/* 6-frame input buffer (§9.4): a press is remembered for 6f; a press made DURING a
+   move also lands in the string queue and auto-fires the frame the move ends.
+   v29 FEEL AUDIT: ye block stepF se alag helper bana — hitstop gate (step) bhi ise
+   bulata hai, taaki freeze ke dauraan aaya press bhi latch ho jaye. Pehle freeze ke
+   andar dabakar chhod diya gaya chhota tap stepF tak kabhi pahunchta hi nahi tha —
+   input hamesha ke liye miss. Gate me decay=false: buffer freeze ke saath jamta hai. */
+Sim.prototype.bufUpdate=function(f,foe,inp,decay){
  var pressed={};for(var k in inp)pressed[k]=inp[k]&&!f.prev[k];f.prev=Object.assign({},inp);
- /* 6-frame input buffer (§9.4): a press is remembered for 6f; a press made DURING a
-    move also lands in the string queue and auto-fires the frame the move ends. */
  var towardP=(foe.x>f.x)?inp.right:inp.left;
  var dirAtPress=towardP?'fwd':(inp.down?'down':null);
  ['punch','kick','grab','special','style'].forEach(function(kk){
    if(pressed[kk]){f.buf[kk]=6;if(f.atkT>0&&kk!=='style')f.queue={kind:kk,dirH:(kk==='kick'&&inp.down)?'down':dirAtPress};}
-   else if(f.buf[kk]>0)f.buf[kk]--;
+   else if(decay&&f.buf[kk]>0)f.buf[kk]--;
  });
+ return pressed;
+};
+Sim.prototype.stepF=function(f,foe,inp){
+ f.t++;var fd=f.fd;
+ var pressed=this.bufUpdate(f,foe,inp,true);
  if(f.counterT>0)f.counterT--;
  if(f.styleCD>0)f.styleCD--;
+ /* v30 DASH: timers + double-tap pehchan. Tap ka hisaab f.t (fighter ke apne frame)
+    par hai — hitstop me stepF rukta hai to ghadi bhi rukti hai, window freeze ke
+    paar galat nahi bhadakta. Dusra tap window ke andar = dash; tap timestamp dash
+    ke baad reset, taaki teesra tap nayi jodi shuru kare, chain-dash nahi. */
+ if(f.dashCD>0)f.dashCD--;
+ if(f.dashT>0)f.dashT--;
+ if(pressed.left){var dtL=f.t-f.tapL;f.tapL=f.t;if(dtL<=DASH_WIN&&this.tryDash(f,-1))f.tapL=-999;}
+ if(pressed.right){var dtR=f.t-f.tapR;f.tapR=f.t;if(dtR<=DASH_WIN&&this.tryDash(f,1))f.tapR=-999;}
+ if(pressed.dashF)this.tryDash(f,foe.x>=f.x?1:-1); /* touch 💨 DASH button: hamesha aage (dushman ki taraf) */
+ if(pressed.dashB)this.tryDash(f,foe.x>=f.x?-1:1);
  if(f.aftermathT>0){f.aftermathT--;if(f.aftermathT===0)f.aftermath=null;}
+ /* v29: ease-out pushback ka dusra aadha — velocity har frame 0.78x ghatti hai (pehla frame sabse tez dhakka, phir dheere dheere rukta hai). Hitstop ke dauraan stepF chalta hi nahi, isliye dhakka bhi fighters ke saath freeze hota hai — FX (sparks/pops) view layer me chalte rehte hain */
+ if(f.pushV){f.x+=f.pushV;f.pushV*=0.78;if(Math.abs(f.pushV)<0.003)f.pushV=0;}
  /* advance the move's step table — a hit step may land ONCE per (move, step):
     the registry is keyed by step index of the current move, never a boolean */
  if(f.move&&f.state!=='hit'&&f.state!=='ko'){
@@ -918,7 +1031,7 @@ Sim.prototype.stepF=function(f,foe,inp){
        f.dashLow=true;f.x+=f.dir*0.2;
        var dd3=(foe.x-f.x)*f.dir;
        if(!f.hitReg[f.moveIdx]&&dd3<0.85&&dd3>-0.35&&Math.abs(foe.y-f.y)<0.9){
-         f.hitReg[f.moveIdx]=1;this.dmg(f,foe,44,false,'style');this.hitstop=5;
+         f.hitReg[f.moveIdx]=1;this.dmg(f,foe,44,false,'style');if(foe.state==='hit')this.hitstop=5+(foe.caughtHS||0); /* v29: blocked bite par dmg() ka 3f hi rahe — per-move hitstop sirf CLEAN hit par · v31: CAUGHT! bonus is par bhi jude */
          f.atkT-=(st.dur-f.moveT);f.moveIdx++;f.moveT=0;var nst=f.move.steps[f.moveIdx];if(nst)nst.dur=12;
          st=f.move.steps[f.moveIdx];f.dashLow=false;
        }
@@ -927,7 +1040,12 @@ Sim.prototype.stepF=function(f,foe,inp){
    if(st&&st.hit&&!f.hitReg[f.moveIdx]){
      var h=st.hit,d2=(foe.x-f.x)*f.dir;
      if(h.grab){if(Math.abs(foe.x-f.x)<0.62){f.hitReg[f.moveIdx]=1;foe.block=false;this.dmg(f,foe,70,false,'grab');foe.state='hit';foe.hitT=20;}}
-     else if(d2>0&&d2<h.reach+0.35&&Math.abs(foe.y-f.y)<0.9){f.hitReg[f.moveIdx]=1;
+     /* v30 ANTI-AIR: zameen par khade fighter ki STANDING KICK (aur →+K signature kick —
+        low/sweep shamil NAHI) hawa wale dushman ko 2.4u unchai tak pakadti hai; baaki
+        har move ki purani 0.9u khidki hi rehti hai. Jump ka apex (~5.7u) jaan-bujh kar
+        isse UPAR hai: sabse unchi chhalang kick se nahi rukti, sahi time ki kick mangti
+        hai — jump-in ki utarti/kadhti hui arc hi punish hoti hai, isiliye timing fair hai. */
+     else if(d2>0&&d2<h.reach+0.35&&Math.abs(foe.y-f.y)<((h.kind==='kick'&&!h.low&&f.onGround&&!foe.onGround)?2.4:0.9)){f.hitReg[f.moveIdx]=1;var wasAA=h.kind==='kick'&&!h.low&&f.onGround&&!foe.onGround;
        /* AI Dog Backflip Kick ke active frames me lows neeche se nikal jate hain (COMBAT §5) */
        if(h.low&&foe.fd.id==='aidog'&&foe.atkKind==='sigK'&&foe.state==='kick'){/* whiff — pass under */}
        else{
@@ -935,10 +1053,14 @@ Sim.prototype.stepF=function(f,foe,inp){
          var effKind=isSig?'sig':(f.atkKind==='sweep'?'kick':h.kind);
          var totHits=0,ordHit=0;f.move.steps.forEach(function(ss,si){if(ss.hit&&!ss.hit.grab){totHits++;if(si<f.moveIdx)ordHit++;}});
          this.dmg(f,foe,h.dmg,false,effKind,{low:!!h.low,noPush:totHits>1&&ordHit<totHits-1});
-         if(h.hitstop!=null)this.hitstop=h.hitstop;
+         if(h.hitstop!=null&&foe.state==='hit')this.hitstop=h.hitstop+(foe.caughtHS||0); /* v29: blocked hit par per-move hitstop dmg() ke 3f ko override NA kare · v31: CAUGHT! ka +6f bonus declared hitstop ke UPAR judta hai, usse mita nahi */
          if(h.stun&&foe.state==='hit')foe.hitT=h.stun;
          if(h.kd&&foe.state==='hit')foe.hitT=Math.max(foe.hitT,26);
-         if(h.push&&foe.state==='hit')foe.x+=f.dir*(h.push-0.22)/foe.fd.weight;}}
+         if(h.push&&foe.state==='hit')foe.pushV=(foe.pushV||0)+f.dir*((h.push-0.22)/foe.fd.weight)*0.22;
+         /* v30: anti-air saaf lage to koodne wala hawa me hi latakta hai (hitT 18) aur
+            phir seedha neeche girta hai — jump-spam ka yahi daam hai. Blocked AA par
+            kuch nahi (hawa me block hota hi nahi, par dashLow/sweep अपवाद mehfooz). */
+         if(wasAA&&foe.state==='hit'){foe.hitT=Math.max(foe.hitT,18);if(foe.vy>-0.6)foe.vy=-0.6;this.events.push({t:'antiair',by:f,vic:foe,x:foe.x});}}}
    }
    f.pose=st?st.pose:'idle';
  } else f.pose=(f.state==='super')?'act':'idle';
@@ -948,10 +1070,14 @@ Sim.prototype.stepF=function(f,foe,inp){
  if(f.state==='ko')return;
  var away=(foe.x>f.x)?inp.left:inp.right; var toward=(foe.x>f.x)?inp.right:inp.left;
  f.block=!!away&&f.onGround&&f.atkT<=0; f.crouch=!!inp.down&&f.onGround;
+ if(f.dashT>0)f.block=false; /* v30: dash ke dauraan block NAHI — away hold bhi dash ko suraksha nahi deta */
  if(f.block){f.blockT++;if(this.bossMode&&f.isP1)this.shortlist=Math.min(100,this.shortlist+0.012*this.slFactor());}else f.blockT=0;
  var acted=false;
  if(f.atkT<=0&&this.phase==='fight'){
-  if(!f.block){
+  if(f.dashT>0){ /* v30: dash movement sabse pehle — walk/jump/attack teeno iske saamne rukte hain */
+   f.x+=f.dashDir*DASH_SPD;f.state='dash';acted=true;
+  }
+  else if(!f.block){
    if(inp.left){f.x-=fd.speed/60;f.state='walk';acted=true;}
    if(inp.right){f.x+=fd.speed/60;f.state='walk';acted=true;}
    if(pressed.up&&f.onGround){f.vy=4.6;f.onGround=false;this.events.push({t:'jump',by:f});}
@@ -986,6 +1112,10 @@ Sim.prototype.step=function(i1,i2){
     while input buffers, camera, sparks, pops, ticker, music and crowd keep running
     in the view layer. Stun timers tick INSIDE the gate so hitstun stays honest. */
  if(this.hitstop>0){this.hitstop--;
+   /* v29: freeze ke dauraan bhi dono fighters ke press latch hote hain (buf/queue) —
+      fighters jame rehte hain, par input miss nahi hota; freeze khulte hi buffered
+      move chal padta hai. FX isse pehle se hi exempt the (view layer). */
+   if(this.phase==='fight'&&!this.cine){this.bufUpdate(this.p1,this.p2,i1,false);this.bufUpdate(this.p2,this.p1,i2,false);}
    if(this.p1&&this.p1.state==='hit'){if(--this.p1.hitT<=0)this.p1.state='idle';}
    if(this.p2&&this.p2.state==='hit'){if(--this.p2.hitT<=0)this.p2.state='idle';}
    return this.events;}
@@ -1016,7 +1146,7 @@ Sim.prototype.step=function(i1,i2){
    if(pr.band==='chest'&&vic.dashLow)canHit=false;                /* AI Dog dash ke neeche se */
    if(canHit&&Math.abs(vic.x-pr.x)<0.45&&Math.abs(vic.y+1-pr.y)<0.8){
      this.dmg(pr.from,vic,pr.dmg,false,pr.style?(pr.gain===4?'punch':'style'):(pr.sig?'sig':'punch'),{low:!!pr.low});
-     if(pr.style){if(pr.hitstop!=null)this.hitstop=pr.hitstop;if(pr.sprite==='letter')this.events.push({t:'letterHit',vic:vic});}
+     if(pr.style){if(pr.hitstop!=null&&vic.state==='hit')this.hitstop=pr.hitstop+(vic.caughtHS||0);if(pr.sprite==='letter')this.events.push({t:'letterHit',vic:vic});} /* v29: blocked projectile par bhi 3f hi — declared hitstop sirf clean hit par · v31: CAUGHT! bonus projectile punish par bhi bacha rahe */
      this.projectiles.splice(i,1);continue;}
    if(pr.life<=0||Math.abs(pr.x)>4.2){if(pr.style&&Math.abs(pr.x)>4.2)this.events.push({t:'projWall',sprite:pr.sprite,x:pr.x});this.projectiles.splice(i,1);}}
  /* projectile vs projectile — dono phat-te hain, confetti pop, koi damage nahi */
@@ -1031,8 +1161,8 @@ Sim.prototype.step=function(i1,i2){
    if(!rg.hitDone&&!rg.dead&&vic2.state!=='ko'&&Math.abs(vic2.x-rg.x)<0.42&&vic2.y<ringH){
      rg.hitDone=true;var wasBlk=vic2.block&&vic2.onGround;
      this.dmg(rg.from,vic2,34,false,'style');
-     if(wasBlk)vic2.x+=rg.dir*0.35/vic2.fd.weight;
-     else if(vic2.state==='hit'){this.hitstop=5;vic2.hitT=20;vic2.x+=rg.dir*(0.55-0.22)/vic2.fd.weight;}
+     if(wasBlk)vic2.pushV=(vic2.pushV||0)+rg.dir*(0.35/vic2.fd.weight)*0.22;
+     else if(vic2.state==='hit'){this.hitstop=5+(vic2.caughtHS||0);vic2.hitT=20;vic2.pushV=(vic2.pushV||0)+rg.dir*((0.55-0.22)/vic2.fd.weight)*0.22;} /* v31: ring hit bhi recovery ko pakde to CAUGHT! bonus hitstop mile */
      this.events.push({t:'ringHit',vic:vic2,blocked:wasBlk});}
    if(rg.travel>=rg.max||rg.life<=0){if(!rg.dead)this.events.push({t:'ringPop',x:rg.x});rg.dead=true;}}
  if(this.rings.some(function(r){return r.dead;}))this.rings=this.rings.filter(function(r){return !r.dead;});
@@ -1040,11 +1170,24 @@ Sim.prototype.step=function(i1,i2){
  return this.events;
 };
 /* CPU AI */
-function makeAI(diff,fd){var cfg=diff==='easy'?{react:32,block:.10,agg:.30,mist:.35,sig:.10,aa:0}:diff==='hard'?{react:9,block:.60,agg:.85,mist:.05,sig:.70,aa:.60}:{react:19,block:.35,agg:.60,mist:.15,sig:.40,aa:.25};var state={t:0,plan:{}};
- return function(sim,self,foe){var inp={left:false,right:false,up:false,down:false,punch:false,kick:false,grab:false,special:false,style:false};state.t--;
+function makeAI(diff,fd){var cfg=diff==='easy'?{react:32,block:.10,agg:.30,mist:.35,sig:.10,aa:0,dashF:.05,dashB:0}:diff==='hard'?{react:9,block:.60,agg:.85,mist:.05,sig:.70,aa:.60,dashF:.20,dashB:.025}:{react:19,block:.35,agg:.60,mist:.15,sig:.40,aa:.25,dashF:.13,dashB:.012};var state={t:0,plan:{},dseq:null,di:0,dk:''};
+ /* v30: CPU dash bhi ASLI double-tap se hota hai — koi cheat input nahi. Sequence
+    [dabao, dabao, chhodo, dabao, dabao]: dusra dabav hi Sim ka dash trigger hai,
+    bilkul khiladi ke keyboard jaisa. Isi liye CPU ka dash bhi wahi window/cooldown
+    maanta hai jo khiladi ka maanta hai — unfair hone ka raasta hi band. */
+ function startDash(foe,self,away){var toRight=away?(self.x>foe.x):(foe.x>self.x);state.dk=toRight?'right':'left';state.dseq=[1,1,0,1,1];state.di=0;}
+ return function(sim,self,foe){var inp={left:false,right:false,up:false,down:false,punch:false,kick:false,grab:false,special:false,style:false,dashF:false,dashB:false};state.t--;
+  /* reactive back-dash: dushman paas me vaar kare aur Sim ka cooldown taiyaar ho to
+     kabhi-kabhi peeche dash (Easy kabhi nahi — dashB 0; Normal ~1.2%/frame, Hard 2.5%/frame) */
+  if(!state.dseq&&foe&&foe.atkT>0&&Math.abs(foe.x-self.x)<1.25&&cfg.dashB>0&&self.dashCD<=0&&self.dashT<=0&&Math.random()<cfg.dashB)startDash(foe,self,true);
+  if(state.dseq){if(state.dseq[state.di])inp[state.dk]=true;state.di++;if(state.di>=state.dseq.length){state.dseq=null;state.di=0;}return inp;}
   if(foe&&(foe.state==='punch'||foe.state==='kick')&&Math.abs(foe.x-self.x)<1.6&&Math.random()<cfg.block){if(foe.x>self.x)inp.left=true;else inp.right=true;return inp;}
-  /* anti-air (COMBAT §7): jump-in par kick — Easy kabhi nahi, Normal 25%, Hard 60% */
-  if(foe&&!foe.onGround&&foe.y>0.25&&Math.abs(foe.x-self.x)<1.6&&cfg.aa>0&&Math.random()<cfg.aa){inp.kick=true;if(foe.x>self.x)inp.right=true;else inp.left=true;return inp;}
+  /* anti-air (COMBAT §7): jump-in par kick — Easy kabhi nahi, Normal 25%, Hard 60%.
+     v30: do sudhaar — (1) direction hold HATA diya: woh →+K signature bana deta tha,
+     khadi kick hi asal anti-air hai aur ab usme air-hit property bhi hai; (2) trigger
+     sirf GIRTE hue jump-in par (vy<-1.2): kick ke ~10f startup me apex wali chhalang
+     haath nahi aati, utarti hui aati hai — CPU ab andhi kick nahi ghumata. */
+  if(foe&&!foe.onGround&&foe.y>0.25&&foe.vy<-1.2&&Math.abs(foe.x-self.x)<1.6&&cfg.aa>0&&Math.random()<cfg.aa){inp.kick=true;return inp;}
   /* super usage per difficulty: Easy = random moment par waste-prone (25% per check) · Normal = range me sensible · Hard = whiff-punish / pakki range par hi */
   if(self.meter>=100){var sd=Math.abs(foe.x-self.x);var fire=diff==='easy'?(Math.random()<0.25):diff==='hard'?((foe.atkT>0&&sd<2.8)||sd<1.4):(sd<2.8&&Math.random()<0.8);if(fire){inp.special=true;return inp;}}
   if(state.t<=0){state.t=cfg.react+Math.random()*10;var r=Math.random();var dist=Math.abs(foe.x-self.x);state.plan={};
@@ -1063,6 +1206,7 @@ function makeAI(diff,fd){var cfg=diff==='easy'?{react:32,block:.10,agg:.30,mist:
    }
    if(Math.random()<cfg.mist){state.plan.whiff=true;}
    else if(styW)state.plan.style=true;
+   else if(dist>2.0&&Math.random()<cfg.dashF)state.plan.dashIn=true; /* v30: door se kabhi-kabhi dash karke ghusna — variety ke liye, har decision par nahi */
    else if(dist>1.1)state.plan.moveToward=true;
    else if(r<cfg.agg){state.plan.attack=Math.random()<0.5?'punch':'kick';if(Math.random()<cfg.sig)state.plan.sig=true;}
    else if(r<cfg.agg+0.2)state.plan.block=true;else if(foe.block&&diff!=='easy'&&Math.random()<(diff==='hard'?0.35:0.15))state.plan.grab=true;else state.plan.retreat=true;}
@@ -1073,6 +1217,7 @@ function makeAI(diff,fd){var cfg=diff==='easy'?{react:32,block:.10,agg:.30,mist:
   if(pl.moveToward&&self.fd.id==='warden'&&dist2<1.25)pl.moveToward=false;
   if(diff==='hard'&&foe.fd.id==='canteen'&&dist2<1.3&&(pl.moveToward||pl.attack))pl.retreat=true,pl.moveToward=false,pl.attack=null;
   if(pl.style){inp.style=true;if(self.fd.id==='canteen'){if(foe.x<self.x)inp.left=true;else inp.right=true;}}
+  else if(pl.dashIn&&self.dashCD<=0&&self.dashT<=0){pl.dashIn=false;startDash(foe,self,false);inp[state.dk]=true;state.di=1;return inp;} /* v30: dash sequence shuru — baaki frames upar wala dseq block sambhalega */
   else if(pl.whiff&&Math.random()<0.1)inp[diff==='easy'?'punch':'grab']=true; /* Easy ka grab usage = Never (§7) — uski galti wala move punch hai */
   else if(pl.moveToward){if(foe.x<self.x)inp.left=true;else inp.right=true;if(Math.random()<0.01)inp.up=true;}
   else if(pl.attack){if(pl.sig){if(foe.x>self.x)inp.right=true;else inp.left=true;}inp[pl.attack]=true;}
@@ -1647,6 +1792,7 @@ function poseBillboard(mesh,f,time){
  } else if(f.state==='counter'){rotZ=dir*0.12;sy=0.97;}
  else if(f.state==='hit'){rotZ=dir*-0.15;sx=0.98;bob=Math.sin(time*3.1)*0.012;}
  else if(!f.onGround){sy=1.08;sx=0.94;rotZ=dir*-0.05;}
+ else if(f.state==='dash'){rotZ=-(f.dashDir||dir)*0.15;sx=1.08;sy=0.95;bob=0.005;} /* v30: dash lean + halka speed-stretch — photo waisi ki waisi, bas jhukav bolta hai */
  else if(f.state==='walk'){bob=Math.abs(Math.sin(time*0.55+u.seed*3))*0.05;rotZ=-Math.max(-0.1,Math.min(0.1,dx*2.4));}
  else{bob=Math.sin(ph)*0.022;sy=1+Math.sin(ph*0.9)*0.006;}
  /* personality idles (STORIES): har fighter ki saans bhi alag — Topper stiff, Backbencher
@@ -1753,6 +1899,7 @@ function poseModel3D(mesh,f,time){
  } else if(f.state==='counter'){rotZ=dir*0.12;}
  else if(f.state==='hit'){rotZ=dir*0.18;bob=Math.sin(time*3.1)*0.012;}
  else if(!f.onGround){rotZ=-dir*0.06;if(u.sc)u.sc.scale.set(u.base*0.94,u.base*1.08,u.base);}
+ else if(f.state==='dash'){rotZ=-(f.dashDir||dir)*0.17;bob=0.01;} /* v30: 3D statue bhi dash me aage jhukta hai */
  else if(f.state==='walk'){bob=Math.abs(Math.sin(time*0.55+u.seed*3))*0.05;rotZ=Math.sin(time*0.55+u.seed*3)*0.055;}
  else{bob=Math.sin(ph)*0.024;if(u.sc)u.sc.scale.set(u.base,u.base*(1+Math.sin(ph*0.9)*0.015),u.base);}
  /* land squash for the statue too: brief (1.18, 0.82) settle after airtime */
@@ -1810,6 +1957,7 @@ function poseFighter(mesh,f,time){
    else if(id==='adarsh'){if(f.idleT>150&&time%320<70){p.armR.rotation.z=-2.15;p.head.rotation.z=0.12;}else{p.armR.rotation.z=-0.5;p.hips.rotation.z=0.03;}}               // chai sip break
  }
  if(f.state==='walk'){var s=Math.sin(time*0.5)*0.55;if(id==='topper')s=Math.sin(time*0.5)*0.3;p.legR.rotation.z=s;p.legL.rotation.z=-s;p.armR.rotation.z=s*0.6;p.armL.rotation.z=-s*0.6;if(id==='backbencher')p.hips.rotation.x=0.12;if(id==='cr'){p.legR.rotation.z=s*1.25;p.legL.rotation.z=-s*1.25;}}
+ if(f.state==='dash'){p.hips.rotation.z+=(f.dashDir||f.dir)*0.18;p.legR.rotation.z=0.75;p.legL.rotation.z=-0.55;p.armR.rotation.z=-0.9;p.armL.rotation.z=0.7;} /* v30: bhaagta hua jhukav */
  if(f.state==='punch'||f.atkKind==='sigP'||f.atkKind==='style'){var pr=1-Math.abs(f.atkT/(f.atkDur||20)-0.45)*2;p.armR.rotation.z=-1.5*Math.max(0,pr);if(id==='warden')p.armR.rotation.z=-1.9*Math.max(0,pr);}
  if(f.state==='kick'||f.atkKind==='sigK'||f.atkKind==='sweep'){var kr=1-Math.abs(f.atkT/(f.atkDur||28)-0.45)*2;p.legR.rotation.z=-1.3*Math.max(0,kr);}
  if(f.state==='grab'){p.armR.rotation.z=-1.1;p.armL.rotation.z=-0.7;}
@@ -1930,7 +2078,7 @@ function syncTouch(){var t=document.getElementById('touch');if(!t)return;var on=
 if(window.MutationObserver){var mo=new MutationObserver(function(){syncTouch();});['pauseModal','vsModal','resultModal'].forEach(function(id){var m=document.getElementById(id);if(m)mo.observe(m,{attributes:true,attributeFilter:['class']});});}
 /* fight-live state: launchFight ON karta hai; show()/showResult OFF karte hain */
 function fightLiveOn(){document.body.classList.add('fightlive');wakeLockOn();syncTouch();}
-function fightLiveOff(){if(!document.body.classList.contains('fightlive'))return;document.body.classList.remove('fightlive');wakeLockOff();syncTouch();}
+function fightLiveOff(){if(!document.body.classList.contains('fightlive'))return;document.body.classList.remove('fightlive');wakeLockOff();syncTouch();var tp=document.getElementById('tutPop');if(tp)tp.style.display='none';if(typeof tutCpuActive!=='undefined')tutCpuActive=false;}
 window.addEventListener('blur',clearTouchState);
 /* WakeLock: fight ke dauraan screen band na ho — fully guarded, unsupported par silent */
 var wakeLockObj=null;
@@ -1947,13 +2095,14 @@ window.addEventListener('touchstart',firstGestureAudio,{passive:true});
 /* rotate hint dismiss (session bhar ke liye) */
 var rotBtn=document.getElementById('btnRotDismiss');if(rotBtn)rotBtn.addEventListener('click',function(){document.body.classList.add('rotdismissed');});
 /* CONTROLS — always-active multi-scheme (brief B): simple cluster J/K/L/Space + legacy F/G/R/H/T + arrows for P1 in 1P */
-function inpP1(){var oneP=mode!=='2p';return{left:!!keys['a']||(oneP&&!!keys['arrowleft'])||!!touchState.left,right:!!keys['d']||(oneP&&!!keys['arrowright'])||!!touchState.right,up:!!keys['w']||(oneP&&!!keys['arrowup'])||!!touchState.jump,down:!!keys['s']||(oneP&&!!keys['arrowdown'])||!!touchState.down,punch:!!keys['j']||!!keys['f']||!!touchState.punch,kick:!!keys['k']||!!keys['g']||!!touchState.kick,grab:!!keys['l']||!!keys['r']||!!touchState.grab,special:!!keys[' ']||!!keys['t']||!!keys['h']||!!touchState.special,style:!!keys['u']||!!touchState.style};}
-function inpP2(){return{left:!!keys['arrowleft'],right:!!keys['arrowright'],up:!!keys['arrowup'],down:!!keys['arrowdown'],punch:!!keys[',']||!!keys['code:Numpad1'],kick:!!keys['.']||!!keys['code:Numpad2'],grab:!!keys['/']||!!keys['code:Numpad3']||!!keys[';'],special:!!keys['rshift']||!!keys['code:Numpad0']||!!keys["'"],style:!!keys['m']};}
-function emptyInp(){return{left:false,right:false,up:false,down:false,punch:false,kick:false,grab:false,special:false,style:false};}
+function inpP1(){var oneP=mode!=='2p';return{left:!!keys['a']||(oneP&&!!keys['arrowleft'])||!!touchState.left,right:!!keys['d']||(oneP&&!!keys['arrowright'])||!!touchState.right,up:!!keys['w']||(oneP&&!!keys['arrowup'])||!!touchState.jump,down:!!keys['s']||(oneP&&!!keys['arrowdown'])||!!touchState.down,punch:!!keys['j']||!!keys['f']||!!touchState.punch,kick:!!keys['k']||!!keys['g']||!!touchState.kick,grab:!!keys['l']||!!keys['r']||!!touchState.grab,special:!!keys[' ']||!!keys['t']||!!keys['h']||!!touchState.special,style:!!keys['u']||!!touchState.style,dashF:!!touchState.dash,dashB:false};} /* v30: dashF = touch 💨 DASH button; keyboard/touch-direction par dash double-tap se aata hai (Sim ke andar) */
+function inpP2(){return{left:!!keys['arrowleft'],right:!!keys['arrowright'],up:!!keys['arrowup'],down:!!keys['arrowdown'],punch:!!keys[',']||!!keys['code:Numpad1'],kick:!!keys['.']||!!keys['code:Numpad2'],grab:!!keys['/']||!!keys['code:Numpad3']||!!keys[';'],special:!!keys['rshift']||!!keys['code:Numpad0']||!!keys["'"],style:!!keys['m'],dashF:false,dashB:false};}
+function emptyInp(){return{left:false,right:false,up:false,down:false,punch:false,kick:false,grab:false,special:false,style:false,dashF:false,dashB:false};}
 /* ===== MATCH FLOW ===== */
 var mode='cpu',difficulty='normal',arenaId='auditorium',pick1=null,pick2=null,pickStage=1,previewId='adarsh',challengeActive=false,dogeshActive=false,selPhase='p1';
 function dispName(fd,opp){return (dogeshActive&&opp&&fd&&fd.id==='aidog')?'DOGESH BHAI':(fd?fd.name:'');}
 var sim=null,aiFn=null,rafId=null,acc=0,lastTs=0,matchStats=null,semesterActive=false,practiceActive=false,bossActive=false,shortlistStage=0,hrActive=false,galMesh=null,galDemoT=0,galId='adarsh';
+var tutCpuActive=false,tutCpuStep=-1,tutCpuFrames=0,tutCpuFlash=0,tutCpuFlags=null,tutCpuStartX=-1.6,tutCpuBlockHeld=0,tutCpuFullNote=false;
 var ONOM=['DHADAAM!','PATAAK!','THAPPAD!','DHISHUM!','BHADAAK!'];
 var comboTrack={by:null,n:0,tick:-9999},lowWarned={p1:false,p2:false},meter75={p1:false,p2:false};
 function isLocked(fd){if(fd.id==='aidog')return !save.unlocked.aidog;if(fd.id==='boss')return !save.unlocked.boss;return false;}
@@ -2086,6 +2235,7 @@ function launchFight(){
  if(!starGroup)starGroup=makeStars();
  if(mode==='online'&&typeof NET!=='undefined'&&NET.role==='guest'){sim=netMakeViewSim(F(pick1),F(pick2));aiFn=null;}
  else{sim=new Sim(Date.now()%100000);sim.practice=practiceActive;sim.bossMode=bossActive||pick2==='boss';sim.startRound(F(pick1),F(pick2));
+ tutCpuSetup();sim.meterBoost=tutCpuActive?1.5:1; /* v28: 1.5x meter SIRF pehle VS CPU match me */
  var aiDiff=difficulty;if(semesterActive&&difficulty==='normal')aiDiff=save.semesterStage<2?'easy':(save.semesterStage<5?'normal':'hard'); /* Semester Mode: difficulty stage ke saath badhti hai (MODES §2) */
  aiFn=(mode==='cpu')?makeAI(aiDiff,F(pick2)):null;}
  shortlistStage=0;hrActive=false;
@@ -2093,14 +2243,94 @@ function launchFight(){
  document.getElementById('shortlistWrap').style.display=sim.bossMode?'block':'none';
  document.getElementById('tutBox').style.display=practiceActive?'block':'none';
  if(practiceActive)tutStep(0);
+ if(tutCpuActive)tutCpuShow(0);else tutCpuHide(true);
  show('fight');fightMsg(semesterActive?SEMESTER[save.semesterStage].note:(practiceActive?'Orientation Day — seekho, koi timer nahi!':(sim.bossMode?'Placement Cell Sir: "Baitho. Resume rakho… backlogs kitni hain, sach batana."':(dogeshActive?'🐕 DOGESH BHAI aaya hai — original desi, bilkul unbothered.':''))));
- sndBell(1);startAmbience(arenaId);musicSetMode('fight',arenaId);MUS.intensity=0;trauma=0;slowT=0;freezeT=0;cineT=0;govState.recovered=false;document.getElementById('roundLbl').textContent='ROUND 1';lowWarned={p1:false,p2:false};meter75={p1:false,p2:false};comboTrack={by:null,n:0,tick:-9999};document.body.classList.remove('cine');acc=0;lastTs=performance.now();if(!rafId)rafId=requestAnimationFrame(fightLoop);
+ sndBell(1);playAnnouncer('round1');startAmbience(arenaId);musicSetMode('fight',arenaId);MUS.intensity=0;trauma=0;slowT=0;freezeT=0;cineT=0;govState.recovered=false;document.getElementById('roundLbl').textContent='ROUND 1';lowWarned={p1:false,p2:false};meter75={p1:false,p2:false};comboTrack={by:null,n:0,tick:-9999};document.body.classList.remove('cine');acc=0;lastTs=performance.now();if(!rafId)rafId=requestAnimationFrame(fightLoop);
  camera.position.set(0,2.2,7.2);
  fightLiveOn(); /* v23: touch layer + wakelock ON */
 }
 var tutIdx=0;var TUT=['1️⃣ A/D se chalo, W se jump!','2️⃣ J = Punch, K = Kick maro dummy par!','3️⃣ Opponent se ulta hold = BLOCK. Try karo!','4️⃣ Paas jaakar L = GRAB — block todta hai!','5️⃣ Meter bharne par SPACE = SPECIAL! Dummy sota rahega, tum star bano ⭐'];
 function tutStep(i){tutIdx=i;document.getElementById('tutBox').textContent='🎓 '+TUT[Math.min(i,TUT.length-1)]+(i>=TUT.length-1?' — Practice khatm! Menu se asli ladai shuru karo.':'');}
 function practiceAI(){if(tutIdx===2&&sim.tick%240<120){return{left:false,right:false,up:false,down:false,punch:true,kick:false,grab:false,special:false};}return emptyInp();}
+/* ===== v28: HIDDEN TUTORIAL — pehla VS CPU match hi tutorial hai.
+   Koi alag screen/mode nahi: match ke andar bade pops, order MOVE -> PUNCH -> BLOCK -> GRAB -> SUPER.
+   Har step tabhi aage badhta hai jab player woh move ASAL me kar le (flags sim state se bante hain);
+   step miss/skip ho to pop khud fade hokar aage badh jata hai — player kabhi stuck nahi hota.
+   Flag (save.tutCpuDone) tutorial START hote hi lag jata hai — zindagi me sirf ek baar. ===== */
+var TUT_CPU=[
+ {head:'🚶 CHALNA SEEKHO!',body:'<b>A</b> / <b>D</b> se left-right chalo, <b>W</b> se jump! Lecture hall tak khud jaana padega — yahan proxy nahi chalegi!',touch:'Neeche wale <b>◀</b> <b>▶</b> buttons se chalo, <b>▲</b> se jump! Lecture hall tak khud jaana padega — yahan proxy nahi chalegi!',done:'✔ CHAL DIYE! Pair chal gaye — aadhi ladai wahi jeet gaye!'},
+ {head:'👊 PUNCH MAARO!',body:'Paas jaakar <b>J</b> dabao — ek saaf mukka! Pehla punch hamesha special hota hai, bilkul pehle din ki attendance jaisa.',touch:'Paas jaakar <b>PUNCH</b> button dabao — ek saaf mukka! Pehla punch hamesha special hota hai, bilkul pehle din ki attendance jaisa.',done:'✔ MUKKA LAGA! Haath khul gaya — ab rukna mat!'},
+ {head:'🛡️ BLOCK KARO!',body:'Opponent se <b>ULTI</b> direction dabaye rakho — wahi <b>BLOCK</b> hai! Maar rukegi, sirf halki si chip lagegi. Attendance ki tarah, block bhi bachata hai!',touch:'Opponent se <b>DOOR</b> wala button (◀ ya ▶) dabaye rakho — wahi <b>BLOCK</b> hai! Maar rukegi, sirf halki si chip lagegi.',done:'✔ BLOCK PAKDA! Maar aayi aur ruk gayi — yahi bachav hai!'},
+ {head:'✋ GRAB — BLOCK TODO!',body:'Saamne wala block kare to paas jaakar <b>L</b> dabao — <b>GRAB</b> block ko tod deta hai! Block ke peeche chhupna ab nahi chalega!',touch:'Saamne wala block kare to paas jaakar <b>GRAB</b> dabao — grab block ko tod deta hai! Block ke peeche chhupna ab nahi chalega!',done:'✔ GRAB NE BLOCK TODA! Ab koi bachav kaam nahi aayega!'},
+ {head:'⚡ SUPER — LAST CHAPTER!',body:'Attendance Meter is match me <b>1.5x TEZ</b> bhar raha hai — maarte raho! Meter full hote hi <b>SPACE</b> dabao: 30% damage + full comedy scene!',touch:'Attendance Meter is match me <b>1.5x TEZ</b> bhar raha hai — maarte raho! Meter full hote hi <b>SPECIAL</b> dabao: 30% damage + full comedy scene!',done:'✔ SUPER CHAL GAYA! 🎓'}
+];
+function tutCpuSetup(){
+ tutCpuActive=false;tutCpuStep=-1;tutCpuFrames=0;tutCpuFlash=0;tutCpuFlags={move:false,punch:false,block:false,grab:false,super:false};tutCpuBlockHeld=0;tutCpuFullNote=false;tutCpuStartX=-1.6;
+ if(mode!=='cpu'||practiceActive||semesterActive||bossActive||challengeActive)return;
+ if(save.tutCpuDone)return;
+ if((save.winsTotal||0)>0||(save.lossesTotal||0)>0){save.tutCpuDone=true;persist();return;} /* purana khiladi — uska pehla match kab ka ho gaya, tutorial uske liye nahi */
+ tutCpuActive=true;tutCpuStep=0;save.tutCpuDone=true;persist();
+}
+function tutCpuShow(s){
+ tutCpuStep=s;tutCpuFrames=0;tutCpuFlash=0;
+ var el=document.getElementById('tutPop');if(!el)return;
+ if(s<0||s>=TUT_CPU.length){tutCpuHide(false);return;}
+ var st=TUT_CPU[s];
+ document.getElementById('tutStepLbl').textContent='🎓 PEHLA MATCH — CHHUPA TUTORIAL • STEP '+(s+1)+' / 5';
+ document.getElementById('tutHead').textContent=st.head;
+ document.getElementById('tutBody').innerHTML=(typeof IS_TOUCH!=='undefined'&&IS_TOUCH&&st.touch)?st.touch:st.body;
+ var dots='';for(var i=0;i<5;i++)dots+=(i<=s?'●':'○');
+ document.getElementById('tutDots').textContent=dots;
+ el.classList.remove('fade');el.classList.remove('done');el.style.display='block';
+}
+function tutCpuHide(instant){var el=document.getElementById('tutPop');if(!el)return;if(instant){el.style.display='none';el.classList.remove('fade');el.classList.remove('done');}else{el.classList.add('fade');setTimeout(function(){if(!tutCpuActive)el.style.display='none';},520);}}
+function tutCpuFinish(){
+ if(!tutCpuActive)return;tutCpuActive=false;tutCpuStep=-1;
+ var el=document.getElementById('tutPop');if(!el)return;
+ el.classList.remove('fade');el.classList.add('done');el.style.display='block';
+ document.getElementById('tutStepLbl').textContent='🎓 TUTORIAL COMPLETE — 5 / 5';
+ document.getElementById('tutHead').textContent='🎓 SAB SEEKH LIYA!';
+ document.getElementById('tutBody').innerHTML='Bina syllabus khole poora chapter clear! Ab asli ladai — <b>ALL THE BEST!</b>';
+ document.getElementById('tutDots').textContent='●●●●●';
+ setTimeout(function(){el.classList.add('fade');setTimeout(function(){el.style.display='none';el.classList.remove('done');},520);},1700);
+}
+function tutCpuAiHelp(i2){
+ /* GRAB step par CPU thodi-thodi der block karke khada hota hai — taaki player ko asal blocker par grab try karne ka mauka mile. Sirf tutorial step 4 (index 3), sirf pehle match me. */
+ if(!sim||sim.phase!=='fight'||tutCpuStep!==3)return i2;
+ var p1=sim.p1,p2=sim.p2;
+ if(Math.abs(p2.x-p1.x)<1.5&&p2.onGround&&p2.atkT<=0&&(sim.tick%150)<90){
+  var away={left:false,right:false,up:false,down:false,punch:false,kick:false,grab:false,special:false,style:false};
+  if(p1.x<p2.x)away.right=true;else away.left=true;
+  return away;
+ }
+ return i2;
+}
+function tutCpuTick(){
+ if(!tutCpuActive||!sim||!sim.p1||!sim.p2)return;
+ if(sim.phase==='matchEnd'){tutCpuActive=false;tutCpuHide(false);return;}
+ if(sim.phase!=='fight'||sim.cine)return;
+ var p1=sim.p1,p2=sim.p2,FL=tutCpuFlags;if(!FL)return;
+ if(Math.abs(p1.x-tutCpuStartX)>0.35||!p1.onGround||p1.y>0.12)FL.move=true;
+ if(p1.state==='punch'&&(p1.atkKind==='punch'||p1.atkKind==='sigP'))FL.punch=true;
+ if(p1.block){tutCpuBlockHeld++;if(tutCpuBlockHeld>=18)FL.block=true;}else tutCpuBlockHeld=0;
+ if(p1.state==='grab'&&p1.atkKind==='grab'&&(p2.block||p2.blockT>4||Math.abs(p2.x-p1.x)<0.95))FL.grab=true;
+ if(p1.state==='super'||p1.stats.superTry>0)FL.super=true;
+ if(tutCpuFlash>0){tutCpuFlash--;if(tutCpuFlash===0){if(tutCpuStep>=4)tutCpuFinish();else tutCpuShow(tutCpuStep+1);}return;}
+ tutCpuFrames++;
+ var key=['move','punch','block','grab','super'][tutCpuStep];
+ if(key&&FL[key]){
+  var el=document.getElementById('tutPop');
+  if(el){el.classList.add('done');document.getElementById('tutHead').textContent=TUT_CPU[tutCpuStep].done;document.getElementById('tutBody').innerHTML='';}
+  tutCpuFlash=55;return;
+ }
+ if(tutCpuStep===4&&p1.meter>=100&&!tutCpuFullNote){tutCpuFullNote=true;document.getElementById('tutBody').innerHTML='<b>METER FULL!</b> Ab <b>'+((typeof IS_TOUCH!=='undefined'&&IS_TOUCH)?'SPECIAL':'SPACE')+'</b> dabao — SUPER chalao, poora campus dekhega! 🔥';}
+ var lim=[780,780,780,960,1800][tutCpuStep]||780;
+ if(tutCpuFrames>lim){ /* player step skip karke khel raha hai — pop khud fade hokar aage badhega, match kabhi nahi rukega */
+  if(tutCpuStep>=4){tutCpuFinish();return;}
+  var el2=document.getElementById('tutPop');if(el2)el2.classList.add('fade');
+  tutCpuFlash=26;
+ }
+}
 /* ===== arena ambience beds (low volume, procedural) ===== */
 var ambNodes=null,ambInt=null,ambArena='';
 function startAmbience(arena){stopAmbience();ambArena=arena;if(muted)return;var c=ac();if(!c||!noiseBuf)return;
@@ -2301,6 +2531,9 @@ function handleEvents(evs){
   if(ev.t==='block'){sndBlock(ev.by.fd.id);var bv=ev.by;spawnSparks(bv.x,bv.y,false,0xBFD9FF);trauma=Math.min(1,trauma+0.05);}
   if(ev.t==='whoosh')noiseS('bandpass',700,1100,0.08,0.06);
   if(ev.t==='jump')osc('sine',300,500,0.08,0.05);
+  if(ev.t==='dash')noiseS('bandpass',500,1500,0.11,0.09); /* v30: dash ki furrr — halki hawa wali whoosh, attack whoosh se alag */
+  if(ev.t==='antiair'){showPopAt(ev.vic.x,'🚀 ANTI-AIR! Koodna mehenga pada!',true,850);osc('square',880,1400,0.07,0.06);} /* v30: hit sound 'hit' event se pehle hi aata hai — yahan sirf pop + chhoti seeti */
+  if(ev.t==='caught'){showPopAt(ev.vic.x,'😱 CAUGHT!\nRecovery me pakda gaya — +20% damage!',true,1250);spawnSparks(ev.vic.x,ev.vic.y,true,0xFF5252);spawnDmgNum(ev.vic.x,2.3,'-'+ev.amt,false);trauma=Math.min(1,trauma+0.22);osc('square',1250,420,0.13,0.07);sndCrowd('ooh');if(canVibrate())navigator.vibrate(25);reactiveTicker('BREAKING: CAUGHT! Signature ki recovery me pakda gaya — +20% damage ka punish mila!');} /* v31: CAUGHT! — 'hit' event ke baad aata hai, isliye bada pop onomatopoeia ki jagah final dikhta hai; hit sound 'hit' se pehle hi baj chuka hota hai */
   if(ev.t==='superGo'){musicDuckSuper();sndSuper(ev.by.fd.id);playVoice(ev.by.fd.id);showPop('⚡ '+ev.by.fd.special.toUpperCase()+' ⚡\n"'+ev.txt+'"',1800);freezeT=6;cineT=58;cineX=ev.by.x;crowdExcited=170;crowdScatter=42;trauma=Math.min(1,trauma+0.3);reactiveTicker('BREAKING: '+ev.by.fd.name+' ne apna SPECIAL chala diya — campus me sannata (aur hasi)');}
   if(ev.t==='styleGo'){sndStyle(ev.by.fd.id==='adarsh3d'?'adarsh':ev.by.fd.id);playVoice(ev.by.fd.id);if(ev.txt)showPopAt(ev.by.x,'"'+ev.txt+'"',false,1050);}
   if(ev.t==='ringHit'){sndHit('labmadam',false);spawnSparks(ev.vic.x,0.5,false,0xBFEFFF);showPopAt(ev.vic.x,ev.blocked?'🛡 CHUP! (blocked)':'CHUP! 🤫',false,700);trauma=Math.min(1,trauma+0.12);}
@@ -2314,15 +2547,15 @@ function handleEvents(evs){
   if(ev.t==='superBlocked'){showPopAt(ev.vic.x,'🛡 BLOCKED! Sirf chip damage',false,1100);sndBlock(ev.by.fd.id);}
   if(ev.t==='superHit'){showPopAt(ev.by.x+ev.by.dir*1.6,'"'+ev.txt+'"',true,1600);spawnSparks(ev.by.x+ev.by.dir*1.4,0.4,true,0xFF8A3C);trauma=Math.min(1,trauma+0.45);}
   if(ev.t==='superMiss'){showPop('"'+ev.txt+'" 😅',1300);sndCrowd('aww');crowdScatter=30;}
-  if(ev.t==='ko'){musicKO();sndBell(1);sndCrowd('cheer');crowdExcited=240;slowT=45;slowScale=0.25;trauma=1;showPop('K.O.! 😵💫 Chakkar kha ke gir gaya!',1900);if(canVibrate())navigator.vibrate(60);}
-  if(ev.t==='timeout'){sndStamp();
+  if(ev.t==='ko'){musicKO();sndBell(1);playAnnouncer('ko');sndCrowd('cheer');crowdExcited=240;slowT=45;slowScale=0.25;trauma=1;showPop('K.O.! 😵💫 Chakkar kha ke gir gaya!',1900);if(canVibrate())navigator.vibrate(60);}
+  if(ev.t==='timeout'){sndStamp();if(ev.how==='hp'||ev.how==='meter')playAnnouncer('timeup');
    if(ev.how==='meter'){fightMsg('⏰ SAMAY KHATAM! Attendance se faisla! 75% wala pass, baaki backlog!');reactiveTicker('BREAKING: Timeout par ATTENDANCE se faisla hua — zyada ladne wala jeeta!');}
    else if(ev.how==='grace'){fightMsg('🎓 GRACE MARKS ROUND! 10 second — pehla saaf hit (≥20) jeetega!');showPop('🎓 GRACE MARKS!\nPehla saaf hit = round tumhara!',1800);reactiveTicker('BREAKING: Grace Marks Round chal raha hai — campus ki saansein ruki hui hain!');}
    else if(ev.how==='draw'){fightMsg('⏰ Grace Marks me bhi koi nahi jeeta — DRAW! Round dobara hoga, dono ko backlog mark.');}
    else if(ev.how==='hp'){fightMsg('⏰ SAMAY KHATAM! Zyada health wala jeeta — bilkul grace marks ki tarah.');}}
   if(ev.t==='graceWin'){fightMsg('🎓 GRACE MARK MIL GAYA! Saaf hit ne round jeeta diya!');sndStamp();showPop('🎓 GRACE MARKS!\nRound jeet gaya!',1500);}
   if(ev.t==='fightStart'){fightMsg('SHURU! 🥊');sndBell(1);osc('square',660,null,0.09,0.1,0.1);osc('square',880,null,0.12,0.1,0.22);}
-  if(ev.t==='newRound'){sndBell(ev.round>=3?3:ev.round);fightMsg(ev.round>=3?'FINAL ROUND — PASS YA BACK!':'ROUND '+ev.round+' — BACKLOG CLEAR KARO!');document.getElementById('roundLbl').textContent='ROUND '+ev.round;lowWarned={p1:false,p2:false};meter75={p1:false,p2:false};}
+  if(ev.t==='newRound'){sndBell(ev.round>=3?3:ev.round);playAnnouncer(ev.round>=3?'round3':'round2');fightMsg(ev.round>=3?'FINAL ROUND — PASS YA BACK!':'ROUND '+ev.round+' — BACKLOG CLEAR KARO!');document.getElementById('roundLbl').textContent='ROUND '+ev.round;lowWarned={p1:false,p2:false};meter75={p1:false,p2:false};}
   if(ev.t==='matchEnd'){stopAmbience();setTimeout(showResult,700);}
  });
 }
@@ -2377,7 +2610,9 @@ function fightLoop(ts){
      /* cinematic skip: koi bhi attack key/tap = Beat 3 ke end par jump (SPECIALS_FX §0 rule 4) */
      if(sim.cine){if(performance.now()>cineSkipAt){var atkDown=!!(keys['j']||keys['k']||keys['l']||keys[' ']||keys['u']||keys[',']||keys['.']||keys['/']||keys['m']||touchState.punch||touchState.kick||touchState.grab||touchState.special||touchState.style);if(atkDown&&!skipPrev){sim.skipCine();clearGagFx();}skipPrev=atkDown;}else skipPrev=true;}
      var i1=inpP1();var i2=mode==='online'?NET.inp2:(mode==='2p'?inpP2():(practiceActive?practiceAI():aiFn(sim,sim.p2,sim.p1)));
+     if(tutCpuActive)i2=tutCpuAiHelp(i2);
      var evs=sim.step(i1,i2);handleEvents(evs);
+     if(tutCpuActive)tutCpuTick();
      if(mode==='online'&&NET.role==='host')netHostTick(evs);
      if(sim.bossMode&&(sim.p2.state==='hit')&&shortlistStage===1){shortlistStage=2;showPop('📄 Resume bach gaya! Sir ka haath ruk gaya!',1500);}
     }}
@@ -2523,12 +2758,12 @@ document.getElementById('btnRematch').addEventListener('click',function(){if(mod
 document.getElementById('btnResultSelect').addEventListener('click',function(){if(mode==='online'){netResultSelect();return;}document.getElementById('resultModal').classList.remove('on');beginSelect(mode);});
 document.getElementById('btnResultHome').addEventListener('click',function(){if(mode==='online')netLeave(true);document.getElementById('resultModal').classList.remove('on');document.body.classList.remove('cine');sim=null;goMenu();});
 document.getElementById('btnShare').addEventListener('click',shareCard);
-function setMuteBtns(){var t=muted?'🔇 Sound OFF':'🔊 Sound ON';document.getElementById('btnMute2').textContent=t;document.getElementById('btnMuteTop').textContent=muted?'🔇 OFF':'🔊 ON';}
-document.getElementById('btnMute2').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted){stopAmbience();stopVoices();}else if(screens.fight.classList.contains('on'))startAmbience(arenaId);});
-document.getElementById('btnMuteTop').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted){stopAmbience();stopVoices();}});
+function setMuteBtns(){document.getElementById('btnMute2').innerHTML=muted?'🔇<span class="btnLbl"> Sound OFF</span>':'🔊<span class="btnLbl"> Sound ON</span>';document.getElementById('btnMuteTop').textContent=muted?'🔇 OFF':'🔊 ON';}
+document.getElementById('btnMute2').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted){stopAmbience();stopVoices();stopAnnouncer();}else if(screens.fight.classList.contains('on'))startAmbience(arenaId);});
+document.getElementById('btnMuteTop').addEventListener('click',function(){muted=!muted;save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted){stopAmbience();stopVoices();stopAnnouncer();}});
 document.getElementById('setMusicVol').addEventListener('input',function(){save.settings.musicVol=this.value/100;document.getElementById('musicVolLbl').textContent=this.value+'%';persist();applyMusicGain();musicDebugRender();});
 (function(){var sv=document.getElementById('setMusicVol');var v=Math.round(((save.settings.musicVol!=null)?save.settings.musicVol:0.8)*100);sv.value=v;document.getElementById('musicVolLbl').textContent=v+'%';})();
-document.getElementById('setSound').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;muted=b.dataset.v==='off';save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted)stopVoices();this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});});
+document.getElementById('setSound').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;muted=b.dataset.v==='off';save.settings.sound=!muted;persist();setMuteBtns();applyMusicGain();if(muted){stopVoices();stopAnnouncer();}this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});});
 document.getElementById('setQuality').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;save.settings.quality=b.dataset.v;persist();this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});showPop('Quality: '+b.dataset.v.toUpperCase()+' — agle match se apply hoga');});
 document.getElementById('setShake').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;save.settings.shake=b.dataset.v==='on';persist();this.querySelectorAll('button').forEach(function(x){x.classList.toggle('sel',x===b);});});
 function volSlider(id,lbl,key,after){var el=document.getElementById(id);if(!el)return;var cur=(save.settings&&save.settings[key]!=null)?save.settings[key]:1;el.value=Math.round(cur*100);document.getElementById(lbl).textContent=Math.round(cur*100)+'%';el.addEventListener('input',function(){save.settings[key]=this.value/100;document.getElementById(lbl).textContent=this.value+'%';persist();if(after)after();});}
@@ -2913,9 +3148,9 @@ function openOnline(){
  if(NET.connected&&NET.role==='host')document.getElementById('btnNetSelect').style.display='block';
 }
 /* ===== data flow ===== */
-function netPackInp(i){return (i.left?'1':'0')+(i.right?'1':'0')+(i.up?'1':'0')+(i.down?'1':'0')+(i.punch?'1':'0')+(i.kick?'1':'0')+(i.grab?'1':'0')+(i.special?'1':'0')+(i.style?'1':'0');}
-function netUnpackInp(d){var v=(d&&d.v)||'';return {left:v.charAt(0)==='1',right:v.charAt(1)==='1',up:v.charAt(2)==='1',down:v.charAt(3)==='1',punch:v.charAt(4)==='1',kick:v.charAt(5)==='1',grab:v.charAt(6)==='1',special:v.charAt(7)==='1',style:v.charAt(8)==='1'};}
-function netSerF(f){return [r3(f.x),r3(f.y),Math.round(f.hp),Math.round(f.meter),f.state,f.pose,f.dir,f.block?1:0,f.crouch?1:0,f.onGround?1:0,f.atkKind||'',f.atkT||0,f.atkDur||20,f.dashLow?1:0,f.aftermath||'',f.aftermathT||0,f.idleT||0,f.stats.punch,f.stats.kick,f.stats.blocked,f.stats.superTry,f.stats.superHit];}
+function netPackInp(i){return (i.left?'1':'0')+(i.right?'1':'0')+(i.up?'1':'0')+(i.down?'1':'0')+(i.punch?'1':'0')+(i.kick?'1':'0')+(i.grab?'1':'0')+(i.special?'1':'0')+(i.style?'1':'0')+(i.dashF?'1':'0')+(i.dashB?'1':'0');} /* v30: char 9/10 = dashF/dashB (touch DASH button) — double-tap dash to left/right edges (char 0/1) se hi host ke Sim me banta hai, isliye guest ka double-tap pehle se hi online chalta tha */
+function netUnpackInp(d){var v=(d&&d.v)||'';return {left:v.charAt(0)==='1',right:v.charAt(1)==='1',up:v.charAt(2)==='1',down:v.charAt(3)==='1',punch:v.charAt(4)==='1',kick:v.charAt(5)==='1',grab:v.charAt(6)==='1',special:v.charAt(7)==='1',style:v.charAt(8)==='1',dashF:v.charAt(9)==='1',dashB:v.charAt(10)==='1'};}
+function netSerF(f){return [r3(f.x),r3(f.y),Math.round(f.hp),Math.round(f.meter),f.state,f.pose,f.dir,f.block?1:0,f.crouch?1:0,f.onGround?1:0,f.atkKind||'',f.atkT||0,f.atkDur||20,f.dashLow?1:0,f.aftermath||'',f.aftermathT||0,f.idleT||0,f.stats.punch,f.stats.kick,f.stats.blocked,f.stats.superTry,f.stats.superHit,f.dashT||0,f.dashDir||0];} /* v30: index 22/23 = dashT/dashDir — guest screen par dash lean dikhe */
 function netSnap(){
  var s={tick:sim.tick,ph:sim.phase,rd:sim.round,tl:sim.timeLeft,gr:sim.grace,w1:sim.wins.p1,w2:sim.wins.p2,win:sim.winner||'',sl:Math.round(sim.shortlist),bm:sim.bossMode?1:0,p1:netSerF(sim.p1),p2:netSerF(sim.p2),pr:[],rg:[],cn:null};
  for(var i=0;i<sim.projectiles.length;i++){var p=sim.projectiles[i];s.pr.push([r3(p.x),r3(p.y),p.sprite||'',(p.from&&p.from.isP1)?1:0,r3(p.spin||0),p.delay||0,(p.from&&p.from.fd)?p.from.fd.id:'']);}
@@ -2950,7 +3185,7 @@ function netHostTick(evs){
  netSend({t:'snap',s:netSnap(),evs:NET.evAcc});NET.evAcc=[];
 }
 /* ===== guest side: view-only sim (asal Sim ka aakar, par koi physics nahi — host hi sach hai) ===== */
-function netViewFighter(fd,x,dir,isP1){return {fd:fd,x:x,y:0,vy:0,dir:dir,isP1:isP1,hp:fd.hp,maxhp:fd.hp,meter:0,state:'idle',t:0,atkT:0,atkDur:20,atkKind:'',didHit:false,hitT:0,block:false,crouch:false,onGround:true,prev:{},stats:{punch:0,kick:0,superTry:0,superHit:0,blocked:0},idleT:0,blockT:0,counterT:0,buf:{punch:0,kick:0,grab:0,special:0,style:0},queue:null,move:null,moveIdx:0,moveT:0,hitReg:{},pose:'idle',styleCD:0,dashLow:false,spawnDone:false,aftermath:null,aftermathT:0};}
+function netViewFighter(fd,x,dir,isP1){return {fd:fd,x:x,y:0,vy:0,pushV:0,dir:dir,isP1:isP1,hp:fd.hp,maxhp:fd.hp,meter:0,state:'idle',t:0,atkT:0,atkDur:20,atkKind:'',didHit:false,hitT:0,block:false,crouch:false,onGround:true,prev:{},stats:{punch:0,kick:0,superTry:0,superHit:0,blocked:0},idleT:0,blockT:0,counterT:0,buf:{punch:0,kick:0,grab:0,special:0,style:0},queue:null,move:null,moveIdx:0,moveT:0,hitReg:{},pose:'idle',styleCD:0,dashLow:false,spawnDone:false,aftermath:null,aftermathT:0,dashT:0,dashDir:0,dashCD:0,tapL:-999,tapR:-999};}
 function netMakeViewSim(a,b){return {isView:true,practice:false,bossMode:b.id==='boss',tick:0,timeLeft:3600,grace:0,round:1,phase:'intro',phaseT:0,hitstop:0,slowmo:1,shortlist:0,projectiles:[],rings:[],cine:null,wins:{p1:0,p2:0},winner:null,p1:netViewFighter(a,-1.6,1,true),p2:netViewFighter(b,1.6,-1,false),step:function(){return[];},skipCine:function(){}};}
 function netGuestApplySnap(now){
  var s=NET.snap;if(!s||!sim||!sim.isView)return;
@@ -2962,6 +3197,7 @@ function netGuestApplySnap(now){
   else{vf.x=a[0];vf.y=a[1];}
   vf.hp=a[2];vf.meter=a[3];vf.state=a[4];vf.pose=a[5];vf.dir=a[6];vf.block=!!a[7];vf.crouch=!!a[8];vf.onGround=!!a[9];
   vf.atkKind=a[10];vf.atkT=a[11];vf.atkDur=a[12];vf.dashLow=!!a[13];vf.aftermath=a[14]||null;vf.aftermathT=a[15];vf.idleT=a[16];
+  vf.dashT=a[22]||0;vf.dashDir=a[23]||0; /* v30: purane snapshot me ye index na ho to 0 — guest par dash lean sirf tab jab host bheje */
   vf.stats.punch=a[17];vf.stats.kick=a[18];vf.stats.blocked=a[19];vf.stats.superTry=a[20];vf.stats.superHit=a[21];
  }
  appF(sim.p1,s.p1,pv?pv.p1:null);appF(sim.p2,s.p2,pv?pv.p2:null);
